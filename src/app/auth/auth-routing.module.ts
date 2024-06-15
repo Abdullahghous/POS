@@ -66,42 +66,46 @@ const routes: Routes = [
         path: 'forgot-password-3',
         component: ForgotPassword3Component,
       },
+      // {
+      //   path: 'register',
+      //   component: RegisterComponent,
+      // },
       {
-        path: 'register',
-        component: RegisterComponent,
-      },
-      {
-        path: 'register-2',
+        path: 'onboarding',
         component: Register2Component,
       },
+      // {
+      //   path: 'register-3',
+      //   component: Register3Component,
+      // },
+      // {
+      //   path: 'signin',
+      //   component: SigninComponent,
+      // },
       {
-        path: 'register-3',
-        component: Register3Component,
-      },
-      {
-        path: 'signin',
-        component: SigninComponent,
-      },
-      {
-        path: 'signin-2',
+        path: 'login',
         component: Signin2Component,
       },
-      {
-        path: 'signin-3',
-        component: Signin2Component,
-      },
+      // {
+      //   path: 'signin-2',
+      //   component: Signin2Component,
+      // },
+      // {
+      //   path: 'signin-3',
+      //   component: Signin2Component,
+      // },
+      // {
+      //   path: 'two-step-verification',
+      //   component: TwoStepVerificationComponent,
+      // },
       {
         path: 'two-step-verification',
-        component: TwoStepVerificationComponent,
-      },
-      {
-        path: 'two-step-verification-2',
         component: TwoStepVerification2Component,
       },
-      {
-        path: 'two-step-verification-3',
-        component: TwoStepVerification3Component,
-      },
+      // {
+      //   path: 'two-step-verification-3',
+      //   component: TwoStepVerification3Component,
+      // },
       {
         path: 'lock-screen',
         component: LockScreenComponent,

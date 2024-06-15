@@ -21,6 +21,8 @@ export class WebstorgeService {
   public Logout(): void {
     localStorage.removeItem('authorized');
     localStorage.removeItem('loginTime');
-    this.router.navigate(['/auth/signin']);
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigate(['/auth/login']);
   }
 }

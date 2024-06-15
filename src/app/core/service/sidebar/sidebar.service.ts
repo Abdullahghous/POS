@@ -807,18 +807,18 @@ export class SidebarService {
                   hasSubRoute: false,
                   showSubRoute: false,
                 },
-                {
-                  menuValue: 'Illustration',
-                  route: routes.twoStepVerification2,
-                  hasSubRoute: false,
-                  showSubRoute: false,
-                },
-                {
-                  menuValue: 'Basic',
-                  route: routes.twoStepVerification3,
-                  hasSubRoute: false,
-                  showSubRoute: false,
-                },
+                // {
+                //   menuValue: 'Illustration',
+                //   route: routes.twoStepVerification2,
+                //   hasSubRoute: false,
+                //   showSubRoute: false,
+                // },
+                // {
+                //   menuValue: 'Basic',
+                //   route: routes.twoStepVerification3,
+                //   hasSubRoute: false,
+                //   showSubRoute: false,
+                // },
               ],
             },
             {
