@@ -2127,3 +2127,13 @@ body .mini-sidebar .sidebar .sidebar-menu>ul>li.submenu-open ul li a {
 // table tbody td.action-table-data {
 //   /* display: flex; */
 // }
+
+.snackbar-success {
+  background-color: #4caf50 !important; /* Green color */
+  color: white !important;
+}
+
+.snackbar-danger {
+  background-color: #f44336 !important; /* Red color */
+  color: white !important;
+}

@@ -16,14 +16,14 @@
                   <div class="form-login">
                        <label>Email Address</label>
                        <div class="form-addons">
-                           <input type="text" class="form-control">
+                           <input [(ngModel)]="userEmail" name="email" type="text" class="form-control">
                            <img src="assets/img/icons/mail.svg" alt="img">
                        </div>
                    </div>
                    <div class="form-login">
                        <label>Password</label>
                        <div class="pass-group">
-                        <input [type]="password[1] ? 'text' : 'password' " class="pass-input">
+                        <input [(ngModel)]="userPassword" name="password" [type]="password[1] ? 'text' : 'password' " class="pass-input">
                         <span class="fas toggle-password" [ngClass]=" password[1] ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePassword(1)"></span>
                     </div>
                    </div>
@@ -43,12 +43,12 @@
                        </div>
                    </div>
                    <div class="form-login">
-                       <button type="button" (click)="navigation()" class="btn btn-login">Sign In</button>
+                       <button type="button" (click)="login()" class="btn btn-login" [disabled]="loginBtnDisable" >{{ loginBtnText }}</button>
                    </div>
                    <div class="signinform">
-                       <h4>New on our platform?<a [routerLink] = "routes.register2" class="hover-a"> Create an account</a></h4>
+                       <h4>New on our platform?<a [routerLink] = "routes.createAccount" class="hover-a"> Create an account</a></h4>
                    </div>
-                   <div class="form-setlogin or-text">
+                   <!-- <div class="form-setlogin or-text">
                        <h4>OR</h4>
                    </div>
                    <div class="form-sociallink">
@@ -73,7 +73,7 @@
                        <div class="my-4 d-flex justify-content-center align-items-center copyright-text">
                            <p>Copyright &copy; 2023 DreamsPOS. All rights reserved</p>
                        </div>
-                   </div>
+                   </div> -->
                </div>
             </form>
         </div>

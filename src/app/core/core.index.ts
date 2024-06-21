@@ -1,6 +1,7 @@
 export * from './service/data/data.service';
 export * from './service/settings/settings.service';
 export * from './service/spinner/spinner.service';
+export * from './service/http/http.service';
 export * from './guard/auth/auth.guard';
 export * from './service/sidebar/sidebar.service';
 export * from './service/common/common.service';

@@ -5,8 +5,21 @@ export class routes {
   public static get baseUrl(): string {
     return this.base;
   }
+
+  // our auth routes
+
+  public static get login(): string {
+    return this.base + '/login';
+  }
+
+  public static get createAccount(): string {
+    return this.base + '/onboarding';
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////
+
   // auth routes *start*
-  
+
   public static get signIn(): string {
     return this.base + '/signin';
   }
@@ -847,12 +860,12 @@ export class routes {
   public static get twoStepVerification(): string {
     return this.base + '/two-step-verification';
   }
-  public static get twoStepVerification2(): string {
-    return this.base + '/two-step-verification-2';
-  }
-  public static get twoStepVerification3(): string {
-    return this.base + '/two-step-verification-3';
-  }
+  // public static get twoStepVerification2(): string {
+  //   return this.base + '/two-step-verification-2';
+  // }
+  // public static get twoStepVerification3(): string {
+  //   return this.base + '/two-step-verification-3';
+  // }
   public static get lockScreen(): string {
     return this.base + '/lock-screen';
   }
@@ -943,6 +956,6 @@ export class routes {
   public static get permissions(): string {
     return this.usersManagement + '/permissions';
   }
-  
+
   // core pages child routes *ends*
 }
