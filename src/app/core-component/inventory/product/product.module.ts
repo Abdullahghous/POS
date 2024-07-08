@@ -9,7 +9,8 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { ExpiredProductsComponent } from './expired-products/expired-products.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @NgModule({
   declarations: [
@@ -18,12 +19,14 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     ProductListComponent,
     AddProductComponent,
     ExpiredProductsComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
   ],
   imports: [
     CommonModule,
     ProductRoutingModule,
-    sharedModule
+    sharedModule,
+    NzSelectModule,
+    NzInputModule
   ]
 })
 export class ProductModule { }

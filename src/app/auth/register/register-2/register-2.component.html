@@ -3,33 +3,33 @@
         <form>
             <div class="login-userset">
                 <div class="login-logo logo-normal">
-                   <img src="assets/img/logo.png" alt="img">
+                   <!-- <img src="assets/img/logo.png" alt="img"> -->
                </div>
                <a [routerLink]="routes.dashboard" class="login-logo logo-white">
-                   <img src="assets/img/logo-white.png"  alt="">
+                   <!-- <img src="assets/img/logo-white.png"  alt=""> -->
                </a>
                <div class="login-userheading">
                    <h3>Register</h3>
-                   <h4>Create New Dreamspos Account</h4>
+                   <h4>Create New {{ productName }} Account</h4>
                </div>
-               <div class="form-login">
+               <!-- <div class="form-login">
                    <label>Name</label>
                    <div class="form-addons">
                        <input type="text" class="form-control">
                        <img src="assets/img/icons/user-icon.svg" alt="img">
                    </div>
-               </div>
+               </div> -->
                <div class="form-login">
-                   <label>Email Address</label>
+                   <label>Email</label>
                    <div class="form-addons">
-                       <input type="text" class="form-control">
+                       <input [(ngModel)]="email" name="email" type="text" class="form-control">
                        <img src="assets/img/icons/mail.svg" alt="img">
                    </div>
                </div>
                <div class="form-login">
                    <label>Password</label>
                    <div class="pass-group">
-                    <input [type]="password[1] ? 'text' : 'password' " class="pass-input">
+                    <input [(ngModel)]="user_password" name="password" [type]="password[1] ? 'text' : 'password' " class="pass-input">
                     <span class="fas toggle-password" [ngClass]=" password[1] ? 'fa-eye' : 'fa-eye-slash'"
                         (click)="togglePassword(1)"></span>
                 </div>
@@ -37,7 +37,7 @@
                <div class="form-login">
                    <label>Confirm Password</label>
                    <div class="pass-group">
-                    <input [type]="password[2] ? 'text' : 'password' " class="pass-input">
+                    <input [(ngModel)]="user_con_password" name="confirm password" [type]="password[2] ? 'text' : 'password' " class="pass-input">
                     <span class="fas toggle-passwords" [ngClass]=" password[2] ? 'fa-eye' : 'fa-eye-slash'"
                         (click)="togglePassword(2)"></span>
                 </div>
@@ -57,7 +57,7 @@
                    </div>
                </div>
                <div class="form-login">
-                   <button type="button" class="btn btn-login" (click)="navigation()">Sign Up</button>
+                   <button type="button" class="btn btn-login" (click)="createAccount()">{{ loginBtnText }}</button>
                </div>
                <div class="signinform">
                    <h4>Already have an account ? <a [routerLink] = "routes.login" class="hover-a">Sign In Instead</a></h4>
@@ -85,12 +85,12 @@
                    </ul>
                </div> -->
                <div class="my-4 d-flex justify-content-center align-items-center copyright-text">
-                   <p>Copyright &copy; 2023 DreamsPOS. All rights reserved</p>
+                   <p>Copyright &copy; 2024 {{ productName }}. All rights reserved</p>
                </div>
            </div>
         </form>
     </div>
-    <div class="login-img">
-        <img src="assets/img/authentication/register02.png" alt="img">
+    <div class="login-img" style="background: #008FD4 !important;">
+        <!-- <img src="assets/img/authentication/register02.png" alt="img"> -->
     </div>
 </div>

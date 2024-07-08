@@ -1,0 +1,54 @@
+
+// Custom Theming for NG-ZORRO
+// For more information: https://ng.ant.design/docs/customize-theme/en
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
+
+// Override less variables to here
+// View all variables: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less
+
+// @primary-color: #1890ff;
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    width: 100% !important;
+    height: 43px !important; 
+    padding: 6px 11px !important;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    position: relative !important;
+    background-color: #fff !important;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+    border: 1px solid rgba(145, 158, 171, 0.32) !important;
+    border-radius: 5px !important;
+    color: #878a99 !important;
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-search {
+    position: absolute !important;;
+    top: 6px !important;
+    right: 11px !important;;
+    bottom: 0 !important;;
+    left: 11px !important;;
+}
+
+.ant-input {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-variant: tabular-nums;
+    list-style: none;
+    font-feature-settings: 'tnum';
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    min-width: 0;
+    height: 43px !important;
+    padding: 4px 11px;
+    color: #878a99 !important;
+    font-size: 14px;
+    line-height: 1.5715;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid rgba(145, 158, 171, 0.32) !important;
+    border-radius: 5px;
+    transition: all 0.3s;
+}

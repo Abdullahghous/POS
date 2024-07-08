@@ -74,7 +74,7 @@ const icons = {
     NgxMatIntlTelInputComponent,
     CountUpModule,
     TimepickerModule,
-    
+
     FeatherModule.pick(icons)
 
   ],

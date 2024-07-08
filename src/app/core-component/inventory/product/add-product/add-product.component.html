@@ -43,7 +43,7 @@
           <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
             data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-lg-4 col-sm-6 col-12">
                   <div class="mb-3 add-product">
                     <label class="form-label">Store</label>
@@ -72,15 +72,124 @@
                     </mat-select>
                   </div>
                 </div>
+              </div> -->
+              <div class="addservice-info">
+                <div class="row">
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="mb-3 add-product">
+                      <div class="add-newplus">
+                        <label class="form-label">Category</label>
+                        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add-units-category"><i
+                            class="feather icon-plus-circle plus-down-add"></i><span>Add New</span></a>
+                      </div>
+
+                      <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
+                        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                      </nz-select>
+                      <!-- <mat-select [(ngModel)]="selectedValue3" [ngModelOptions]="{standalone: true}"
+                        class="select custom-mat-select" placeholder="Choose">
+                        @for (data of selectedList3; track data) {
+                        <mat-option [value]="data.value">
+                          {{data.value}}
+                        </mat-option>
+                        }
+                      </mat-select> -->
+
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="mb-3 add-product">
+                      <label class="form-label">Sub Category</label>
+
+                      <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
+                        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                      </nz-select>
+                      <!-- <mat-select [(ngModel)]="selectedValue4" [ngModelOptions]="{standalone: true}"
+                        class="select custom-mat-select" placeholder="Choose">
+                        @for (data of selectedList4; track data) {
+                        <mat-option [value]="data.value">
+                          {{data.value}}
+                        </mat-option>
+                        }
+                      </mat-select> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="mb-3 add-product">
+                      <label class="form-label">Sub Sub Category</label>
+
+                      <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
+                        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                      </nz-select>
+                      <!-- <mat-select [(ngModel)]="selectedValue5" [ngModelOptions]="{standalone: true}"
+                        class="select custom-mat-select" placeholder="Choose">
+                        @for (data of selectedList5; track data) {
+                        <mat-option [value]="data.value">
+                          {{data.value}}
+                        </mat-option>
+                        }
+                      </mat-select> -->
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="row">
                 <div class="col-lg-4 col-sm-6 col-12">
                   <div class="mb-3 add-product">
                     <label class="form-label">Product Name</label>
-                    <input type="text" class="form-control" />
+                    <!-- <input type="text" class="form-control" /> -->
+                    <input nz-input placeholder="Type product name" nzSize="large" />
                   </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 col-12">
+                  <div class="mb-3 add-product">
+                    <div class="add-newplus">
+                      <label class="form-label">Brand</label>
+                      <!-- <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add-units-brand"><i
+                          class="feather icon-plus-circle plus-down-add"></i><span>Add New</span></a> -->
+                    </div>
+
+                    <input nz-input placeholder="Type brand name" nzSize="large" />
+                    <!-- <mat-select [(ngModel)]="selectedValue6" [ngModelOptions]="{standalone: true}"
+                      class="select custom-mat-select" placeholder="Choose">
+                      @for (data of selectedList6; track data) {
+                      <mat-option [value]="data.value">
+                        {{data.value}}
+                      </mat-option>
+                      }
+                    </mat-select> -->
+                  </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-12">
+                  <div class="mb-3 add-product">
+                    <div class="add-newplus">
+                      <label class="form-label">Unit</label>
+                      <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add-unit"><i
+                          class="feather icon-plus-circle plus-down-add"></i><span>Add New</span></a>
+                    </div>
+
+                    <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
+                      <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                      <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                      <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                    </nz-select>
+                    <!-- <mat-select [(ngModel)]="selectedValue7" [ngModelOptions]="{standalone: true}"
+                      class="select custom-mat-select" placeholder="Choose">
+                      @for (data of selectedList7; track data) {
+                      <mat-option [value]="data.value">
+                        {{data.value}}
+                      </mat-option>
+                      }
+                    </mat-select> -->
+                  </div>
+                </div>
+                <!-- <div class="col-lg-4 col-sm-6 col-12">
                   <div class="mb-3 add-product">
                     <label class="form-label">Slug</label>
                     <input type="text" class="form-control" />
@@ -94,96 +203,10 @@
                       Generate Code
                     </button>
                   </div>
-                </div>
+                </div> -->
               </div>
-              <div class="addservice-info">
+              <!-- <div class="add-product-new">
                 <div class="row">
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <div class="mb-3 add-product">
-                      <div class="add-newplus">
-                        <label class="form-label">Category</label>
-                        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add-units-category"><i
-                            class="feather icon-plus-circle plus-down-add"></i><span>Add New</span></a>
-                      </div>
-
-                      <mat-select [(ngModel)]="selectedValue3" [ngModelOptions]="{standalone: true}"
-                        class="select custom-mat-select" placeholder="Choose">
-                        @for (data of selectedList3; track data) {
-                        <mat-option [value]="data.value">
-                          {{data.value}}
-                        </mat-option>
-                        }
-                      </mat-select>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <div class="mb-3 add-product">
-                      <label class="form-label">Sub Category</label>
-
-                      <mat-select [(ngModel)]="selectedValue4" [ngModelOptions]="{standalone: true}"
-                        class="select custom-mat-select" placeholder="Choose">
-                        @for (data of selectedList4; track data) {
-                        <mat-option [value]="data.value">
-                          {{data.value}}
-                        </mat-option>
-                        }
-                      </mat-select>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <div class="mb-3 add-product">
-                      <label class="form-label">Sub Sub Category</label>
-
-                      <mat-select [(ngModel)]="selectedValue5" [ngModelOptions]="{standalone: true}"
-                        class="select custom-mat-select" placeholder="Choose">
-                        @for (data of selectedList5; track data) {
-                        <mat-option [value]="data.value">
-                          {{data.value}}
-                        </mat-option>
-                        }
-                      </mat-select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="add-product-new">
-                <div class="row">
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <div class="mb-3 add-product">
-                      <div class="add-newplus">
-                        <label class="form-label">Brand</label>
-                        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add-units-brand"><i
-                            class="feather icon-plus-circle plus-down-add"></i><span>Add New</span></a>
-                      </div>
-
-                      <mat-select [(ngModel)]="selectedValue6" [ngModelOptions]="{standalone: true}"
-                        class="select custom-mat-select" placeholder="Choose">
-                        @for (data of selectedList6; track data) {
-                        <mat-option [value]="data.value">
-                          {{data.value}}
-                        </mat-option>
-                        }
-                      </mat-select>
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <div class="mb-3 add-product">
-                      <div class="add-newplus">
-                        <label class="form-label">Unit</label>
-                        <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#add-unit"><i
-                            class="feather icon-plus-circle plus-down-add"></i><span>Add New</span></a>
-                      </div>
-
-                      <mat-select [(ngModel)]="selectedValue7" [ngModelOptions]="{standalone: true}"
-                        class="select custom-mat-select" placeholder="Choose">
-                        @for (data of selectedList7; track data) {
-                        <mat-option [value]="data.value">
-                          {{data.value}}
-                        </mat-option>
-                        }
-                      </mat-select>
-                    </div>
-                  </div>
                   <div class="col-lg-4 col-sm-6 col-12">
                     <div class="mb-3 add-product">
                       <label class="form-label">Selling Type</label>
@@ -199,23 +222,29 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="row">
-                <div class="col-lg-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-sm-6 col-12">
+                  <div class="mb-3 add-product">
+                    <label class="form-label">Conversion Type</label>
+                    <input nz-input placeholder="Type conversion" nzSize="large" />
+                  </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-12">
                   <div class="mb-3 add-product">
                     <label class="form-label">Barcode Symbology</label>
-
-                    <mat-select [(ngModel)]="selectedValue11" [ngModelOptions]="{standalone: true}"
+                    <input nz-input placeholder="Type barcode symbology" nzSize="large" />
+                    <!-- <mat-select [(ngModel)]="selectedValue11" [ngModelOptions]="{standalone: true}"
                       class="select custom-mat-select" placeholder="Choose">
                       @for (data of selectedList11; track data) {
                       <mat-option [value]="data.value">
                         {{data.value}}
                       </mat-option>
                       }
-                    </mat-select>
+                    </mat-select> -->
                   </div>
                 </div>
-                <div class="col-lg-6 col-sm-6 col-12">
+                <!-- <div class="col-lg-4 col-sm-6 col-12">
                   <div class="input-blocks add-product list">
                     <label>Item Code</label>
                     <input type="text" class="form-control list" placeholder="Please Enter Item Code" />
@@ -223,14 +252,16 @@
                       Generate Code
                     </button>
                   </div>
-                </div>
+                </div> -->
               </div>
               <!-- Editor -->
-              <div class="col-lg-12">
+              <div class="col-lg-12 px-0">
                 <div class="input-blocks summer-description-box transfer mb-3">
                   <label>Description</label>
-                  <textarea class="form-control h-100" rows="5"></textarea>
-                  <p class="mt-1">Maximum 60 Characters</p>
+                  <!-- <textarea class="form-control h-100" rows="5" placeholder="Type description..."></textarea> -->
+                  <textarea nz-input placeholder="Type description..."
+                    [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+                  <!-- <p class="mt-1">Maximum 60 Characters</p> -->
                 </div>
               </div>
               <!-- /Editor -->
@@ -256,7 +287,7 @@
           <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
             data-bs-parent="#accordionExample2">
             <div class="accordion-body">
-              <div class="input-blocks add-products">
+              <!-- <div class="input-blocks add-products">
                 <label class="d-block">Product Type</label>
                 <div class="single-pill-product">
                   <ul class="nav nav-pills" id="pills-tab1" role="tablist">
@@ -274,34 +305,41 @@
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> -->
               <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                   <div class="row">
                     <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>Quantity</label>
-                        <input type="text" class="form-control" />
+                        <!-- <input type="text" class="form-control" /> -->
+                        <input nz-input placeholder="Type quantity" nzSize="large" />
                       </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>Price</label>
-                        <input type="text" class="form-control" />
+                        <!-- <input type="text" class="form-control" /> -->
+                        <input nz-input placeholder="Type price" nzSize="large" />
                       </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>Tax Type</label>
 
-                        <mat-select [(ngModel)]="selectedValue8" [ngModelOptions]="{standalone: true}"
+                        <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
+                          <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                          <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                          <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                        </nz-select>
+                        <!-- <mat-select [(ngModel)]="selectedValue8" [ngModelOptions]="{standalone: true}"
                           class="select custom-mat-select" placeholder="Choose">
                           @for (data of selectedList8; track data) {
                           <mat-option [value]="data.value">
                             {{data.value}}
                           </mat-option>
                           }
-                        </mat-select>
+                        </mat-select> -->
                       </div>
                     </div>
                   </div>
@@ -310,26 +348,33 @@
                       <div class="input-blocks add-product">
                         <label>Discount Type</label>
 
-                        <mat-select [(ngModel)]="selectedValue9" [ngModelOptions]="{standalone: true}"
+                        <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
+                          <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                          <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                          <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                        </nz-select>
+                        <!-- <mat-select [(ngModel)]="selectedValue9" [ngModelOptions]="{standalone: true}"
                           class="select custom-mat-select" placeholder="Choose">
                           @for (data of selectedList9; track data) {
                           <mat-option [value]="data.value">
                             {{data.value}}
                           </mat-option>
                           }
-                        </mat-select>
+                        </mat-select> -->
                       </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>Discount Value</label>
-                        <input type="text" placeholder="Choose" />
+                        <!-- <input type="text" placeholder="Choose" /> -->
+                        <input nz-input placeholder="Type discount value" nzSize="large" />
                       </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>Quantity Alert</label>
-                        <input type="text" class="form-control" />
+                        <!-- <input type="text" class="form-control" /> -->
+                        <input nz-input placeholder="Type quantity alert" nzSize="large" />
                       </div>
                     </div>
                   </div>
@@ -538,7 +583,7 @@
           </div>
         </div>
       </div>
-      <div class="accordion-card-one accordion" id="accordionExample4">
+      <!-- <div class="accordion-card-one accordion" id="accordionExample4">
         <div class="accordion-item">
           <div class="accordion-header" id="headingFour">
             <div class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseFour"
@@ -623,7 +668,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="col-lg-12">
       <div class="btn-addproduct mb-4">

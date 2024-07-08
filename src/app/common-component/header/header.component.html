@@ -4,13 +4,16 @@
   <!-- Logo -->
   <div class="header-left active" (mouseover)="miniSideBarMouseHover('over')" (mouseout)="miniSideBarMouseHover('out')" >
     <a [routerLink] = "routes.adminDashboard" class="logo logo-normal">
-      <img src="assets/img/logo.png" alt="">
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+       {{ productName }}
     </a>
     <a [routerLink] = "routes.adminDashboard" class="logo logo-white">
-      <img src="assets/img/logo-white.png" alt="">
+      <!-- <img src="assets/img/logo-white.png" alt=""> -->
+      {{ productName }}
     </a>
     <a [routerLink] = "routes.adminDashboard" class="logo-small">
-      <img src="assets/img/logo-small.png" alt="">
+      <!-- <img src="assets/img/logo-small.png" alt=""> -->
+      {{ productName }}
     </a>
     <a id="toggle_btn" href="javascript:void(0);" (click)="toggleSidebar()" [ngClass]="{'d-none': page === 'pos'}">
       <i class="feather icon-chevrons-left" class="feather icon-16"></i>
@@ -112,7 +115,7 @@
     <!-- /Select Store -->
 
     <!-- Flag -->
-    <li class="nav-item dropdown has-arrow flag-nav nav-item-box">
+    <!-- <li class="nav-item dropdown has-arrow flag-nav nav-item-box">
       <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
         <img src="assets/img/flags/us.png" alt="Language" class="img-fluid">
       </a>
@@ -130,7 +133,7 @@
           <img src="assets/img/flags/de.png" alt="" height="16"> German
         </a>
       </div>
-    </li>
+    </li> -->
     <!-- /Flag -->
 
     <li class="nav-item nav-item-box">
@@ -138,12 +141,12 @@
         <i class="feather icon-maximize"></i>
       </a>
     </li>
-    <li class="nav-item nav-item-box">
+    <!-- <li class="nav-item nav-item-box">
       <a [routerLink] = "routes.email">
         <i class="feather icon-mail"></i>
         <span class="badge rounded-pill">1</span>
       </a>
-    </li>
+    </li> -->
     <!-- Notifications -->
     <li class="nav-item dropdown nav-item-box">
       <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
@@ -245,9 +248,9 @@
     </li>
     <!-- /Notifications -->
 
-    <li class="nav-item nav-item-box">
+    <!-- <li class="nav-item nav-item-box">
       <a [routerLink] = "routes.generalSettings"><i class="feather icon-settings"></i></a>
-    </li>
+    </li> -->
     <li class="nav-item dropdown has-arrow main-drop">
       <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
         <span class="user-info">
@@ -255,8 +258,8 @@
             <img src="assets/img/profiles/avator1.jpg" alt="" class="img-fluid">
           </span>
           <span class="user-detail">
-            <span class="user-name">John Smilga</span>
-            <span class="user-role">Super Admin</span>
+            <span class="user-name">{{ firstname }} <br> {{ lastname }}</span>
+            <!-- <span class="user-role">Super Admin</span> -->
           </span>
         </span>
       </a>
@@ -266,12 +269,13 @@
             <span class="user-img"><img src="assets/img/profiles/avator1.jpg" alt="">
               <span class="status online"></span></span>
             <div class="profilesets">
-              <h6>John Smilga</h6>
-              <h5>Super Admin</h5>
+              <span class="user-name">{{ firstname }} <br> {{ lastname }}</span>
+              <!-- <h5>Super Admin</h5> -->
             </div>
           </div>
           <hr class="m-0">
-          <a class="dropdown-item" [routerLink] = "routes.profile"> <i class="me-2" class="feather icon-user"></i> My Profile</a>
+          <!-- <a class="dropdown-item" [routerLink] = "routes.profile"> <i class="me-2" class="feather icon-user"></i> My Profile</a> -->
+          <a class="dropdown-item" [routerLink] = "routes.generalSettings"> <i class="me-2" class="feather icon-user"></i> My Profile</a>
           <a class="dropdown-item" [routerLink] = "routes.generalSettings"><i class="me-2"
               class="feather icon-settings"></i>Settings</a>
           <hr class="m-0">
@@ -288,9 +292,10 @@
     <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
         class="fa fa-ellipsis-v"></i></a>
     <div class="dropdown-menu dropdown-menu-right">
-      <a class="dropdown-item" [routerLink] = "routes.profile">My Profile</a>
+      <!-- <a class="dropdown-item" [routerLink] = "routes.profile">My Profile</a> -->
+      <a class="dropdown-item" [routerLink] = "routes.generalSettings">My Profile</a>
       <a class="dropdown-item" [routerLink] = "routes.generalSettings">Settings</a>
-      <a class="dropdown-item" [routerLink] = "routes.signIn">Logout</a>
+      <a class="dropdown-item" (click)="logout()">Logout</a>
     </div>
   </div>
   <!-- /Mobile Menu -->

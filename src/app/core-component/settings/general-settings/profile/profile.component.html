@@ -8,16 +8,16 @@
   <ul class="table-top-head">
     <li>
       <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Refresh" matTooltipPosition="above"><i
-      class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
+          class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
     </li>
     <li>
-      <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Collapse" matTooltipPosition="above"
-        id="collapse-header"> @if (!isCollapsed) {
+      <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Collapse"
+        matTooltipPosition="above" id="collapse-header"> @if (!isCollapsed) {
         <i class="feather icon-chevron-up feather-chevron-up"></i>
-      }
-      @if (isCollapsed) {
+        }
+        @if (isCollapsed) {
         <i class="feather icon-chevron-down feather-chevron-down"></i>
-      }</a>
+        }</a>
     </li>
   </ul>
 </div>
@@ -31,7 +31,7 @@
             <h4>Profile Settings</h4>
           </div>
           <div class="card-title-head">
-            <h6><span><i class="feather icon-user feather-chevron-up"></i></span>Employee Information</h6>
+            <h6><span><i class="feather icon-user feather-chevron-up"></i></span>Profile Information</h6>
           </div>
           <div class="profile-pic-upload">
             <div class="profile-pic">
@@ -50,38 +50,40 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-4">
-              <div class="mb-3">
-                <label class="form-label">First Name</label>
-                <input type="text" class="form-control">
+            <form [formGroup]="formGroup" class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-control" formControlName="firstName">
+                </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="mb-3">
-                <label class="form-label">Last Name</label>
-                <input type="text" class="form-control">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-control" formControlName="lastName">
+                </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="mb-3">
-                <label class="form-label">User Name</label>
-                <input type="text" class="form-control">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">User Name</label>
+                  <input type="text" class="form-control" formControlName="username">
+                </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="mb-3">
-                <label class="form-label">Phone Number</label>
-                <input type="text" class="form-control">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Phone Number</label>
+                  <input type="text" class="form-control" formControlName="phone">
+                </div>
               </div>
-            </div>
-            <div class="col-md-4">
-              <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" formControlName="email">
+                </div>
               </div>
-            </div>
+            </form>
           </div>
-          <div class="card-title-head">
+          <!-- <div class="card-title-head">
             <h6><span><i class="feather icon-map-pin feather-chevron-up"></i></span>Our Address</h6>
           </div>
           <div class="row">
@@ -115,10 +117,10 @@
                 <input type="text" class="form-control">
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="text-end settings-bottom-btn">
-            <button type="button" class="btn btn-cancel me-2">Cancel</button>
-            <button type="button" class="btn btn-submit" (click)="navigation()">Save Changes</button>
+            <!-- <button type="button" class="btn btn-cancel me-2">Cancel</button> -->
+            <button type="button" class="btn btn-submit" (click)="updateProfile()">Save Changes</button>
           </div>
         </form>
       </div>

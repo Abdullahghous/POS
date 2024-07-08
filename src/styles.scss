@@ -196,7 +196,7 @@ body {
 .mat-mdc-option:focus:not(.mdc-list-item--disabled),
 .mat-mdc-option.mat-mdc-option-active,
 .mat-mdc-option.mdc-list-item--selected:not(.mat-mdc-option-multiple):not(.mdc-list-item--disabled) {
-  background-color: #ff9f43;
+  background-color: #FF9F43;
 }
 
 .mat-mdc-option-active .mdc-list-item__primary-text,
@@ -250,7 +250,7 @@ body {
   }
 
   .fc-header-toolbar.fc-toolbar .fc-button.fc-button-active {
-    background-color: #ff9f43;
+    background-color: #FF9F43;
     color: #fff;
     text-shadow: none;
   }
@@ -262,15 +262,15 @@ body {
   }
 
   .fc-button-group.fc .fc-button-primary:not(:disabled).fc-button-active {
-    background-color: #ff9f43;
-    border-color: #ff9f43;
+    background-color: #FF9F43;
+    border-color: #FF9F43;
     color: #fff;
     text-transform: capitalize;
   }
 
   .fc .fc-button-primary:disabled {
-    background-color: #ff9f43;
-    border-color: #ff9f43;
+    background-color: #FF9F43;
+    border-color: #FF9F43;
     color: #fff;
     text-transform: capitalize;
   }
@@ -283,8 +283,8 @@ body {
   }
 
   .fc .fc-button-primary:disabled:hover {
-    background: #ff9f43;
-    border-color: #ff9f43;
+    background: #FF9F43;
+    border-color: #FF9F43;
     color: #fff;
     text-transform: capitalize;
   }
@@ -329,16 +329,16 @@ body {
 }
 
 .day-unit.is-selected {
-  background: #ff9f43 !important;
+  background: #FF9F43 !important;
   color: #fff;
 }
 
 .day-unit:hover {
-  background-color: #ff9f43 !important;
+  background-color: #FF9F43 !important;
 }
 
 // .mat-mdc-select:focus {
-//   border: 1px solid #ff9f43;
+//   border: 1px solid #FF9F43;
 // }
 
 .content-wrapper {
@@ -402,7 +402,7 @@ a.btn-cancel:active {
 li.active {
   .menu-arrow {
     &::before {
-      border-color: #fe9f43 !important;
+      border-color: #008FD4 !important;
     }
   }
 }

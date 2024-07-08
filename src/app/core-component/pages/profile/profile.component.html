@@ -21,56 +21,58 @@
                         </div>
                     </div>
                     <div class="profile-contentname">
-                        <h2>William Castillo</h2>
+                        <h2>{{ firstname }}  {{ lastname }}</h2>
                         <h4>Updates Your Photo and Personal Details.</h4>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6 col-sm-12">
-                <div class="input-blocks">
-                    <label class="form-label">First Name</label>
-                    <input type="text" class="form-control" value="William">
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-12">
-                <div class="input-blocks">
-                    <label class="form-label">Last Name</label>
-                    <input type="text" class="form-control" value="Castilo">
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-12">
-                <div class="input-blocks">
-                    <label>Email</label>
-                    <input type="email" class="form-control" value="william@example.com">
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-12">
-                <div class="input-blocks">
-                    <label class="form-label">Phone</label>
-                    <input type="text" value="+1452 876 5432">
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-12">
-                <div class="input-blocks">
-                    <label class="form-label">User Name</label>
-                    <input type="text" class="form-control" value="William Castilo">
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-12">
-                <div class="input-blocks">
-                    <label class="form-label">Password</label>
-                    <div class="pass-group">
-                        <input [type]="password[1] ? 'text' : 'password' " class="pass-input form-control">
-                        <span class="fas toggle-password" [ngClass]=" password[1] ? 'fa-eye' : 'fa-eye-slash'"
-                            (click)="togglePassword(1)"></span>
+            <form [formGroup]="formGroup" class="row">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="input-blocks">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-control" formControlName="firstName">
                     </div>
                 </div>
-            </div>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="input-blocks">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-control" formControlName="lastName">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="input-blocks">
+                        <label>Email</label>
+                        <input type="email" class="form-control" formControlName="email">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="input-blocks">
+                        <label class="form-label">Phone</label>
+                        <input type="text"  formControlName="phone">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="input-blocks">
+                        <label class="form-label">User Name</label>
+                        <input type="text" class="form-control"  formControlName="username">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-12">
+                    <div class="input-blocks">
+                        <label class="form-label">Password</label>
+                        <div class="pass-group">
+                            <input [type]="password[1] ? 'text' : 'password' " class="pass-input form-control"  formControlName="password">
+                            <span class="fas toggle-password" [ngClass]=" password[1] ? 'fa-eye' : 'fa-eye-slash'"
+                                (click)="togglePassword(1)"></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="col-12">
-                <a href="javascript:void(0);" class="btn btn-submit me-2">Submit</a>
-                <a href="javascript:void(0);" class="btn btn-cancel">Cancel</a>
+                <a class="btn btn-submit me-2" style="color: white;" (click)="updateProfile()">Submit</a>
+                <a class="btn btn-cancel" style="color: white;">Cancel</a>
             </div>
         </div>
     </div>

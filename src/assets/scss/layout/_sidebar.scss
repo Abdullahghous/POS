@@ -38,7 +38,7 @@
                         color: $white;
                     }
                     svg {
-                        color: #FE9F43
+                        color: #008FD4
                     }
                 }
                 svg {
@@ -65,22 +65,24 @@
                         color: #637381;
                     }
                     &:hover{
-                        background: rgba(254, 159, 67, 0.08);
-                        color: #FE9F43;
+                        // background: rgba(254, 159, 67, 0.08);
+                        background: #F5F8FD !important;
+                        color: #008FD4;
                         border-radius: 5px;
                         img {
                             filter: invert(72%) sepia(76%) saturate(1430%) hue-rotate(327deg) brightness(103%) contrast(101%);
                         }
                         span{
-                            color: #FE9F43;
+                            color: #008FD4;
                         }
                         svg{
-                            color: #FE9F43;
+                            color: #008FD4;
                         }
                     }
                     &.active{
-                        background: rgba(254, 159, 67, 0.08);
-                        color: #FE9F43;
+                        // background: rgba(254, 159, 67, 0.08);
+                        background: #F5F8FD !important;
+                        color: #008FD4;
                         border-radius: 5px;
                         svg{
                             color: $white;
@@ -89,12 +91,12 @@
                             filter: invert(72%) sepia(76%) saturate(1430%) hue-rotate(327deg) brightness(103%) contrast(101%);
                         }
                         span{
-                            color: #FE9F43;
+                            color: #008FD4;
                         }
                         .menu-arrow{
-                            background: #FFEDDC;
+                            background: #F5F8FD ;
                             &::before{
-                                border-color: #FE9F43;
+                                border-color: #008FD4;
                             }
                         }
                     }
@@ -106,13 +108,14 @@
                 }
                 &.active{
                     a{
-                        background: rgba(254, 159, 67, 0.08);
+                        // background: rgba(254, 159, 67, 0.08);
+                        background: #F5F8FD !important;
                         border-radius: 5px;
                         img{
                             filter: invert(72%) sepia(76%) saturate(1430%) hue-rotate(327deg) brightness(103%) contrast(101%);
                         }
                         span{
-                            color: #FE9F43;
+                            color: #008FD4;
                         }
                     }
                 }
@@ -132,7 +135,7 @@
                                &.active{
                                    color: $secondary;
                                    &:after{
-                                    background: #FE9F43;
+                                    background: #008FD4;
                                     border: 2px solid #FDB;
                                    }
                                }
@@ -148,7 +151,7 @@
                                &:hover{
                                    color:$primary;
                                    &:after{
-                                    background: #FE9F43;
+                                    background: #008FD4;
                                     border: 2px solid #FDB;
                                    }
                                }
@@ -188,14 +191,14 @@
                                        }
                                    }
                                    &:after{
-                                    background: #FE9F43;
+                                    background: #008FD4;
                                     border: 2px solid #FDB;
                                    }
                                }
                                &:hover{
                                    color:$primary;
                                    &:after{
-                                    background: #FE9F43;
+                                    background: #008FD4;
                                     border: 2px solid #FDB;
                                    }
                                    span {
@@ -207,9 +210,10 @@
                        > li 
                        {
                         &.active a{
-                            background: rgba(254, 159, 67, 0.08);
+                            // background: rgba(254, 159, 67, 0.08);
+                            background: #F5F8FD !important;
                             border-radius: 5px;
-                            color: #FE9F43;
+                            color: #008FD4;
                             span {
                                 color: $primary;
                             }
@@ -240,25 +244,26 @@
             li {
                 &.active{
                     a{
-                        color: #FE9F43;
+                        color: #008FD4;
                     }
                     svg {
-                        color: #FE9F43
+                        color: #008FD4
                     }
                 }
                 .submenu > {
                     a {
                         &.active{
-                            background: rgba(254, 159, 67, 0.08);
-                            color: #FE9F43;
+                            // background: rgba(254, 159, 67, 0.08);
+                            background: #F5F8FD !important;
+                            color: #008FD4;
                             border-radius: 5px;
                             span{
-                                color: #FE9F43;
+                                color: #008FD4;
                             }
                             .menu-arrow{
-                                background: #FFEDDC;
+                                background: #F5F8FD ;
                                 &::before{
-                                    border-color: #FE9F43;
+                                    border-color: #008FD4;
                                 }
                             }
                         }
@@ -321,7 +326,7 @@
                             &:hover{
                                 color:$primary;
                                 &:after{
-                                background: #FE9F43;
+                                background: #008FD4;
                                 border: 2px solid #FDB;
                                 }
                             }
@@ -374,7 +379,7 @@
         &.subdrop{
             .menu-arrow {
                 @include transform(rotate(90deg));                            
-                background: #FFEDDC;
+                background: #F5F8FD ;
             }
         }
     }
