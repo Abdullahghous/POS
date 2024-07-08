@@ -8,6 +8,7 @@ import {
   apiResultFormat,
   routes,
   SidebarService,
+  HttpService,
 } from 'src/app/core/core.index';
 import { categoryList } from 'src/app/shared/model/page.model';
 import { PaginationService, tablePageSize } from 'src/app/shared/shared.index';
@@ -42,7 +43,8 @@ export class CategoryListComponent {
     private data: DataService,
     private pagination: PaginationService,
     private router: Router,
-    private sidebar: SidebarService
+    private sidebar: SidebarService,
+    private apiService: HttpService
   ) {
     this.data.getDataTable().subscribe((apiRes: apiResultFormat) => {
       this.totalData = apiRes.totalData;
@@ -53,6 +55,10 @@ export class CategoryListComponent {
         }
       });
     });
+  }
+
+  ngOnInit() {
+    this.getAllCategory();
   }
 
   private getTableData(pageOption: pageSelection): void {
@@ -164,5 +170,11 @@ export class CategoryListComponent {
         f.isSelected = false;
       });
     }
+  }
+
+  getAllCategory() {
+    this.apiService.get('item/get-all-item-category').subscribe((res) => {
+      console.log('All Category::' ,res)
+    })
   }
 }

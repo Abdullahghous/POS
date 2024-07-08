@@ -7,9 +7,10 @@
 export const environment = {
   production: false,
   PROTOCOL: 'http',
+  PRODUCT_NAME: 'POS',
   // FOR IAMGE PATH
   IAMGE_PATH: '',
   // FOR API's
-  baseURL: '43.206.83.97:8025',
+  baseURL: '43.206.83.97:8021',
   ROOT_URL: 'localhost', // LOCAL
 };

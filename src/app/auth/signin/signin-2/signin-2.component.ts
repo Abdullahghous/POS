@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { switchMap, tap } from 'rxjs';
 import { routes } from 'src/app/core/helpers/routes';
 import { HttpService } from 'src/app/core/service/http/http.service';
 import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service';
+import { environment } from '../../../../environments/environment'
 
 @Component({
   selector: 'app-signin-2',
@@ -16,8 +18,10 @@ export class Signin2Component {
   public loginBtnText: string = 'Login';
   public loginBtnDisable: boolean = false;
 
+  public productName = environment.PRODUCT_NAME;
+
   constructor(
-    private router: Router, 
+    private router: Router,
     private apiService: HttpService,
     private snackBarService: SnackBarService
   ) {}
@@ -29,7 +33,6 @@ export class Signin2Component {
   }
 
   public login() {
-
     this.loginBtnText = 'Loading...';
     this.loginBtnDisable = true;
 
@@ -39,28 +42,66 @@ export class Signin2Component {
       grant_type: 'password',
     };
 
-    this.apiService.post('getToken', loginObj).subscribe({
-      next: (res) => {
-          if (res) {
-              console.log('Login Res::', res);
-              sessionStorage.setItem('access_token', res.access_token);
-              JSON.stringify(sessionStorage.setItem('user', res.user));
-              this.snackBarService.showSuccess('Redirecting to OTP verification !');
-          } else {
-              console.log('No auth token found');
+    this.apiService
+      .post('user/getToken', loginObj)
+      .pipe(
+        switchMap((loginRes) => {
+          sessionStorage.setItem('access_token', loginRes.access_token);
+          return this.apiService.get(
+            `user/get-by-email?email=${loginRes.companyName}`
+          );
+        })
+      )
+      .subscribe({
+        next: (res) => {
+          if(res) {
+            console.log('res::', res);
+            sessionStorage.setItem('loginUser::', JSON.stringify(res));
+            this.snackBarService.showSuccess('Redirected toward OTP verification !');
+            this.navigationToVerification();
           }
-      },
-      error: (err) => {
-          console.error('Error fetching auth token:', err.error.message);
+        },
+        error: (err) => {
           this.snackBarService.showError(err.error.message);
           this.loginBtnText = 'Login';
           this.loginBtnDisable = false;
-      },
-      complete: () => {
-          console.log('Auth token fetch complete');
-          this.navigationToVerification();
+          localStorage.clear();
+          sessionStorage.clear();
+        },
+      });
+    // this.apiService.post('user/getToken', loginObj).subscribe({
+    //   next: (res) => {
+    //     if (res) {
+    //       console.log('Login Res::', res);
+    //       sessionStorage.setItem('access_token', res.access_token);
+    //       JSON.stringify(
+    //         sessionStorage.setItem('companyName', res.companyName)
+    //       );
+    //       this.getLoginUserData(res.companyName);
+    //       this.snackBarService.showSuccess('Redirecting to OTP verification !');
+    //     } else {
+    //       console.log('No auth token found');
+    //     }
+    //   },
+    //   error: (err) => {
+        // console.error('Error fetching auth token:', err.error.message);
+        // this.snackBarService.showError(err.error.message);
+        // this.loginBtnText = 'Login';
+        // this.loginBtnDisable = false;
+    //   },
+    //   complete: () => {
+    //     console.log('Auth token fetch complete');
+    //     this.navigationToVerification();
+    //   },
+    // });
+  }
+
+  getLoginUserData(email: string) {
+    this.apiService.get(`user/get-by-email?email=${email}`).subscribe((res) => {
+      if (res) {
+        sessionStorage.setItem('uInfo', JSON.stringify(res));
       }
-  });
+    });
   }
 
   navigationToVerification() {

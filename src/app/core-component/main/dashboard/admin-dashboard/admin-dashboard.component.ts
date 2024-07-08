@@ -60,6 +60,13 @@ export class AdminDashboardComponent {
   @ViewChild('chart') chart!: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
 
+  public alertType: any = "warning";
+  public alertHeading = '';
+  public alertMessage = '';
+  public showAlert = false;
+
+  public loginUserData;
+
   constructor(
     private common: CommonService,
     private setting: SettingsService,
@@ -146,6 +153,15 @@ export class AdminDashboardComponent {
         }
       });
     });
+
+    this.loginUserData = JSON.parse(sessionStorage.getItem('loginUser::')!);
+    
+    if(!this.loginUserData?.Success?.profileCompleted && this.loginUserData !== null) {
+      this.alertType = "warning";
+      this.alertHeading = 'Account Profile';
+      this.alertMessage = `Please complete your profile !`;
+      this.showAlert = true;
+    }
   }
   // pagination variables
   public tableData: Array<expiredproduct> = [];
@@ -223,6 +239,19 @@ export class AdminDashboardComponent {
       this.tableData.forEach((f) => {
         f.isSelected = false;
       });
+    }
+  }
+
+  afterCloseAlert(): void {
+    console.log('close');
+  }
+
+  onAlertAction(type: string) {
+    if(type == 'profilePage') {
+      this.router.navigate([routes.profile]);
+    }
+    else {
+      this.showAlert = false;
     }
   }
 }

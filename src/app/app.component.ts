@@ -6,6 +6,7 @@ import {
   Event as RouterEvent,
 } from '@angular/router';
 import { SpinnerService } from './core/core.index';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,8 @@ import { SpinnerService } from './core/core.index';
 export class AppComponent {
   title = 'template';
   public page = '';
+
+  public productName = environment.PRODUCT_NAME;
 
   constructor(private router: Router, private spinner: SpinnerService) {
     this.router.events.subscribe((event: RouterEvent) => {
