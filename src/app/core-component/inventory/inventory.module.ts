@@ -10,7 +10,7 @@ import { BrandListComponent } from './brand-list/brand-list.component';
 import { UnitsComponent } from './units/units.component';
 import { VarriantAttributesComponent } from './varriant-attributes/varriant-attributes.component';
 import { QrcodeComponent } from './qrcode/qrcode.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -28,6 +28,7 @@ import { QrcodeComponent } from './qrcode/qrcode.component';
     CommonModule,
     InventoryRoutingModule,
     sharedModule,
+    ReactiveFormsModule
   ]
 })
 export class InventoryModule { }

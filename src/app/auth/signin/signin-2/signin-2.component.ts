@@ -62,6 +62,7 @@ export class Signin2Component {
           }
         },
         error: (err) => {
+          console.log('err', err)
           this.snackBarService.showError(err.error.message);
           this.loginBtnText = 'Login';
           this.loginBtnDisable = false;

@@ -2137,3 +2137,10 @@ body .mini-sidebar .sidebar .sidebar-menu>ul>li.submenu-open ul li a {
   background-color: #f44336 !important; /* Red color */
   color: white !important;
 }
+
+@media (min-width: 576px) { /* sm */
+  .custom-width-sm { width: 400px !important; }
+}
+@media (min-width: 768px) { /* md */
+  .custom-width-md { width: 600px !important; }
+}
