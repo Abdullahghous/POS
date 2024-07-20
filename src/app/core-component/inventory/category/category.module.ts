@@ -6,7 +6,8 @@ import { CategoryComponent } from './category.component';
 import { sharedModule } from 'src/app/shared/shared.module';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { SubCategoriesComponent } from './sub-categories/sub-categories.component';
-
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { SubCategoriesComponent } from './sub-categories/sub-categories.componen
   imports: [
     CommonModule,
     CategoryRoutingModule,
-    sharedModule
+    sharedModule,
+    NzCheckboxModule,
+    NzRadioModule
   ]
 })
 export class CategoryModule { }

@@ -7,10 +7,10 @@
 export const environment = {
   production: false,
   PROTOCOL: 'http',
-  PRODUCT_NAME: 'POS',
+  PRODUCT_NAME: 'Ahmed Enterprises',
   // FOR IAMGE PATH
   IAMGE_PATH: '',
   // FOR API's
-  baseURL: '43.206.83.97:8021',
+  baseURL: '45.8.148.212:8021',
   ROOT_URL: 'localhost', // LOCAL
 };
