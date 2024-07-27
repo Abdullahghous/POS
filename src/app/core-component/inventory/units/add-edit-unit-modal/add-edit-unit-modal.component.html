@@ -1,0 +1,51 @@
+<div class="w-100 w-md-50 w-sm-100 container-lg rounded-lg shadow-lg h-100 overflow-auto p-0" style="max-width: 600px;">
+
+    <div class="modal-header border-0 custom-modal-header">
+        <div class="page-title">
+            <h4>{{ !data.isEdit ? 'Add Unit' : 'Update Unit' }}</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="p-3">
+
+        <form [formGroup]="formGroup">
+
+            <div class="mb-3">
+                <label class="form-label">Unit Name</label>
+                <input formControlName="name" placeholder="Enter Unit Name" type="text" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Base unit</label>
+                <input formControlName="baseUnit" placeholder="Enter Base Unit" type="text" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Secondary unit</label>
+                <input formControlName="secondaryUnit" placeholder="Enter Secondary Unit" type="text" class="form-control" />
+            </div>
+
+            <p style="text-decoration: underline; font-weight: 700;">Conversion Rate</p>
+
+            <span style="display: flex; align-items: center; flex-wrap: wrap; justify-content: center;">
+                ⦿ 1 {{ baseUnit }} = 
+                <input style="width: 40% !important; margin-left: 4px; margin-right: 4px;" formControlName="conversionValue" placeholder="Enter Conversion Value" type="text" class="form-control" />
+                of 
+                {{ secondaryUnit }}
+            </span>
+        </form>
+
+    </div>
+
+    <div class="modal-footer-btn custom-modal-footer mr-1">
+        <button type="button" class="btn btn-cancel me-2" (click)="closeModal()">Cancel</button>
+        @if (!data.isEdit) {
+        <button type="submit" class="btn btn-submit" (click)="addDetails()">Add Unit</button>
+        } @else {
+        <button type="submit" class="btn btn-submit" (click)="updateDetails()">Update Unit</button>
+        }
+    </div>
+</div>

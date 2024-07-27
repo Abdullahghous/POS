@@ -2,16 +2,16 @@
 <div class="header">
 
   <!-- Logo -->
-  <div class="header-left active" (mouseover)="miniSideBarMouseHover('over')" (mouseout)="miniSideBarMouseHover('out')" >
-    <a [routerLink] = "routes.adminDashboard" class="logo logo-normal">
+  <div class="header-left active" (mouseover)="miniSideBarMouseHover('over')" (mouseout)="miniSideBarMouseHover('out')">
+    <a [routerLink]="routes.adminDashboard" class="logo logo-normal">
       <!-- <img src="assets/img/logo.png" alt=""> -->
-       {{ productName }}
+      {{ productName }}
     </a>
-    <a [routerLink] = "routes.adminDashboard" class="logo logo-white">
+    <a [routerLink]="routes.adminDashboard" class="logo logo-white">
       <!-- <img src="assets/img/logo-white.png" alt=""> -->
       {{ productName }}
     </a>
-    <a [routerLink] = "routes.adminDashboard" class="logo-small">
+    <a [routerLink]="routes.adminDashboard" class="logo-small">
       <!-- <img src="assets/img/logo-small.png" alt=""> -->
       {{ productName }}
     </a>
@@ -275,8 +275,9 @@
           </div>
           <hr class="m-0">
           <!-- <a class="dropdown-item" [routerLink] = "routes.profile"> <i class="me-2" class="feather icon-user"></i> My Profile</a> -->
-          <a class="dropdown-item" [routerLink] = "routes.generalSettings"> <i class="me-2" class="feather icon-user"></i> My Profile</a>
-          <a class="dropdown-item" [routerLink] = "routes.generalSettings"><i class="me-2"
+          <a class="dropdown-item" [routerLink]="routes.generalSettings"> <i class="me-2" class="feather icon-user"></i>
+            My Profile</a>
+          <a class="dropdown-item" [routerLink]="routes.generalSettings"><i class="me-2"
               class="feather icon-settings"></i>Settings</a>
           <hr class="m-0">
           <a class="dropdown-item logout pb-0" (click)="logout()"><img src="assets/img/icons/log-out.svg" class="me-2"
@@ -293,11 +294,12 @@
         class="fa fa-ellipsis-v"></i></a>
     <div class="dropdown-menu dropdown-menu-right">
       <!-- <a class="dropdown-item" [routerLink] = "routes.profile">My Profile</a> -->
-      <a class="dropdown-item" [routerLink] = "routes.generalSettings">My Profile</a>
-      <a class="dropdown-item" [routerLink] = "routes.generalSettings">Settings</a>
+      <a class="dropdown-item" [routerLink]="routes.generalSettings">My Profile</a>
+      <a class="dropdown-item" [routerLink]="routes.generalSettings">Settings</a>
       <a class="dropdown-item" (click)="logout()">Logout</a>
     </div>
   </div>
   <!-- /Mobile Menu -->
+
 </div>
 <!-- /Header -->

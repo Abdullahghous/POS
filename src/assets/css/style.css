@@ -10284,7 +10284,7 @@ table.dataTable thead > tr > th.no-sort.sorting::after {
   -ms-transition: all 0.5s ease;
   transition: all 0.5s ease;
   margin: 0 0 0 260px;
-  padding: 66px 0 0;
+  padding: 40px 0 0;
   position: relative;
   left: 0;
   -webkit-transition: all 0.2s ease;
@@ -24002,6 +24002,12 @@ table .edit-delete-action.data {
   background: #FAFBFE;
   padding: 24px;
 }
+
+.custom-modal-footer {
+  background: #FAFBFE;
+  padding: 24px;
+}
+
 .custom-modal-header .page-title h4 {
   font-size: 18px;
   font-weight: 700;
@@ -32116,6 +32122,10 @@ label span {
 
 .text-default {
   color: #5B6670;
+}
+
+.required-span-color {
+  color: red !important;
 }
 
 /*# sourceMappingURL=style.css.map */

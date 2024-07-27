@@ -28,6 +28,11 @@ export class CoreComponentComponent implements OnInit {
   public navigationColor: string = '';
   private _loading = new BehaviorSubject<boolean>(false);
   public readonly loading$ = this._loading.asObservable();
+  
+  public loginUserData: any;
+  public firstname: any;
+  public lastname: any;
+  msgToDisplay = '';
 
   base = '';
   page = '';
@@ -87,6 +92,7 @@ export class CoreComponentComponent implements OnInit {
     });
     this.getRoutes(this.Router);
   }
+
   private getRoutes(data: url): void {
     const splitVal = data.url.split('/');
     this.base = splitVal[1];
@@ -118,6 +124,13 @@ export class CoreComponentComponent implements OnInit {
     this.sidebar.collapse$.subscribe((collapse: boolean) => {
       this.isCollapsed = collapse;
     });
+
+    this.loginUserData = JSON.parse(sessionStorage.getItem('loginUser::')!);
+    if(this.loginUserData?.Success) {
+      this.firstname = this.loginUserData?.Success?.firstName;
+      this.lastname = this.loginUserData?.Success?.lastName;
+      this.msgToDisplay = `Hello ${ this.firstname } ${ this.lastname }, All menus on the sidebar are now functional. Once the other features are completed, you will also be able to access those menus on the sidebar. In case of any issues or bugs, please report them to us.`
+    }
   }
 
   showLoader() {

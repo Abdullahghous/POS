@@ -59,7 +59,7 @@
                     <span><img src="assets/img/icons/closes.svg" alt="img"></span>
                   </a>
                 </div> -->
-      <div class="form-sort">
+      <!-- <div class="form-sort">
         <i class="feather icon-sliders info-img"></i>
         <mat-select [(ngModel)]="selectedValue1" [ngModelOptions]="{standalone: true}" class="select space-select"
           placeholder="Sort by Date">
@@ -69,7 +69,7 @@
           </mat-option>
           }
         </mat-select>
-      </div>
+      </div> -->
     </div>
     <!-- /Filter -->
     <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
@@ -134,8 +134,8 @@
             <th mat-sort-header="category">Category</th>
             <!-- <th mat-sort-header="categorySlug">Category slug</th> -->
             <th mat-sort-header="status">Status</th>
-            <th mat-sort-header="createdOn">Created By / On</th>
-            <th mat-sort-header="createdOn">Modified By / On</th>
+            <th mat-sort-header="createdAt">Created By / On</th>
+            <th mat-sort-header="modifiedAt">Modified By / On</th>
             <th class="no-sort" style="text-align: center;">Action</th>
           </tr>
         </thead>
@@ -181,7 +181,7 @@
       </table>
 
     </div>
-    <app-custom-pagination></app-custom-pagination>
+    <!-- <app-custom-pagination></app-custom-pagination> -->
   </div>
 </div>
 <!-- /product list -->

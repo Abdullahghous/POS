@@ -248,7 +248,7 @@ export class AdminDashboardComponent {
 
   onAlertAction(type: string) {
     if(type == 'profilePage') {
-      this.router.navigate([routes.profile]);
+      this.router.navigate([routes.generalSettings]);
     }
     else {
       this.showAlert = false;

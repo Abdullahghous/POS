@@ -84,6 +84,7 @@ caption {
   thead tr th {
     font-weight: $font-weight-semibold;
     font-size: 15px;
+    padding: 4px !important;
   }
   &.table-sm > :not(caption) > * > * {
     padding: 0.3rem;

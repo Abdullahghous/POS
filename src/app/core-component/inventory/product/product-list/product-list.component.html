@@ -6,21 +6,21 @@
     </div>
   </div>
   <ul class="table-top-head">
-    <li>
-      <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Pdf" matTooltipPosition="above"><img
-      src="assets/img/icons/pdf.svg" alt="img"></a>
+    <li (click)="generatePDF()">
+      <a data-bs-toggle="tooltip" data-bs-placement="top" title="Pdf" matTooltip="Pdf" matTooltipPosition="above"><img
+          src="assets/img/icons/pdf.svg" alt="img"></a>
     </li>
-    <li>
-      <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Excel" matTooltipPosition="above"><img
-      src="assets/img/icons/excel.svg" alt="img"></a>
+    <li (click)="exportToExcel()">
+      <a data-bs-toggle="tooltip" data-bs-placement="top" title="Excel" matTooltip="Excel"
+        matTooltipPosition="above"><img src="assets/img/icons/excel.svg" alt="img"></a>
     </li>
-    <li>
-      <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Print" matTooltipPosition="above"><i
-      class="feather icon-printer feather-rotate-ccw"></i></a>
-    </li>
-    <li>
-      <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Refresh" matTooltipPosition="above"><i
-      class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
+    <!-- <li>
+      <a data-bs-toggle="tooltip" data-bs-placement="top" title="Print" matTooltip="Print" matTooltipPosition="above"><i
+          class="feather icon-printer feather-rotate-ccw"></i></a>
+    </li> -->
+    <li (click)="getAllProducts()">
+      <a data-bs-toggle="tooltip" data-bs-placement="top" title="Refresh" matTooltip="Refresh"
+        matTooltipPosition="above"><i class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
     </li>
     <li>
       <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Collapse"
@@ -36,10 +36,10 @@
     <a [routerLink] = "routes.addProduct" class="btn btn-added"><i class="feather icon-plus-circle me-2"></i>Add New
   Product</a>
 </div>
-<div class="page-btn import">
+<!-- <div class="page-btn import">
   <a href="javascript:void(0);" class="btn btn-added color" data-bs-toggle="modal" data-bs-target="#view-notes"><i
   class="feather icon-download me-2"></i>Import Product</a>
-</div>
+</div> -->
 </div>
 
 <!-- /product list -->
@@ -58,14 +58,14 @@
             </div>
           </div>
         </div>
-        <div class="search-path">
+        <!-- <div class="search-path">
           <a class="btn btn-filter" id="filter_search" (click)="openFilter()"
             [ngClass]="{'setclose': filter === true}">
             <i class="feather icon-filter filter-icon"></i>
             <span><img src="assets/img/icons/closes.svg" alt="img"></span>
           </a>
-        </div>
-        <div class="form-sort">
+        </div> -->
+        <!-- <div class="form-sort">
           <i class="feather icon-sliders info-img"></i>
           <mat-select [(ngModel)]="selectedValue1" [ngModelOptions]="{standalone: true}" class="space-select select"
             placeholder="Sort by Date">
@@ -73,7 +73,7 @@
             <mat-option value="14 09 23">14 09 23</mat-option>
             <mat-option value="11 09 23">11 09 23</mat-option>
           </mat-select>
-        </div>
+        </div> -->
       </div>
       <!-- /Filter -->
       <div class="card mb-0" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
@@ -151,69 +151,57 @@
         </div>
       </div>
       <!-- /Filter -->
-      <div class="table-responsive product-list">
+      <div class="table-responsive product-list" id="table-container">
         <table class="table datanew">
           <thead>
             <tr matSort (matSortChange)="sortData($event)">
-              <th class="no-sort">
+              <!-- <th class="no-sort">
                 <label class="checkboxs"  (click)="selectAll(initChecked)">
                   <input type="checkbox" id="select-all" [(ngModel)]="initChecked" >
                   <span class="checkmarks"></span>
                 </label>
-              </th>
-              <th mat-sort-header="product">Product</th>
-              <th mat-sort-header="SKU">SKU</th>
+              </th> -->
+              <th mat-sort-header="name">Product</th>
+              <th mat-sort-header="SKU">Brand</th>
               <th mat-sort-header="category">Category</th>
-              <th mat-sort-header="brand">Brand</th>
-              <th mat-sort-header="price">Price</th>
-              <th mat-sort-header="unit">Unit</th>
-              <th mat-sort-header="qty">Qty</th>
-              <th mat-sort-header="createdBy">Created by</th>
+              <th mat-sort-header="brand">Sub Categroy</th>
+              <th mat-sort-header="price">Unit</th>
+              <th mat-sort-header="unit">Buying Price</th>
+              <th mat-sort-header="qty">Sale Price</th>
+              <th mat-sort-header="createdBy">Created by / On</th>
+              <th mat-sort-header="createdBy">Modified by / On</th>
               <th class="no-sort">Action</th>
             </tr>
           </thead>
           <tbody>
             @for (data of tableData; track data) {
               <tr>
+                <td>{{data?.name}} </td>
+                <td>{{data?.brand?.name}}</td>
+                <td>{{ data?.itemSubCategory?.itemCategory?.name }}</td>
+                <td>{{ data?.itemSubCategory?.name }}</td>
+                <td>{{ data?.unit?.name }}</td>
+                <td>{{ data?.purchaseRate }}</td>
+                <td>{{ data?.saleRate }}</td>
                 <td>
-                  <label class="checkboxs">
-                    <input type="checkbox" [(ngModel)]="data.isSelected">
-                    <span class="checkmarks"></span>
-                  </label>
+                  <div>{{ data.createdBy }}</div>
+                  <div style="font-size: 12px; margin-top: 8px;">{{data.formattedCreatedAt}}</div>
                 </td>
                 <td>
-                  <div class="productimgname">
-                    <a href="javascript:void(0);" class="product-img stock-img">
-                      <img [src]="data.img1" alt="product">
-                    </a>
-                    <a href="javascript:void(0);">{{data.product}} </a>
-                  </div>
-                </td>
-                <td>{{data.SKU}} </td>
-                <td>{{data.category}}</td>
-                <td>{{data.brand}}</td>
-                <td>{{data.price}}</td>
-                <td>{{data.unit}}</td>
-                <td>{{data.qty}}</td>
-                <td>
-                  <div class="userimgname">
-                    <a href="javascript:void(0);" class="product-img">
-                      <img [src]="data.img2" alt="product">
-                    </a>
-                    <a href="javascript:void(0);">{{data.createdBy}}</a>
-                  </div>
+                  <div>{{ data.modifiedBy }}</div>
+                  <div style="font-size: 12px; margin-top: 8px;">{{data.formattedModifiedAt}}</div>
                 </td>
                 <td class="action-table-data">
                   <div class="edit-delete-action">
-                    <a class="me-2 edit-icon  p-2" [routerLink] = "routes.productDetails">
+                    <!-- <a class="me-2 edit-icon  p-2" [routerLink] = "routes.productDetails">
                       <i class="feather icon-eye feather-eye"></i>
-                    </a>
-                    <a class="me-2 p-2" [routerLink] = "routes.editProduct">
+                    </a> -->
+                    <a class="me-2 p-2" (click)="onEdit(data)" [routerLink] = "routes.editProduct">
                       <i class="feather icon-edit feather-edit"></i>
                     </a>
-                    <a class="confirm-text p-2" href="javascript:void(0);" (click)=confirmColor()>
+                    <!-- <a class="confirm-text p-2" href="javascript:void(0);" (click)=confirmColor()>
                       <i class="feather icon-trash-2 feather-trash-2"></i>
-                    </a>
+                    </a> -->
                   </div>
                 </td>
               </tr>
@@ -221,7 +209,7 @@
           </tbody>
         </table>
       </div>
-      <app-custom-pagination></app-custom-pagination>
+      <!-- <app-custom-pagination></app-custom-pagination> -->
     </div>
   </div>
   <!-- /product list -->

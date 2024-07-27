@@ -1,0 +1,48 @@
+<div class="w-100 w-md-50 w-sm-100 container-lg rounded-lg shadow-lg h-100 overflow-auto p-0" style="max-width: 600px;">
+
+    <div class="modal-header border-0 custom-modal-header">
+        <div class="page-title">
+            <h4>{{ !data.isEdit ? 'Add Sub Category' : 'Update Sub Category' }}</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="p-3">
+
+        <form [formGroup]="formGroup">
+            <div class="mb-3">
+                <label class="form-label">Parent Category</label>
+                <mat-select formControlName="parentCategoryCode" class="select"
+                    placeholder="Choose Category">
+                    @for (data of parentCategoryList; track data) {
+                    <mat-option [value]="data.code">
+                        {{ data.name }}
+                    </mat-option>
+                    }
+                </mat-select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Sub Category Name</label>
+                <input formControlName="name" placeholder="Enter Sub Category Name"  type="text" class="form-control" />
+            </div>
+            <div class="mb-0">
+                <div class="modal-status d-flex justify-content-between align-items-center">
+                    <span class="status-label">Status</span>
+                    <label formControlName="active" nz-checkbox></label>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="modal-footer-btn custom-modal-footer mr-1">
+        <button type="button" class="btn btn-cancel me-2" (click)="closeModal()">Cancel</button>
+        @if (!data.isEdit) {
+        <button type="submit" class="btn btn-submit" (click)="addDetails()">Add Sub Category</button>
+        } @else {
+        <button type="submit" class="btn btn-submit" (click)="updateDetails()">Update Sub Category</button>
+        }
+    </div>
+</div>
