@@ -8,10 +8,21 @@ import {
   apiResultFormat,
   routes,
   SidebarService,
+  HttpService,
 } from 'src/app/core/core.index';
 import { productList } from 'src/app/shared/model/page.model';
 import { PaginationService, tablePageSize } from 'src/app/shared/shared.index';
 import Swal from 'sweetalert2';
+import * as XLSX from 'xlsx';
+import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
+import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service';
+import { MatDialog } from '@angular/material/dialog';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { AddEditBrandModalComponent } from '../../brand-list/add-edit-brand-modal/add-edit-brand-modal.component';
+
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -48,7 +59,7 @@ export class ProductListComponent {
 
   public routes = routes;
   // pagination variables
-  public tableData: Array<productList> = [];
+  public tableData: Array<any> = [];
   public pageSize = 10;
   public serialNumberArray: Array<number> = [];
   public totalData = 0;
@@ -58,43 +69,15 @@ export class ProductListComponent {
   //** / pagination variables
 
   constructor(
-    private data: DataService,
+    public dialog: MatDialog,
     private pagination: PaginationService,
     private router: Router,
     private sidebar: SidebarService,
+    private apiService: HttpService,
+    private snackBarService: SnackBarService,
+    private datePipe: DatePipe
   ) {
-    this.data.getDataTable().subscribe((apiRes: apiResultFormat) => {
-      this.totalData = apiRes.totalData;
-      this.pagination.tablePageSize.subscribe((res: tablePageSize) => {
-        if (this.router.url == this.routes.productList) {
-          this.getTableData({ skip: res.skip, limit: this.totalData  });
-          this.pageSize = res.pageSize;
-        }
-      });
-    });
-  }
-
-  private getTableData(pageOption: pageSelection): void {
-    this.data.getProductList().subscribe((apiRes: apiResultFormat) => {
-      this.tableData = [];
-      this.serialNumberArray = [];
-      this.totalData = apiRes.totalData;
-      apiRes.data.map((res: productList, index: number) => {
-        const serialNumber = index + 1;
-        if (index >= pageOption.skip && serialNumber <= pageOption.limit) {
-          res.sNo = serialNumber;
-          this.tableData.push(res);
-          this.serialNumberArray.push(serialNumber);
-        }
-      });
-      this.dataSource = new MatTableDataSource<productList>(this.tableData);
-      this.pagination.calculatePageSize.next({
-        totalData: this.totalData,
-        pageSize: this.pageSize,
-        tableData: this.tableData,
-        serialNumberArray: this.serialNumberArray,
-      });
-    });
+    this.getAllProducts();
   }
 
   public sortData(sort: Sort) {
@@ -167,6 +150,58 @@ export class ProductListComponent {
         f.isSelected = false;
       });
     }
+  }
+
+  getAllProducts() {
+    this.apiService.get('item/get-all-item').subscribe((res) => {
+      if (res.length) {
+        // res.forEach((d: any) => {
+        //   this.tableData.push({
+        //     ...d,
+        //     formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
+        //     formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
+        //   })
+        // })
+        this.tableData = res.map((d: any) => ({
+          ...d,
+          formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
+          formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
+        }));
+        this.dataSource = new MatTableDataSource<any>(this.tableData);
+      }
+    });
+  }
+
+  onEdit(data: any) {
+    localStorage.setItem('product::', JSON.stringify(data));
+  }
+
+  generatePDF() {
+    const data: any = document.getElementById('table-container');
+    html2canvas(data).then(canvas => {
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save(`${environment.PRODUCT_NAME}-products-list.pdf`);
+    });
+  }
+
+  exportToExcel(): void {
+    // Create a new workbook and a worksheet
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.tableData);
+
+    // Create a workbook with the worksheet
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    // Save the file
+    XLSX.writeFile(wb, `${environment.PRODUCT_NAME}-category-list.xlsx`);
   }
  
 }

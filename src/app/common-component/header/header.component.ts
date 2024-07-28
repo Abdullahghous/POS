@@ -101,4 +101,8 @@ export class HeaderComponent  {
       document.exitFullscreen();
     }
   }
+
+  doAction(action: string): void {
+    console.log(`Do alert's action: ${action}`);
+  }
 }

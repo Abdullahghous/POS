@@ -47,7 +47,7 @@ export class ProfileComponent {
         lastName: this.loginUserData?.Success?.lastName,
         email: this.loginUserData?.Success?.email,
         phone: '',
-        username: '',
+        username: this.loginUserData?.Success?.email,
         password: null
       })
     }
@@ -56,6 +56,14 @@ export class ProfileComponent {
   updateProfile() {
     this.apiService.post('user/add-or-update', { id: this.userId, profileCompleted: true, ...this.formGroup.value }).subscribe((res) => {
       if(res.status == '1') {
+        console.log('user/add-or-update res::', res);
+        const localStorageUserData = JSON.parse(sessionStorage.getItem('loginUser::')!);
+        localStorageUserData.firstName = this.formGroup.value.firstName;
+        localStorageUserData.lastName = this.formGroup.value.lastName;
+        localStorageUserData.phone = this.formGroup.value.phone;
+        localStorageUserData.username = this.formGroup.value.email;
+        localStorageUserData.profileCompleted = true;
+        localStorage.setItem('loginUser::', JSON.stringify(localStorageUserData));
         this.snackBarService.showSuccess('Profile updated successfully !');
       }
     })

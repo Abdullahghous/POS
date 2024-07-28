@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { SidebarService, routes } from 'src/app/core/core.index';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpService, SidebarService, routes } from 'src/app/core/core.index';
+import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service';
 interface data {
   value: string;
 }
@@ -9,91 +11,123 @@ interface data {
   styleUrl: './add-product.component.scss',
 })
 export class AddProductComponent {
+  formGroup = new FormGroup({
+    productName: new FormControl('', [Validators.required]),
+    brand: new FormControl(''),
+    category: new FormControl(),
+    subCategory: new FormControl(),
+    unit: new FormControl('', [Validators.required]),
+    buyingPrice: new FormControl('', [Validators.required]),
+    sellingPrice: new FormControl('', [Validators.required]),
+    quantityAlert: new FormControl(''),
+  });
+
   isProductVisible: boolean = true;
   isProductVisible1: boolean = true;
   public routes = routes;
-  public selectedValue1 = '';
-  public selectedValue2 = '';
-  public selectedValue3 = '';
-  public selectedValue4 = '';
-  public selectedValue5 = '';
-  public selectedValue6 = '';
-  public selectedValue7 = '';
-  public selectedValue8 = '';
-  public selectedValue9 = '';
-  public selectedValue10 = '';
-  public selectedValue11 = '';
 
-  selectedList1: data[] = [
-    { value: 'Choose' },
-    { value: 'Thomas' },
-    { value: 'Rasmussen' },
-    { value: 'Fred john' },
-  ];
-  selectedList2: data[] = [
-    { value: 'Choose' },
-    { value: 'Legendary' },
-    { value: 'Determined' },
-    { value: 'Sincere' },
-  ];
-  selectedList3: data[] = [
-    { value: 'Choose' },
-    { value: 'Lenovo' },
-    { value: 'Electronics' },
-  ];
-  selectedList4: data[] = [
-    { value: 'Choose' },
-    { value: 'Lenovo' },
-    { value: 'Electronics' },
-  ];
-  selectedList5: data[] = [
-    { value: 'Choose' },
-    { value: 'Fruits' },
-    { value: 'Computers' },
-    { value: 'Shoes' },
-  ];
-  selectedList6: data[] = [
-    { value: 'Choose' },
-    { value: 'Nike' },
-    { value: 'Bolt' },
-  ];
-  selectedList7: data[] = [
-    { value: 'Choose' },
-    { value: 'Kg' },
-    { value: 'Pc' },
-  ];
-  selectedList8: data[] = [{ value: 'Exclusive' }, { value: 'Sales Tax' }];
-  selectedList9: data[] = [
-    { value: 'Choose' },
-    { value: 'Percentage' },
-    { value: 'Cash' },
-  ];
-  selectedList10: data[] = [
-    { value: 'Choose' },
-    { value: 'Percentage' },
-    { value: 'Cash' },
-  ];
-  selectedList11: data[] = [
-    { value: 'Choose' },
-    { value: 'Code34' },
-    { value: 'Code35' },
-    { value: 'Code36' },
-  ];
-  selectedList12: data[] = [
-    { value: 'Choose' },
-    { value: 'Code34' },
-    { value: 'Code35' },
-    { value: 'Code36' },
-  ];
-  constructor(private sidebar: SidebarService) {}
+  allBrands: any[] = [];
+  allCategory: any[] = [];
+  allSubCategory: any[] = [];
+  allUnits: any[] = [];
+
   isCollapsed: boolean = false;
+
   toggleCollapse() {
     this.sidebar.toggleCollapse();
     this.isCollapsed = !this.isCollapsed;
   }
-  public image: boolean[] = [true, true, true];
 
-  public removeImg(index: number) {
-    this.image[index] = !this.image[index];
+  constructor(
+    private sidebar: SidebarService,
+    private apiService: HttpService,
+    private snackBarService: SnackBarService
+  ) {}
+
+  ngOnInit() {
+    this.getAllCategory();
+    this.initializeData();
+  }
+
+  async initializeData() {
+    await this.getAllBrand();
+    // await this.getAllCategory();
+    await this.getAllUnits();
+  }
+
+  async getAllBrand() {
+    const value = await this.apiService.getPromise<any>('brand/list');
+    if (value.length) {
+      this.allBrands = value;
+    }
+  }
+
+  // async getAllCategory() {
+  //   const value = await this.apiService.getPromise<any>('item/get-all-item-category');
+  //   if (value.length) {
+  //     this.allCategory = value;
+  //   };
+  // }
+
+  getAllCategory() {
+    this.apiService.get('item/get-all-item-category').subscribe((res) => {
+      if (res.length) {
+        this.allCategory = res;
+      }
+    });
+  }
+
+  getAllSubCategory(categoryCode: any) {
+    this.apiService.get('item/get-all-item-sub-category').subscribe((res) => {
+      if (res.length) {
+        this.allSubCategory = res.filter(
+          (sub: any) => sub.parentCode == categoryCode
+        );
+      }
+    });
+  }
+
+  async getAllUnits() {
+    const value = await this.apiService.getPromise<any>('unit/list');
+    if (value.length) {
+      this.allUnits = value;
+    }
+  }
+
+  onChangeCatgory(value: any) {
+    this.getAllSubCategory(value);
+  }
+
+  onSave() {
+    if (this.formGroup.valid) {
+
+      const obj: any = {
+        itemSubCategory: { 
+          id: this.formGroup.value?.subCategory
+        },
+        name: this.formGroup.value.productName,
+        pricingRule: 'QUANTITY',
+        reorderLevel: this.formGroup.value.quantityAlert,
+        saleRate: this.formGroup.value.sellingPrice,
+        purchaseRate: this.formGroup.value.buyingPrice,
+        unit: {
+          id: this.formGroup.value.unit,
+        },
+        brand: {
+          id: this.formGroup.value.brand,
+        },
+      };
+
+      this.apiService.post('item/add_or_update_item', obj).subscribe((res) => {
+        // console.log(res, 'sssssssssssssssss');
+        if(res) {
+          this.snackBarService.showSuccess('Product Added Successfully !');
+          this.formGroup.reset();
+        }
+      })
+
+    } else {
+      this.snackBarService.showError('Please fill all the required fields !');
+    }
   }
 }

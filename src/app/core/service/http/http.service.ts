@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs'
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { lastValueFrom, Observable, Subject } from 'rxjs'
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
@@ -53,5 +53,9 @@ export class HttpService {
         return this.http.post(`${this.baseUrl}${url}`, data, {
             headers: this.getHeaders()
         })
+    }
+
+    getPromise<T>(url: string, params?: HttpParams): Promise<T> {
+        return lastValueFrom(this.http.get<T>(`${this.baseUrl}${url}`, { params }));
     }
 }

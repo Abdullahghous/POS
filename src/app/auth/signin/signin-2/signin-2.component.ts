@@ -57,7 +57,7 @@ export class Signin2Component {
           if(res) {
             console.log('res::', res);
             sessionStorage.setItem('loginUser::', JSON.stringify(res));
-            this.snackBarService.showSuccess('Redirected toward OTP verification !');
+            this.snackBarService.showSuccess('Login Successfull !');
             this.navigationToVerification();
           }
         },
@@ -106,7 +106,7 @@ export class Signin2Component {
   }
 
   navigationToVerification() {
-    // this.router.navigate([routes.adminDashboard]);
-    this.router.navigate([routes.twoStepVerification]);
+    this.router.navigate([routes.adminDashboard]);
+    // this.router.navigate([routes.twoStepVerification]);
   }
 }

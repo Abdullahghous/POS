@@ -1,0 +1,31 @@
+<div class="w-100 w-md-50 w-sm-100 container-lg rounded-lg shadow-lg h-100 overflow-auto p-0" style="max-width: 600px;">
+
+    <div class="modal-header border-0 custom-modal-header">
+        <div class="page-title">
+            <h4>{{ !data.isEdit ? 'Add Brand' : 'Update Brand' }}</h4>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="p-3">
+
+        <form [formGroup]="formGroup">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input formControlName="name" placeholder="Enter Name" type="text" class="form-control" />
+            </div>
+        </form>
+
+    </div>
+
+    <div class="modal-footer-btn custom-modal-footer mr-1">
+        <button type="button" class="btn btn-cancel me-2" (click)="closeModal()">Cancel</button>
+        @if (!data.isEdit) {
+        <button type="submit" class="btn btn-submit" (click)="addDetails()">Add Brand</button>
+        } @else {
+        <button type="submit" class="btn btn-submit" (click)="updateDetails()">Update Brand</button>
+        }
+    </div>
+</div>

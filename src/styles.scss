@@ -2138,6 +2138,22 @@ body .mini-sidebar .sidebar .sidebar-menu>ul>li.submenu-open ul li a {
   color: white !important;
 }
 
+.custom-modal-footer {
+  background: #FAFBFE;
+  padding: 12px;
+}
+
+.msg {
+  background-color: #E6F7FF;
+  width: 100%;
+  padding: 14px;
+  font-size: 14px;
+  // text-align: center;
+  font-weight: bold;
+  margin-bottom: 2%;
+}
+
+
 @media (min-width: 576px) { /* sm */
   .custom-width-sm { width: 400px !important; }
 }

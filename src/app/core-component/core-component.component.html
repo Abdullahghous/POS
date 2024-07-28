@@ -46,6 +46,14 @@
             'settings-content':last === 'bank-settings-grid' || last === 'bank-settings-list' || last === 'email-settings' || base === 'settings' || last === 'storage-settings',
             'pos-design p-0':page === 'pos'
           }">
+
+          <!-- <div class="msg">
+           💡 Hello {{ firstname }} {{ lastname }}, Currently, the Product, Category, Sub-Category, Brand, and Unit menus are functioning. Feel free to let us know if you'd like any further adjustments!
+          </div> -->
+          <div class="mb-4">
+            <nz-alert nzShowIcon nzType="info" [nzMessage]="msgToDisplay" nzCloseText="Close Now"></nz-alert> 
+          </div>
+
         <router-outlet></router-outlet>
       </div>
     </div>
