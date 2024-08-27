@@ -73,7 +73,7 @@
       </div> -->
     </div>
     <!-- /Filter -->
-    <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
+    <!-- <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
       <div class="card-body pb-0">
         <div class="row">
           <div class="col-lg-3 col-sm-6 col-12">
@@ -120,58 +120,39 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- /Filter -->
     <div class="table-responsive" id="table-container">
-      <table class="table  datanew" (matSortChange)="sortData($event)" matSort matSortActive="Sno"
-        matSortDirection="asc" matSortDisableClear>
+      <table class="table  datanew">
         <thead>
           <tr>
-            <!-- <th class="no-sort">
-              <label class="checkboxs" (click)="selectAll(initChecked)">
-                <input type="checkbox" id="select-all" [(ngModel)]="initChecked" />
-                <span class="checkmarks"></span>
-              </label>
-            </th> -->
-            <th mat-sort-header="unit">Base Unit</th>
-            <th mat-sort-header="shortname">Secondary Name</th>
-            <th mat-sort-header="product">Conversion Value</th>
+            <th>Base Unit</th>
+            <th>Secondary Name</th>
+            <th>Conversion Value</th>
             <th></th>
-            <!-- <th class="no-sort">Action</th> -->
           </tr>
         </thead>
         <tbody>
           @for (data of tableData; track data; let i = $index) {
           <tr>
-            <!-- <td>
-              <label class="checkboxs" (click)="selectAll(initChecked)">
-                <input type="checkbox" [(ngModel)]="initChecked" />
-                <span class="checkmarks"></span>
-              </label>
-            </td> -->
+
             <td>{{data.baseName}} </td>
             <td>{{data.conversionName}}</td>
             <td>{{data.conversionValue}}</td>
             <td>1 {{ data.baseName }} = {{ data.conversionValue }} {{ data.conversionName }}</td>
-            <!-- <td><span class="badge badge-linesuccess">Active</span></td> -->
-            <!-- <td class="action-table-data">
-              <div class="edit-delete-action">
-                <a class="me-2 p-2" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#edit-units">
-                  <i class="feather icon-edit feather-edit"></i>
-                </a>
-                <a class="confirm-text p-2" href="javascript:void(0);" (click)=confirmColor()>
-                  <i class="feather icon-trash-2 feather-trash-2"></i>
-                </a>
-              </div>
-            </td> -->
           </tr>
+          }
+
+          @if(istableLoading) {
+            <!-- <div> -->
+              <span nz-icon nzType="loading" nzTheme="outline"></span>
+            <!-- </div> -->
           }
 
         </tbody>
       </table>
 
     </div>
-    <!-- <app-custom-pagination></app-custom-pagination> -->
   </div>
 </div>
 <!-- /product list -->

@@ -36,11 +36,10 @@ export class AddEditSubCategoryModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public apiService: HttpService,
     private snackBarService: SnackBarService
-  ) {
-    this.getAllParentCategory();
-  }
+  ) { }
 
   ngOnInit() {
+    this.parentCategoryList = this.data?.parentCategoryList;
     if (this.data?.isEdit) {
       console.log('Edit Data', this.data);
       this.formGroup.setValue({
@@ -113,9 +112,9 @@ export class AddEditSubCategoryModalComponent {
     }
   }
 
-  getAllParentCategory() {
-    this.apiService.get('item/get-all-item-category').subscribe((res) => {
-      this.parentCategoryList = res;
-    });
-  }
+  // getAllParentCategory() {
+  //   this.apiService.get('item/get-all-item-category').subscribe((res) => {
+  //     this.parentCategoryList = res;
+  //   });
+  // }
 }

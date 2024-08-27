@@ -12,7 +12,7 @@ import { VarriantAttributesComponent } from './varriant-attributes/varriant-attr
 import { QrcodeComponent } from './qrcode/qrcode.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     InventoryRoutingModule,
     sharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzIconModule
   ]
 })
 export class InventoryModule { }

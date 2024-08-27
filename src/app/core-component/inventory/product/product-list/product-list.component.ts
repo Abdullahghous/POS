@@ -67,6 +67,8 @@ export class ProductListComponent {
   dataSource!: MatTableDataSource<productList>;
   public searchDataValue = '';
   //** / pagination variables
+  allData = [];
+  istableLoading = true;
 
   constructor(
     public dialog: MatDialog,
@@ -76,100 +78,51 @@ export class ProductListComponent {
     private apiService: HttpService,
     private snackBarService: SnackBarService,
     private datePipe: DatePipe
-  ) {
-    this.getAllProducts();
+  ) {}
+
+  ngOnInit() {
+    this.initializeData();
   }
 
-  public sortData(sort: Sort) {
-    const data = this.tableData.slice();
-    if (!sort.active || sort.direction === '') {
-      this.tableData = data;
-    } else {
-      this.tableData = data.sort((a, b) => {
-        const aValue = (a as never)[sort.active];
-        const bValue = (b as never)[sort.active];
-        return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
-      });
-    }
+
+  async initializeData() {
+    await this.getAllProducts();
   }
 
   public searchData(value: string): void {
     this.dataSource.filter = value.trim().toLowerCase();
     this.tableData = this.dataSource.filteredData;
   }
+
   isCollapsed: boolean = false;
+
   toggleCollapse() {
     this.sidebar.toggleCollapse();
-    this.isCollapsed = !this.isCollapsed;
+    this.isCollapsed = !
+    this.isCollapsed;
   }
   public filter = false;
+
   openFilter() {
     this.filter = !this.filter;
   }
-  confirmColor() {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: ' btn btn-success',
-        cancelButton: 'me-2 btn btn-danger'
-      },
-      buttonsStyling: false
-    })
-    
-    swalWithBootstrapButtons.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      confirmButtonText: 'Yes, delete it!',
-      showCancelButton: true,
-      cancelButtonText: 'Cancel',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        swalWithBootstrapButtons.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
-      } else if (
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelled',
-          'Your imaginary file is safe :)',
-          'error'
-        )
-      }
-    })
-  }
-  selectAll(initChecked: boolean) {
-    if (!initChecked) {
-      this.tableData.forEach((f) => {
-        f.isSelected = true;
-      });
-    } else {
-      this.tableData.forEach((f) => {
-        f.isSelected = false;
-      });
-    }
-  }
 
-  getAllProducts() {
-    this.apiService.get('item/get-all-item').subscribe((res) => {
-      if (res.length) {
-        // res.forEach((d: any) => {
-        //   this.tableData.push({
-        //     ...d,
-        //     formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
-        //     formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
-        //   })
-        // })
-        this.tableData = res.map((d: any) => ({
-          ...d,
-          formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
-          formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
-        }));
-        this.dataSource = new MatTableDataSource<any>(this.tableData);
-      }
-    });
+  async getAllProducts() {
+
+    this.allData = [];
+    this.istableLoading = true;
+    const value = await this.apiService.get<any>('item/get-all-item');
+    if (value.length) {
+      this.allData = value.map((d: any) => ({
+        ...d,
+        formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
+        formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
+      }));;
+      this.dataSource = new MatTableDataSource<any>(this.tableData);
+      this.istableLoading = false;
+    } else {
+      this.istableLoading = false;
+    }
   }
 
   onEdit(data: any) {

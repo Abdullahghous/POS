@@ -20,17 +20,14 @@ import * as XLSX from 'xlsx';
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service';
-import { AddEditBrandModalComponent } from './add-edit-brand-modal/add-edit-brand-modal.component';
 
-interface data {
-  value: string;
-}
 @Component({
-  selector: 'app-brand-list',
-  templateUrl: './brand-list.component.html',
-  styleUrl: './brand-list.component.scss',
+  selector: 'app-account-management-level-list',
+  templateUrl: './account-management-level-list.component.html',
+  styleUrl: './account-management-level-list.component.scss'
 })
-export class BrandListComponent {
+export class AccountManagementLevelListComponent {
+
   initChecked = false;
   public routes = routes;
   // pagination variables
@@ -96,42 +93,6 @@ export class BrandListComponent {
     }
   }
 
-
-  addModal(): void {
-    const dialogRef = this.dialog.open(AddEditBrandModalComponent, {
-      disableClose: true,
-      width: "500px",
-      data: { 
-        isEdit: false
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('RESULT ::', result);
-      if(result === 'created') {
-        this.getAllBrands();
-      }
-    });
-  }
-
-  editModal(data: any): void {
-    const dialogRef = this.dialog.open(AddEditBrandModalComponent, {
-      disableClose: true,
-      width: "500px",
-      data: { 
-        isEdit: true,
-        values: data
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('RESULT ::', result);
-      if(result === 'updated') {
-        this.getAllBrands();
-      }
-    });
-  }
-
   generatePDF() {
     const data: any = document.getElementById('table-container');
     html2canvas(data).then(canvas => {
@@ -159,4 +120,9 @@ export class BrandListComponent {
     // Save the file
     XLSX.writeFile(wb, `${environment.PRODUCT_NAME}-category-list.xlsx`);
   }
+
+  navigateToAddAccount() {
+    this.router.navigate([routes.accountManagementLevelsAddEdit])
+  }
+
 }

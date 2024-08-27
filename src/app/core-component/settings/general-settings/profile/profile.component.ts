@@ -4,6 +4,7 @@ import { SidebarService, routes } from 'src/app/core/core.index';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpService } from 'src/app/core/core.index';
 import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service';
+import { AuthServiceService } from 'src/app/core/service/http/auth-service.service';
 
 @Component({
   selector: 'app-profile',
@@ -32,38 +33,39 @@ export class ProfileComponent {
     private sidebar: SidebarService, 
     private router: Router,
     private apiService: HttpService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private authService: AuthServiceService
   ) {}
 
   ngOnInit() {
-    this.loginUserData = JSON.parse(sessionStorage.getItem('loginUser::')!);
-    if(this.loginUserData?.Success) {
-      console.log('LOGIN USER DATA::', this.loginUserData);
-      this.firstname = this.loginUserData?.Success?.firstName;
-      this.lastname = this.loginUserData?.Success?.lastName;
-      this.userId = this.loginUserData?.Success?.id;
+    const logInUserInfo = this.authService.getLoggedInUserInfo()?.Success;
+    if(logInUserInfo) {
+      this.firstname = logInUserInfo?.firstName;
+      this.lastname = logInUserInfo?.lastName;
+      this.userId = logInUserInfo?.id;
       this.formGroup.setValue({
-        firstName: this.loginUserData?.Success?.firstName,
-        lastName: this.loginUserData?.Success?.lastName,
-        email: this.loginUserData?.Success?.email,
+        firstName: logInUserInfo?.firstName,
+        lastName: logInUserInfo?.lastName,
+        email: logInUserInfo?.email,
         phone: '',
-        username: this.loginUserData?.Success?.email,
+        username: logInUserInfo?.email,
         password: null
       })
     }
   }
 
   updateProfile() {
-    this.apiService.post('user/add-or-update', { id: this.userId, profileCompleted: true, ...this.formGroup.value }).subscribe((res) => {
+    this.apiService.post('user/add-or-update', { id: this.userId, profileCompleted: true, ...this.formGroup.value }).subscribe((res: any) => {
       if(res.status == '1') {
         console.log('user/add-or-update res::', res);
-        const localStorageUserData = JSON.parse(sessionStorage.getItem('loginUser::')!);
+        const localStorageUserData = this.authService.getLoggedInUserInfo()?.Success;
         localStorageUserData.firstName = this.formGroup.value.firstName;
         localStorageUserData.lastName = this.formGroup.value.lastName;
         localStorageUserData.phone = this.formGroup.value.phone;
         localStorageUserData.username = this.formGroup.value.email;
         localStorageUserData.profileCompleted = true;
-        localStorage.setItem('loginUser::', JSON.stringify(localStorageUserData));
+        // localStorage.setItem('loginUser::', JSON.stringify(localStorageUserData))
+        this.authService.setLoggedInUserInfo(localStorageUserData);;
         this.snackBarService.showSuccess('Profile updated successfully !');
       }
     })

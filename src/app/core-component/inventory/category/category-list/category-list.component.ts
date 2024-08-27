@@ -55,6 +55,9 @@ export class CategoryListComponent {
   public searchDataValue = '';
   //** / pagination variables
 
+  allData = [];
+  istableLoading = false;
+
   constructor(
     public dialog: MatDialog,
     private pagination: PaginationService,
@@ -63,56 +66,14 @@ export class CategoryListComponent {
     private apiService: HttpService,
     private snackBarService: SnackBarService,
     private datePipe: DatePipe
-  ) {
-    // this.data.getDataTable().subscribe((apiRes: apiResultFormat) => {
-    //   this.totalData = apiRes.totalData;
-    //   this.pagination.tablePageSize.subscribe((res: tablePageSize) => {
-    //     if (this.router.url == this.routes.categoryList) {
-    //       this.getTableData({ skip: res.skip, limit: this.totalData  });
-    //       this.pageSize = res.pageSize;
-    //     }
-    //   });
-    // });
-  }
+  ) {}
 
   ngOnInit() {
-    this.getAllCategory();
+    this.initializeData();
   }
 
-  // private getTableData(pageOption: pageSelection): void {
-  //   this.data.getCategoryList().subscribe((apiRes: apiResultFormat) => {
-      // this.tableData = [];
-      // this.serialNumberArray = [];
-      // this.totalData = apiRes.totalData;
-      // apiRes.data.map((res: categoryList, index: number) => {
-      //   const serialNumber = index + 1;
-      //   if (index >= pageOption.skip && serialNumber <= pageOption.limit) {
-      //     res.sNo = serialNumber;
-      //     this.tableData.push(res);
-      //     this.serialNumberArray.push(serialNumber);
-      //   }
-      // });
-      // this.dataSource = new MatTableDataSource<categoryList>(this.tableData);
-      // this.pagination.calculatePageSize.next({
-      //   totalData: this.totalData,
-      //   pageSize: this.pageSize,
-      //   tableData: this.tableData,
-      //   serialNumberArray: this.serialNumberArray,
-      // });
-  //   });
-  // }
-
-  public sortData(sort: Sort) {
-    const data = this.tableData.slice();
-    if (!sort.active || sort.direction === '') {
-      this.tableData = data;
-    } else {
-      this.tableData = data.sort((a, b) => {
-        const aValue = (a as never)[sort.active];
-        const bValue = (b as never)[sort.active];
-        return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
-      });
-    }
+  async initializeData() {
+    await this.getAllCategory();
   }
 
   public searchData(value: string): void {
@@ -120,75 +81,18 @@ export class CategoryListComponent {
     this.tableData = this.dataSource.filteredData;
   }
 
-  selectedList1: data[] = [
-    { value: 'Sort by Date' },
-    { value: 'Newest' },
-    { value: 'Oldest' },
-  ];
+
   public filter = false;
+
   openFilter() {
     this.filter = !this.filter;
   }
+
   isCollapsed: boolean = false;
+
   toggleCollapse() {
     this.sidebar.toggleCollapse();
     this.isCollapsed = !this.isCollapsed;
-  }
-  confirmColor() {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: ' btn btn-success',
-        cancelButton: 'me-2 btn btn-danger',
-      },
-      buttonsStyling: false,
-    });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        confirmButtonText: 'Yes, delete it!',
-        showCancelButton: true,
-        cancelButtonText: 'Cancel',
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          );
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-          );
-        }
-      });
-  }
-  selectedList2: data[] = [
-    { value: 'Choose Category' },
-    { value: 'Laptop' },
-    { value: 'Electronics' },
-  ];
-  selectedList3: data[] = [
-    { value: 'Choose Status' },
-    { value: 'Active' },
-    { value: 'Inactive' },
-  ];
-
-  selectAll(initChecked: boolean) {
-    if (!initChecked) {
-      this.tableData.forEach((f) => {
-        f.isSelected = true;
-      });
-    } else {
-      this.tableData.forEach((f) => {
-        f.isSelected = false;
-      });
-    }
   }
 
   createCategory() {
@@ -207,38 +111,22 @@ export class CategoryListComponent {
     }
   }
 
-  getAllCategory() {
-    this.apiService.get('item/get-all-item-category').subscribe((res) => {
-      console.log('All Category::', res);
-      if (res.length) {
-        res.forEach((d: any) => {
-          this.tableData.push({
-            ...d,
-            formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
-            formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
-          })
-        })
+  async getAllCategory() {
 
-        this.tableData = [];
-        this.serialNumberArray = [];
-        this.totalData = res.length;
-        res.map((d: any, index: number) => {
-            // res.sNo = serialNumber;
-            this.tableData.push({
-              ...d,
-              formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
-              formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
-            });
-        });
-        this.dataSource = new MatTableDataSource<categoryList>(this.tableData);
-        this.pagination.calculatePageSize.next({
-          totalData: this.totalData,
-          pageSize: this.pageSize,
-          tableData: this.tableData,
-          serialNumberArray: this.serialNumberArray,
-        });
-      }
-    });
+    this.allData = [];
+    this.istableLoading = true;
+    const value = await this.apiService.get<any>('item/get-all-item-category');
+    if (value.length) {
+      this.allData = value.map((d: any) => ({
+        ...d,
+        formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
+        formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
+      }))
+      this.dataSource = new MatTableDataSource<any>(this.tableData);
+      this.istableLoading = false;
+    } else {
+      this.istableLoading = false;
+    }
   }
 
 

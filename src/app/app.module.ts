@@ -13,7 +13,8 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { MyHttpInterceptorService } from './core/service/http/my-http-interceptor.service';
 
 registerLocaleData(en);
 
@@ -28,7 +29,9 @@ registerLocaleData(en);
     HttpService,
     { provide: NZ_I18N, useValue: en_US },
     provideAnimationsAsync(),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([MyHttpInterceptorService]),
+    ),
   ],
 })
 export class AppModule {}

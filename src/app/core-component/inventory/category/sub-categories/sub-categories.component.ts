@@ -41,6 +41,10 @@ export class SubCategoriesComponent {
   public searchDataValue = '';
   //** / pagination variables
 
+  allData = [];
+  istableLoading = false;
+  parentCategoryList = [];
+
   constructor(
     public dialog: MatDialog,
     private pagination: PaginationService,
@@ -49,21 +53,15 @@ export class SubCategoriesComponent {
     private apiService: HttpService,
     private snackBarService: SnackBarService,
     private datePipe: DatePipe
-  ) {
-    this.getAllSubCategory();
+  ) {}
+  
+  ngOnInit() {
+    this.initializeData();
   }
-
-  public sortData(sort: Sort) {
-    const data = this.tableData.slice();
-    if (!sort.active || sort.direction === '') {
-      this.tableData = data;
-    } else {
-      this.tableData = data.sort((a, b) => {
-        const aValue = (a as never)[sort.active];
-        const bValue = (b as never)[sort.active];
-        return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
-      });
-    }
+  
+  async initializeData() {
+    await this.getParentCategroyList();
+    await this.getAllSubCategory();
   }
 
   public searchData(value: string): void {
@@ -71,140 +69,47 @@ export class SubCategoriesComponent {
     this.tableData = this.dataSource.filteredData;
   }
 
-  confirmColor() {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: ' btn btn-success',
-        cancelButton: 'me-2 btn btn-danger',
-      },
-      buttonsStyling: false,
-    });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        confirmButtonText: 'Yes, delete it!',
-        showCancelButton: true,
-        cancelButtonText: 'Cancel',
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          );
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-          );
-        }
-      });
-  }
-
-  public selectedValue1 = '';
-  public selectedValue2 = '';
-  public selectedValue3 = '';
-  public selectedValue4 = '';
-  public selectedValue5 = '';
-  public selectedValue6 = '';
-
-  selectedList1: data[] = [
-    { value: 'Sort by Date' },
-    { value: 'Newest' },
-    { value: 'Oldest' },
-  ];
-  selectedList2: data[] = [
-    { value: 'Choose Category' },
-    { value: 'Laptop' },
-    { value: 'Electronics' },
-    { value: 'Shoe' },
-  ];
-  selectedList3: data[] = [
-    { value: 'Choose SubCategory' },
-    { value: 'Fruits' },
-    
-  ];
-  selectedList4: data[] = [
-    { value: 'Category Code' },
-    { value: 'CT001' },
-    { value: 'CT002' },
-    
-  ];
-  selectedList5: data[] = [
-    { value: 'Choose Category' },
-    { value: 'Category' },
-  ];
-  selectedList6: data[] = [
-    { value: 'Computers' },
-    { value: 'Fruits' },
-  ];
-
   public filter = false;
+  
   openFilter() {
     this.filter = !this.filter;
   }
+
   isCollapsed: boolean = false;
+
   toggleCollapse() {
     this.sidebar.toggleCollapse();
     this.isCollapsed = !this.isCollapsed;
   }
-  selectAll(initChecked: boolean) {
-    if (!initChecked) {
-      this.tableData.forEach((f) => {
-        f.isSelected = true;
-      });
+
+
+  async getAllSubCategory() {
+
+    this.allData = [];
+    this.istableLoading = true;
+    const value = await this.apiService.get<any>('item/get-all-item-sub-category');
+    if (value.length) {
+      this.allData = value.map((d: any) => ({
+        ...d,
+        formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
+        formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
+      }))
+      this.dataSource = new MatTableDataSource<any>(this.tableData);
+      this.istableLoading = false;
     } else {
-      this.tableData.forEach((f) => {
-        f.isSelected = false;
-      });
+      this.istableLoading = false;
     }
   }
 
-  getAllSubCategory() {
-    this.apiService.get('item/get-all-item-sub-category').subscribe((res) => {
-      console.log('All Sub Category::', res);
-      if (res.length) {
-        res.forEach((d: any) => {
-          this.tableData.push({
-            ...d,
-            formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
-            formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
-          })
-        })
 
-        this.tableData = [];
-        this.serialNumberArray = [];
-        this.totalData = res.length;
-        res.map((d: any, index: number) => {
-            // res.sNo = serialNumber;
-            this.tableData.push({
-              ...d,
-              formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
-              formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
-            });
-        });
-        this.dataSource = new MatTableDataSource<any>(this.tableData);
-        this.pagination.calculatePageSize.next({
-          totalData: this.totalData,
-          pageSize: this.pageSize,
-          tableData: this.tableData,
-          serialNumberArray: this.serialNumberArray,
-        });
-      }
-    });
-  }
 
   addModal(): void {
     const dialogRef = this.dialog.open(AddEditSubCategoryModalComponent, {
       disableClose: true,
       width: "500px",
       data: { 
-        isEdit: false
+        isEdit: false,
+        parentCategoryList: this.parentCategoryList
       }
     });
 
@@ -222,7 +127,8 @@ export class SubCategoriesComponent {
       width: "500px",
       data: { 
         isEdit: true,
-        values: data
+        values: data,
+        parentCategoryList: this.parentCategoryList
       }
     });
 
@@ -260,6 +166,14 @@ export class SubCategoriesComponent {
 
     // Save the file
     XLSX.writeFile(wb, `${environment.PRODUCT_NAME}-category-list.xlsx`);
+  }
+
+  async getParentCategroyList() {
+
+    const value = await this.apiService.get<any>('item/get-all-item-category');
+    if (value.length) {
+      this.parentCategoryList = value;
+    }
   }
 
 }
