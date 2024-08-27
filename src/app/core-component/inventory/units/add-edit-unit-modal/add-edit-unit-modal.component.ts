@@ -47,7 +47,6 @@ export class AddEditUnitModalComponent {
     public apiService: HttpService,
     private snackBarService: SnackBarService
   ) {
-    this.getAllParentCategory();
     this.formGroup.valueChanges.subscribe((v) => {
       this.baseUnit = v.baseUnit;
       this.secondaryUnit = v.secondaryUnit;
@@ -119,11 +118,5 @@ export class AddEditUnitModalComponent {
     } else {
       this.snackBarService.showError('Please fill the fields !');
     }
-  }
-
-  getAllParentCategory() {
-    this.apiService.get('item/get-all-item-category').subscribe((res) => {
-      this.parentCategoryList = res;
-    });
   }
 }

@@ -63,7 +63,7 @@ export class EditProductComponent {
   }
 
   async getAllBrand() {
-    const value = await this.apiService.getPromise<any>('brand/list');
+    const value = await this.apiService.get<any>('brand/list');
     if (value.length) {
       this.allBrands = value;
     }
@@ -77,7 +77,7 @@ export class EditProductComponent {
   // }
 
   getAllCategory() {
-    this.apiService.get('item/get-all-item-category').subscribe((res) => {
+    this.apiService.getObservable('item/get-all-item-category').subscribe((res: any) => {
       if (res.length) {
         this.allCategory = res;
       }
@@ -85,7 +85,7 @@ export class EditProductComponent {
   }
 
   getAllSubCategory(categoryCode: any) {
-    this.apiService.get('item/get-all-item-sub-category').subscribe((res) => {
+    this.apiService.getObservable('item/get-all-item-sub-category').subscribe((res: any) => {
       if (res.length) {
         this.allSubCategory = res.filter(
           (sub: any) => sub.parentCode == categoryCode
@@ -95,7 +95,7 @@ export class EditProductComponent {
   }
 
   async getAllUnits() {
-    const value = await this.apiService.getPromise<any>('unit/list');
+    const value = await this.apiService.get<any>('unit/list');
     if (value.length) {
       this.allUnits = value;
     }
@@ -106,11 +106,9 @@ export class EditProductComponent {
   }
 
   getProductData() {
-    // item/get-item-by-id/1
-    console.log('this.f', this.productData);
     this.apiService
-      .get(`item/get-item-by-id/${this.productData.id}`)
-      .subscribe((res) => {
+      .getObservable(`item/get-item-by-id/${this.productData.id}`)
+      .subscribe((res: any) => {
         if (res) {
           this.getAllSubCategory(res.itemSubCategory.itemCategory.id);
           setTimeout(() => {

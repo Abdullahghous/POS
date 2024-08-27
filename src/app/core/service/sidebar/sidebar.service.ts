@@ -263,6 +263,27 @@ export class SidebarService {
         // },
       ],
     },
+    {
+      tittle: 'Management',
+      showAsTab: true,
+      separateRoute: false,
+      menu: [
+        {
+          menuValue: 'Account List',
+          icon: 'box',
+          route: routes.accountManagementLevels,
+          hasSubRoute: false,
+          showSubRoute: false,
+        },
+        {
+          menuValue: 'Account Add/Update',
+          icon: 'box',
+          route: routes.accountManagementLevelsAddEdit,
+          hasSubRoute: false,
+          showSubRoute: false,
+        },
+      ],
+    },
     // {
     //   tittle: 'Stock',
     //   showAsTab: true,

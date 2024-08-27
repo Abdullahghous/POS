@@ -7,55 +7,80 @@ import { environment } from '../../../../environments/environment';
 @Injectable()
 export class HttpService {
 
-    private baseUrl: string;
-    private authToken: string | undefined | null;
+    // currentLanguage = new BehaviorSubject<string>('en');
+    // currentLanguage$ = this.currentLanguage.asObservable();
+  
+    // langData: any = null;
+    // currentLang: string =  localStorage.getItem('lang') || 'en';
 
-    constructor(private http: HttpClient, private router: Router) {
-        this.baseUrl = `${environment.PROTOCOL}://${environment.baseURL}/`;
+    private apiUrl = 'http://45.8.148.212:8020/';
+  
+    constructor(private http: HttpClient) {
+    //   this.getLang();
     }
+  
+    // setLang(lang: string) {
+    //   localStorage.setItem('lang', lang);
+    //   this.currentLang = lang;
+    //   this.currentLanguage.next(this.currentLang);
+    //   this.getLang();
+    // }
 
-    private getHeaders(): HttpHeaders {
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    // async getLang() {
+    //   try {
+    //   this.langData =  await (await this.getLocalFileLang()).json();
+    //   } catch (error) {
+    //   console.error('getLocalFileLang :: ', error);
+    // }
+    // }
 
-        this.authToken = sessionStorage.getItem("access_token");
-
-        if (this.authToken) {
-            // HttpHeaders are immutable, set() method returns new instance of HttpHeaders
-            headers = headers.set('Authorization', `Bearer ${this.authToken}`);
-        }
-
-        return headers;
+    // getLocalFileLang() {
+    //   const lang = localStorage.getItem('lang');
+    //   let URL = '';
+    //   if (lang) URL = `assets/lang/${lang}.json`;
+    //   else URL = `assets/lang/en.json`;
+    //   return fetch(URL);
+    // }
+  
+    get<T>(endpoint: string, params?: HttpParams): Promise<T> {
+      return lastValueFrom(this.http.get<T>(`${this.apiUrl}${endpoint}`, { params }));
     }
-
-    public onError(error: any): Promise<any> {
-        if (error.status === 401 || error.status === 403) {
-            this.router.navigate(['/login']);
-        }
-        return Promise.reject(error);
+  
+    getObservable<T>(endpoint: string, params?: HttpParams): Observable<T> {
+      return this.http.get<T>(`${this.apiUrl}${endpoint}`, { params });
     }
-
-    /**
-     * Executes GET request for specified url.
-     * @param url Url to execute.
-     */
-    get(url: string): Observable<any> {
-        return this.http.get(`${this.baseUrl}${url}`, {
-            headers: this.getHeaders()
-        })
+  
+    post<T>(endpoint: string, body: any, options?: object): Observable<T> {
+      return this.http.post<T>(`${this.apiUrl}${endpoint}`, body, options);
     }
-
-    /**
-     * Executes POST request with specified url and data
-     * @param url Request Url.
-     * @param data Post data.
-     */
-    post(url: string, data: any): Observable<any> {
-        return this.http.post(`${this.baseUrl}${url}`, data, {
-            headers: this.getHeaders()
-        })
+    
+    patch<T>(endpoint: string, body: any, options?: object): Observable<T> {
+      return this.http.patch<T>(`${this.apiUrl}${endpoint}`, body, options);
     }
-
-    getPromise<T>(url: string, params?: HttpParams): Promise<T> {
-        return lastValueFrom(this.http.get<T>(`${this.baseUrl}${url}`, { params }));
+  
+    put<T>(endpoint: string, body: any, options?: object): Observable<T> {
+      return this.http.put<T>(`${this.apiUrl}${endpoint}`, body, options);
     }
+  
+    delete<T>(endpoint: string, options?: object): Observable<T> {
+      return this.http.delete<T>(`${this.apiUrl}${endpoint}`, options);
+    }
+  
+    // downloadFile(filePath: string): Observable<Blob> {
+    //   const url = `${this.fileApiUrl}${filePath}`;
+    //   return this.http.get(url, { responseType: 'blob' });
+    // }
+  
+    // saveFile(blob: Blob, fileName: string): void {
+    //   const link = document.createElement('a');
+    //   link.href = window.URL.createObjectURL(blob);
+    //   link.download = fileName;
+    //   link.click();
+    //   window.URL.revokeObjectURL(link.href);
+    // }
+  
+    renewToken(): Observable<any> {
+      return this.http.post<any>(`${this.apiUrl}accessToken`, { refreshToken: localStorage.getItem('refreshToken') });
+    }
+  
 }

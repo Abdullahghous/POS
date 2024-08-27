@@ -18,6 +18,7 @@ import { apiResultFormat } from 'src/app/core/core.index';
 import { routes } from 'src/app/core/helpers/routes';
 import { CommonService } from 'src/app/core/service/common/common.service';
 import { DataService } from 'src/app/core/service/data/data.service';
+import { AuthServiceService } from 'src/app/core/service/http/auth-service.service';
 import { SettingsService } from 'src/app/core/service/settings/settings.service';
 import { expiredproduct } from 'src/app/shared/model/page.model';
 import {
@@ -72,7 +73,8 @@ export class AdminDashboardComponent {
     private setting: SettingsService,
     private data: DataService,
     private pagination: PaginationService,
-    private router: Router
+    private router: Router,
+    private authService: AuthServiceService
   ) {
     this.chartOptions = {
       series: [
@@ -154,9 +156,9 @@ export class AdminDashboardComponent {
       });
     });
 
-    this.loginUserData = JSON.parse(sessionStorage.getItem('loginUser::')!);
+    this.loginUserData = this.authService.getLoggedInUserInfo()?.Success;
     
-    if(!this.loginUserData?.Success?.profileCompleted && this.loginUserData !== null) {
+    if(!this.loginUserData?.profileCompleted) {
       this.alertType = "warning";
       this.alertHeading = 'Account Profile';
       this.alertMessage = `Please complete your profile !`;

@@ -56,7 +56,7 @@ export class AddProductComponent {
   }
 
   async getAllBrand() {
-    const value = await this.apiService.getPromise<any>('brand/list');
+    const value = await this.apiService.get<any>('brand/list');
     if (value.length) {
       this.allBrands = value;
     }
@@ -70,7 +70,7 @@ export class AddProductComponent {
   // }
 
   getAllCategory() {
-    this.apiService.get('item/get-all-item-category').subscribe((res) => {
+    this.apiService.getObservable('item/get-all-item-category').subscribe((res: any) => {
       if (res.length) {
         this.allCategory = res;
       }
@@ -78,7 +78,7 @@ export class AddProductComponent {
   }
 
   getAllSubCategory(categoryCode: any) {
-    this.apiService.get('item/get-all-item-sub-category').subscribe((res) => {
+    this.apiService.getObservable('item/get-all-item-sub-category').subscribe((res: any) => {
       if (res.length) {
         this.allSubCategory = res.filter(
           (sub: any) => sub.parentCode == categoryCode
@@ -88,7 +88,7 @@ export class AddProductComponent {
   }
 
   async getAllUnits() {
-    const value = await this.apiService.getPromise<any>('unit/list');
+    const value = await this.apiService.get<any>('unit/list');
     if (value.length) {
       this.allUnits = value;
     }

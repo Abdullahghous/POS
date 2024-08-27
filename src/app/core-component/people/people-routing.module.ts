@@ -5,6 +5,8 @@ import { CustomersComponent } from './customers/customers.component';
 import { StoreListComponent } from './store-list/store-list.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
+import { AccountManagementLevelListComponent } from './account-management-level-list/account-management-level-list.component';
+import { AccountManagementAddEditComponent } from './account-management-add-edit/account-management-add-edit.component';
 
 const routes: Routes = [
   {
@@ -14,6 +16,8 @@ const routes: Routes = [
     { path: 'store-list', component: StoreListComponent},
     { path: 'warehouse', component:WarehouseComponent},
     { path: 'suppliers-list', component:SuppliersComponent},
+    { path: 'account/management-list', component:AccountManagementLevelListComponent},
+    { path: 'account/management', component:AccountManagementAddEditComponent},
   ],
     
   },

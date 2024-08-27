@@ -1,0 +1,27 @@
+.level-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.level-box > div {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.level-add-edit-box {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+}
+
+.btn-level {
+    border-radius: 3px;
+    padding: 0.625rem 1.25rem;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.85rem;
+    transition: all 0.5s;
+    font-weight: 600;
+    border: 0px solid;
+}

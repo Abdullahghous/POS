@@ -12,6 +12,8 @@ import {
 } from '../core/core.index';
 import { url } from '../shared/model/sidebar.model';
 import { BehaviorSubject } from 'rxjs';
+import { AuthServiceService } from '../core/service/http/auth-service.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-core-component.',
@@ -43,7 +45,8 @@ export class CoreComponentComponent implements OnInit {
     private settings: SettingsService,
     private sidebar: SidebarService,
     private common: CommonService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private authService: AuthServiceService
   ) {
     this.sidebar.toggleMobileSideBar.subscribe((res: string) => {
       if (res == 'true' || res == 'true') {
@@ -125,11 +128,11 @@ export class CoreComponentComponent implements OnInit {
       this.isCollapsed = collapse;
     });
 
-    this.loginUserData = JSON.parse(sessionStorage.getItem('loginUser::')!);
-    if(this.loginUserData?.Success) {
-      this.firstname = this.loginUserData?.Success?.firstName;
-      this.lastname = this.loginUserData?.Success?.lastName;
-      this.msgToDisplay = `Hello ${ this.firstname } ${ this.lastname }, All menus on the sidebar are now functional. Once the other features are completed, you will also be able to access those menus on the sidebar. In case of any issues or bugs, please report them to us.`
+    const logInUserInfo = this.authService.getLoggedInUserInfo()?.Success;
+    if(logInUserInfo) {
+      this.firstname = logInUserInfo?.firstName;
+      this.lastname = logInUserInfo?.lastName;
+      this.msgToDisplay = `Hello ${ this.firstname ? this.firstname : environment.PRODUCT_NAME } ${ this.lastname ? this.lastname : '' }, All menus on the sidebar are now functional. Once the other features are completed, you will also be able to access those menus on the sidebar. In case of any issues or bugs, please report them to us.`
     }
   }
 

@@ -27,9 +27,7 @@ export class AddEditBrandModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public apiService: HttpService,
     private snackBarService: SnackBarService
-  ) {
-    this.getAllParentCategory();
-  }
+  ) {}
 
   ngOnInit() {
     if (this.data?.isEdit) {
@@ -92,10 +90,11 @@ export class AddEditBrandModalComponent {
     }
   }
 
-  getAllParentCategory() {
-    this.apiService.get('item/get-all-item-category').subscribe((res) => {
-      this.parentCategoryList = res;
-    });
-  }
+  // getAllParentCategory() {
+  //   // this.apiService.get('item/get-all-item-category').subscribe((res) => {
+  //   //   this.parentCategoryList = res;
+  //   // });
+  //   const value = this.apiService.get('item/get-all-item-category');
+  // }
 
 }

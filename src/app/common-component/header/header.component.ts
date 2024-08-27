@@ -4,6 +4,7 @@ import { CommonService, SidebarService } from 'src/app/core/core.index';
 import { WebstorgeService } from 'src/app/shared/webstorge.service';
 import { routes } from 'src/app/core/helpers/routes';
 import { environment } from 'src/environments/environment';
+import { AuthServiceService } from 'src/app/core/service/http/auth-service.service';
 
 @Component({
   selector: 'app-header',
@@ -36,6 +37,7 @@ export class HeaderComponent  {
     private sidebar: SidebarService,
     private webStorage: WebstorgeService,
     private router: Router, 
+    private authService: AuthServiceService
   ) {
     this.activePath = this.Router.url.split('/')[2];
     this.Router.events.subscribe((data: RouterEvent) => {
@@ -63,10 +65,10 @@ export class HeaderComponent  {
 
 
   ngOnInit() {
-    this.loginUserData = JSON.parse(sessionStorage.getItem('loginUser::')!);
-    if(this.loginUserData?.Success) {
-      this.firstname = this.loginUserData?.Success?.firstName;
-      this.lastname = this.loginUserData?.Success?.lastName;
+    const logInUserInfo = this.authService.getLoggedInUserInfo()?.Success;
+    if(logInUserInfo) {
+      this.firstname = logInUserInfo?.firstName ? logInUserInfo?.firstName : '';
+      this.lastname = logInUserInfo?.lastName ? logInUserInfo?.lastName : '';
     }
   }
 

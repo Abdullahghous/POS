@@ -51,7 +51,7 @@ export class ProfileComponent {
   }
 
   updateProfile() {
-    this.apiService.post('user/add-or-update', { id: this.userId, profileCompleted: true, ...this.formGroup.value }).subscribe((res) => {
+    this.apiService.post('user/add-or-update', { id: this.userId, profileCompleted: true, ...this.formGroup.value }).subscribe((res: any) => {
       if(res.status == '1') {
         this.snackBarService.showSuccess('Profile updated successfully !');
       }

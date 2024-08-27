@@ -72,7 +72,7 @@
       </div> -->
     </div>
     <!-- /Filter -->
-    <div class="card" id="filter_inputs" [ngClass]="{ 'd-block': filter, 'd-none': !filter }">
+    <!-- <div class="card" id="filter_inputs" [ngClass]="{ 'd-block': filter, 'd-none': !filter }">
       <div class="card-body pb-0">
         <div class="row">
           <div class="col-lg-3 col-sm-6 col-12">
@@ -119,51 +119,25 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- /Filter -->
     <div class="table-responsive" id="table-container">
-      <table class="table datanew" (matSortChange)="sortData($event)" matSort matSortActive="Sno" matSortDirection="asc"
-        matSortDisableClear>
+      <table class="table datanew">
         <thead>
           <tr>
-            <!-- <th class="no-sort">
-              <label class="checkboxs" (click)="selectAll(initChecked)">
-                <input type="checkbox" id="select-all" [(ngModel)]="initChecked" />
-                <span class="checkmarks"></span>
-              </label>
-            </th> -->
-            <th mat-sort-header="brand">Name</th>
-            <!-- <th mat-sort-header="logo">Logo</th>
-            <th mat-sort-header="createdOn">Created On</th>
-            <th mat-sort-header="status">Status</th> -->
-            <th class="no-sort" style="text-align: center;">Action</th>
+            <th>Name</th>
+            <th style="text-align: center;">Action</th>
           </tr>
         </thead>
         <tbody>
           @for (data of tableData; track data) {
           <tr>
-            <!-- <td>
-              <label class="checkboxs" (click)="selectAll(initChecked)">
-                <input type="checkbox" [(ngModel)]="initChecked" />
-                <span class="checkmarks"></span>
-              </label>
-            </td> -->
             <td>{{ data.name }}</td>
-            <!-- <td>
-              <span class="d-flex"><img [src]="data.img" alt="" /></span>
-            </td>
-            <td>{{ data.createdOn }}</td>
-            <td>
-              <span class="badge badge-linesuccess">{{ data.status }}</span>
-            </td> -->
             <td class="action-table-data">
               <div class="edit-delete-action">
                 <a class="me-2 p-2" href="javascript:void(0);" (click)="editModal(data)">
                   <i class="feather icon-edit feather-edit"></i>
                 </a>
-                <!-- <a class="confirm-text p-2" href="javascript:void(0);" (click)="confirmColor()">
-                  <i class="feather icon-trash-2 feather-trash-2"></i>
-                </a> -->
               </div>
             </td>
           </tr>
@@ -171,7 +145,6 @@
         </tbody>
       </table>
     </div>
-    <!-- <app-custom-pagination></app-custom-pagination> -->
   </div>
 </div>
 <!-- /product list -->

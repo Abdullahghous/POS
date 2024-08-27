@@ -5,6 +5,7 @@ import { routes } from 'src/app/core/helpers/routes';
 import { HttpService } from 'src/app/core/service/http/http.service';
 import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service';
 import { environment } from '../../../../environments/environment'
+import { AuthServiceService } from 'src/app/core/service/http/auth-service.service';
 
 @Component({
   selector: 'app-signin-2',
@@ -23,7 +24,8 @@ export class Signin2Component {
   constructor(
     private router: Router,
     private apiService: HttpService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private authService: AuthServiceService
   ) {}
 
   public password: boolean[] = [false];
@@ -45,8 +47,9 @@ export class Signin2Component {
     this.apiService
       .post('user/getToken', loginObj)
       .pipe(
-        switchMap((loginRes) => {
-          sessionStorage.setItem('access_token', loginRes.access_token);
+        switchMap((loginRes: any) => {
+          this.authService.setAccessToken(loginRes.access_token);
+          this.authService.setRefreshToken(loginRes.access_token);
           return this.apiService.get(
             `user/get-by-email?email=${loginRes.companyName}`
           );
@@ -55,14 +58,13 @@ export class Signin2Component {
       .subscribe({
         next: (res) => {
           if(res) {
-            console.log('res::', res);
-            sessionStorage.setItem('loginUser::', JSON.stringify(res));
+            this.authService.setLoggedInUserInfo(res);
+            this.authService.userIsAuthenticated();
             this.snackBarService.showSuccess('Login Successfull !');
             this.navigationToVerification();
           }
         },
         error: (err) => {
-          console.log('err', err)
           this.snackBarService.showError(err.error.message);
           this.loginBtnText = 'Login';
           this.loginBtnDisable = false;
@@ -97,13 +99,13 @@ export class Signin2Component {
     // });
   }
 
-  getLoginUserData(email: string) {
-    this.apiService.get(`user/get-by-email?email=${email}`).subscribe((res) => {
-      if (res) {
-        sessionStorage.setItem('uInfo', JSON.stringify(res));
-      }
-    });
-  }
+  // getLoginUserData(email: string) {
+  //   this.apiService.get(`user/get-by-email?email=${email}`).subscribe((res) => {
+  //     if (res) {
+  //       sessionStorage.setItem('uInfo', JSON.stringify(res));
+  //     }
+  //   });
+  // }
 
   navigationToVerification() {
     this.router.navigate([routes.adminDashboard]);

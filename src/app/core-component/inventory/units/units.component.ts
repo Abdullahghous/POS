@@ -55,6 +55,9 @@ export class UnitsComponent {
   public searchDataValue = '';
   //** / pagination variables
 
+  allData = [];
+  istableLoading = true;
+
   constructor(
     public dialog: MatDialog,
     private pagination: PaginationService,
@@ -63,127 +66,45 @@ export class UnitsComponent {
     private apiService: HttpService,
     private snackBarService: SnackBarService,
     private datePipe: DatePipe
-  ) {
-    this.getAllUnits();
+  ) {}
+
+  ngOnInit() {
+    this.initializeData();
   }
 
-  public sortData(sort: Sort) {
-    const data = this.tableData.slice();
-    if (!sort.active || sort.direction === '') {
-      this.tableData = data;
-    } else {
-      this.tableData = data.sort((a, b) => {
-        const aValue = (a as never)[sort.active];
-        const bValue = (b as never)[sort.active];
-        return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
-      });
-    }
+  async initializeData() {
+    await this.getAllUnits();
   }
+
 
   public searchData(value: string): void {
     this.dataSource.filter = value.trim().toLowerCase();
     this.tableData = this.dataSource.filteredData;
   }
 
-  selectedList3: data[] = [
-    { value: 'Sort by Datee' },
-    { value: 'Newest' },
-    { value: 'Oldest' },
-  ];
-  selectedList1: data[] = [
-    { value: 'Choose Status' },
-    { value: 'Active' },
-    { value: 'Inactive' },
-  ];
-  selectedList2: data[] = [
-    { value: 'Choose Unit' },
-    { value: 'Piece' },
-    { value: 'Kilogram' },
-    { value: 'Gram' },
-  ];
   public filter = false;
+
   openFilter() {
     this.filter = !this.filter;
   }
+
   isCollapsed: boolean = false;
+
   toggleCollapse() {
     this.sidebar.toggleCollapse();
     this.isCollapsed = !this.isCollapsed;
   }
-  confirmColor() {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: ' btn btn-success',
-        cancelButton: 'me-2 btn btn-danger',
-      },
-      buttonsStyling: false,
-    });
 
-    swalWithBootstrapButtons
-      .fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        confirmButtonText: 'Yes, delete it!',
-        showCancelButton: true,
-        cancelButtonText: 'Cancel',
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          );
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-          );
-        }
-      });
-  }
-  selectAll(initChecked: boolean) {
-    if (!initChecked) {
-      this.tableData.forEach((f) => {
-        f.isSelected = true;
-      });
+  async getAllUnits() {
+    this.allData = [];
+    const value = await this.apiService.get<any>('unit/list');
+    if (value.length) {
+      this.allData = value;
+      this.dataSource = new MatTableDataSource<any>(this.tableData);
+      this.istableLoading = false;
     } else {
-      this.tableData.forEach((f) => {
-        f.isSelected = false;
-      });
+      this.istableLoading = false;
     }
-  }
-
-  getAllUnits() {
-    this.apiService.get('unit/list').subscribe((res) => {
-      console.log('All Units::', res);
-      if (res.length) {
-        res.forEach((d: any) => {
-          this.tableData.push({
-            ...d,
-          })
-        })
-
-        this.tableData = [];
-        this.serialNumberArray = [];
-        this.totalData = res.length;
-        res.map((d: any, index: number) => {
-            // res.sNo = serialNumber;
-            this.tableData.push({
-              ...d,
-            });
-        });
-        this.dataSource = new MatTableDataSource<any>(this.tableData);
-        this.pagination.calculatePageSize.next({
-          totalData: this.totalData,
-          pageSize: this.pageSize,
-          tableData: this.tableData,
-          serialNumberArray: this.serialNumberArray,
-        });
-      }
-    });
   }
 
   addModal(): void {

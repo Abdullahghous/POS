@@ -878,6 +878,15 @@ export class routes {
   public static get comingSoon(): string {
     return this.pages + '/coming-soon';
   }
+
+  public static get accountManagementLevels(): string {
+    return this.people + '/account/management-list';
+  }
+
+  public static get accountManagementLevelsAddEdit(): string {
+    return this.people + '/account/management';
+  }
+
   public static get wareHouse(): string {
     return this.people + '/warehouse';
   }
