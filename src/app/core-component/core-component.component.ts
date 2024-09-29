@@ -11,9 +11,11 @@ import {
   SidebarService,
 } from '../core/core.index';
 import { url } from '../shared/model/sidebar.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthServiceService } from '../core/service/http/auth-service.service';
 import { environment } from 'src/environments/environment';
+import { SpinnerService } from '../core/core.index';
+import { LoadingService } from '../core/service/allApi/loadingService';
 
 @Component({
   selector: 'app-core-component.',
@@ -39,14 +41,20 @@ export class CoreComponentComponent implements OnInit {
   base = '';
   page = '';
   last = '';
-
+  isLoading = false;
+  private loadingSubscription: Subscription;
+  ngAfterViewInit() {
+    this.isLoading =false;
+    // Ensure Angular runs a new change detection cycle
+  }
   constructor(
     private Router: Router,
     private settings: SettingsService,
     private sidebar: SidebarService,
     private common: CommonService,
     private renderer: Renderer2,
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    private loadingService:LoadingService,
   ) {
     this.sidebar.toggleMobileSideBar.subscribe((res: string) => {
       if (res == 'true' || res == 'true') {
@@ -94,6 +102,11 @@ export class CoreComponentComponent implements OnInit {
       }
     });
     this.getRoutes(this.Router);
+    this.loadingSubscription = this.loadingService.isLoading$.subscribe(isLoading => {
+      //debugger;
+      // Update isLoading variable
+      this.isLoading =  isLoading;
+    });
   }
 
   private getRoutes(data: url): void {
@@ -124,6 +137,7 @@ export class CoreComponentComponent implements OnInit {
   isCollapsed: boolean = false;
 
   ngOnInit(): void {
+    this.isLoading =false;
     this.sidebar.collapse$.subscribe((collapse: boolean) => {
       this.isCollapsed = collapse;
     });

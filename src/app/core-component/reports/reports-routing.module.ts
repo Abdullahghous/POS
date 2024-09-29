@@ -11,6 +11,9 @@ import { SalesReportComponent } from './sales-report/sales-report.component';
 import { SupplierReportComponent } from './supplier-report/supplier-report.component';
 import { TaxReportComponent } from './tax-report/tax-report.component';
 import { InventoryReportComponent } from './inventory-report/inventory-report.component';
+import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
+import { PrePurchaseReportComponent } from './pre-purchase-report/pre-purchase-report.component';
+import { PrePurchaseFormComponent } from './pre-purchase-form/pre-purchase-form.component';
 
 const routes: Routes = [{ path: '', component: ReportsComponent,
 children: [
@@ -47,12 +50,24 @@ children: [
     component: SalesReportComponent
   },
   {
+    path: 'general-ledger',
+    component: GeneralLedgerComponent
+  },
+  {
     path: 'supplier-report',
     component: SupplierReportComponent
   },
   {
     path: 'tax-report',
     component: TaxReportComponent
+  },
+  {
+    path: 'pre-purchase-form',
+    component: PrePurchaseFormComponent
+  },
+  {
+    path: 'pre-purchase-report',
+    component: PrePurchaseReportComponent
   }
 ]
 }];

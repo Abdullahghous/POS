@@ -70,6 +70,15 @@ export class routes {
   public static get sales(): string {
     return this.core + '/sales';
   }
+  public static get labour(): string {
+    return this.core + '/labour';
+  }
+  public static get kanta(): string {
+    return this.core + '/kanta';
+  }
+  public static get voucher(): string {
+    return this.core + '/voucher';
+  }
   public static get purchase(): string {
     return this.core + '/purchase';
   }
@@ -177,6 +186,18 @@ export class routes {
   public static get salesList(): string {
     return this.sales + '/sales-list';
   }
+  public static get salesOrder(): string {
+    return this.sales + '/sales-order';
+  }
+  public static get directSales(): string {
+    return this.sales + '/direct-sales';
+  }
+  public static get salesOrderForm(): string {
+    return this.sales + '/sales-order-form';
+  }
+  public static get custmorStatusReport(): string {
+    return this.sales + '/custmor-status-report';
+  }
   public static get pos(): string {
     return this.sales + '/pos';
   }
@@ -198,12 +219,53 @@ export class routes {
   public static get salesDetails(): string {
     return this.sales + '/sales-details';
   }
-
+  public static get saleVoucher(): string {
+    return this.sales + '/sale-voucher';
+  }
+  public static get completeWeightEntry(): string{
+    return this.kanta + '/complete-weight-entry';
+  }
+  public static get voucherList(): string {
+    return this.voucher + '/voucher-list';
+}
+public static get voucherDetailList(): string {
+  return this.voucher + '/voucher-detail-list';
+}
+public static get productTravelRecord(): string {
+  return this.labour + '/product-travel-record';
+}
+public static get productLocationEntry(): string {
+  return this.labour + '/product-location-entry';
+}
+public static get activity(): string {
+  return this.labour + '/activity';
+}
+public static get thekedarEntry(): string {
+  return this.labour + '/thekedar-entry';
+}
+public static get monshiEntry(): string {
+  return this.labour + '/monshi-entry';
+}
+public static get profitLoss(): string {
+  return this.voucher + '/profit-loss';
+}
+public static get newVoucher(): string {
+  return this.voucher + '/new-voucher';
+}
   public static get purchaseList(): string {
     return this.purchase + '/purchase-list';
   }
+  public static get purchaseVoucher(): string {
+    return this.purchase + '/purchase-voucher';
+  }
   public static get addPurchase(): string {
     return this.purchase + '/add-purchase';
+  }
+  public static get purchaseOrderForm(): string {
+    return this.purchase + '/purchase-order-form';
+  }
+  public static get purchaseOrderlist(): string {
+    return this.purchase + '/purchase-order-list';
   }
   public static get importPurchase(): string {
     return this.purchase + '/import-purchase';
@@ -950,8 +1012,17 @@ export class routes {
   public static get supplierReport(): string {
     return this.reports + '/supplier-report';
   }
+  public static get generalLedger(): string {
+    return this.reports + '/general-ledger';
+  }
   public static get taxReport(): string {
     return this.reports + '/tax-report';
+  }
+  public static get prePurchaseReport(): string {
+    return this.reports + '/pre-purchase-report';
+  }
+  public static get prePurchaseForm(): string {
+    return this.reports + '/pre-purchase-form';
   }
   public static get success(): string {
     return this.base + '/success';

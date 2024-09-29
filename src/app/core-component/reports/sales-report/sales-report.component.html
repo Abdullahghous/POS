@@ -74,86 +74,192 @@
       <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
         <div class="card-body pb-0">
           <div class="row">
-            <div class="col-lg-3">
-              <div class="input-blocks">
-                <i class="feather icon-box info-img"></i>
-                <mat-select [(ngModel)]="selectedValue2" [ngModelOptions]="{standalone: true}"
-                  class="space-select select" placeholder="Choose Product">
-                  <mat-option value="Choose Product">Choose Product</mat-option>
-                  <mat-option value="Bold V3.2">Bold V3.2</mat-option>
-                  <mat-option value="Nike Jordan">Nike Jordan</mat-option>
-                </mat-select>
+            <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  COMPANY</label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                  <nz-select [(ngModel)]=obj.companyId class="w-100" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Select Company">
+                   <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+                 </nz-select>
+               </div>
               </div>
-            </div>
-            <div class="col-lg-3">
-              <div class="input-blocks">
-                <i class="feather icon-zap info-img"></i>
-                <mat-select [(ngModel)]="selectedValue3" [ngModelOptions]="{standalone: true}"
-                  class="space-select select" placeholder="Choose Category">
-                  <mat-option value="Choose Category">Choose Category</mat-option>
-                  <mat-option value="Accessories">Accessories</mat-option>
-                  <mat-option value="Shoe">Shoe</mat-option>
-                </mat-select>
+             </div>
+             <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  BRANCH </label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                  <nz-select [(ngModel)]=obj.branchId [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Select Branch">
+                   <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                 </nz-select>
+               </div>
               </div>
-            </div>
-            <div class="col-lg-6 col-sm-6 col-12">
-              <div class="input-blocks">
-                <a class="btn btn-filters ms-auto"> <i class="feather icon-search feather-search"></i>
-              Search </a>
-            </div>
-          </div>
+             </div>
+             
+             <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  SUPPLIER ACCOUNT </label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                  <nz-select [(ngModel)]=obj.itemDefId [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Select Unit">
+                   <nz-option *ngFor="let p of allParties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
+                 </nz-select>
+               </div>
+              </div>
+             </div>
+             <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  Financial Year</label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                  <nz-select [(ngModel)]=obj.financialYearId [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Select Unit">
+                   <nz-option *ngFor="let f of financialYear" [nzLabel]="f.name" [nzValue]="f.id"></nz-option>
+                 </nz-select>
+               </div>
+              </div>
+             </div>
+             <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  FROM DATE </label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                  <input nz-input type="date" [(ngModel)]=obj.fromDate [ngModelOptions]="{standalone: true}">
+               </div>
+              </div>
+             </div>
+             <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  TO DATE </label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                  <input nz-input type="date" [(ngModel)]=obj.toDate [ngModelOptions]="{standalone: true}">
+               </div>
+              </div>
+             </div>
+             <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  ITEM CATEGORY</label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                    <nz-select [(ngModel)]=obj.itemCategoryId [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type" [(ngModel)]="paymentType">
+                      <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+                      <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+                      <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+                    </nz-select>
+               </div>
+              </div>
+             </div>
+            <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  ITEMS</label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                  <nz-select [(ngModel)]=obj.itemDefId [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Select Item">
+                   <nz-option *ngFor="let item of itemDefs" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+                 </nz-select>
+               </div>
+              </div>
+             </div>
+            
+            <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  ACCOUNT </label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                  <nz-select [(ngModel)]=obj.accountCode [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Select Account">
+                   <nz-option ></nz-option>
+                 </nz-select>
+               </div>
+              </div>
+             </div>
+             <div class="col-lg-6 col-sm-8 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  SET LIMIT(1_30) </label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                  <input nz-input type="number">
+               </div>
+              </div>
+             </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  SEARCH BY DATE</label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                    <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select SEARCH BY DATE" [(ngModel)]="obj.serchByDate">
+                      <nz-option nzLabel="Creat Date" nzValue="Creat Date"></nz-option>
+                      <nz-option nzLabel="UPDATED Date" nzValue="UPDATED DATE"></nz-option>
+                      <nz-option nzLabel="Voucher Date" nzValue="VOUCHER DATE"></nz-option>
+                    </nz-select>
+               </div>
+              </div>
+             </div>
+             <div class="col-lg-3 col-sm-6 col-12">
+              <div  class="input-blocks add-product" style="display: flex;">
+                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+                  PAYMENT TYPE</label>
+                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                    <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type" [(ngModel)]="obj.voucherType">
+                      <nz-option nzLabel="All" nzValue="All"></nz-option>
+                      <nz-option nzLabel="STV" nzValue="STV"></nz-option>
+                      <nz-option nzLabel="SJV" nzValue="SJV"></nz-option>
+                    </nz-select>
+               </div>
+              </div>
+             </div>
+             
+             <div class="col-lg-6 text-end">
+               <div class="input-blocks">
+                <a class="btn btn-filters ms-auto" (click)="onSave()" > <i class="feather icon-search  feather-search"></i>
+                Search </a>
+               </div>
+             </div>
         </div>
       </div>
     </div>
     <!-- /Filter -->
     <div class="table-responsive">
-      <table matSort (matSortChange)="sortData($event)" class="table  datanew">
+      <nz-table>
         <thead>
           <tr>
-            <th class="no-sort">
-                <label class="checkboxs"  (click)="selectAll(initChecked)">
-                  <input type="checkbox" id="select-all" [(ngModel)]="initChecked" >
-                  <span class="checkmarks"></span>
-                </label>
-              </th>
-            <th mat-sort-header="productName">Product Name</th>
-            <th mat-sort-header="SKU">SKU</th>
-            <th mat-sort-header="category">Category</th>
-            <th mat-sort-header="brand">Brand</th>
-            <th mat-sort-header="soldQty">Sold Qty</th>
-            <th mat-sort-header="soldAmount">Sold Amount</th>
-            <th mat-sort-header="instockQty">Instock Qty</th>
+            <th>#</th>
+            <th >Date</th>
+            <th>Mill Khata</th>
+            <th>Invoice</th>
+            <th>Book Number</th>
+            <th>Party Name</th>
+            <th>Truck No</th>
+            <th>PRODUCT,BAGS,NET(W),RATE,MT,BT,FR,SILAI,BAR,OTHER,BROKERY</th>
+            <th>AMOUNT</th>
+            <th>REMARKS</th>
           </tr>
         </thead>
         <tbody>
-          @for (data of tableData; track data) {
-            <tr>
-              <td>
-                  <label class="checkboxs">
-                    <input type="checkbox" [(ngModel)]="data.isSelected">
-                    <span class="checkmarks"></span>
-                  </label>
-                </td>
-              <td class="productimgname">
-                <div class="view-product me-2">
-                  <a href="javascript:void(0);">
-                    <img [src]="data.img" alt="product">
-                  </a>
-                </div>
-                <a href="javascript:void(0);">{{data.productName}}</a>
-              </td>
-              <td>{{data.SKU}}</td>
-              <td>{{data.category}}</td>
-              <td>{{data.brand}}</td>
-              <td>{{data.soldQty}}</td>
-              <td>{{data.soldAmount}}</td>
-              <td>{{data.instockQty}}</td>
-            </tr>
-          }
+         <tr *ngFor="let data of saleReport ; let i=index">
+          <td>{{ i + 1 }}</td>
+            <td>{{ data.createdDate }}</td>
+            <td>{{ data.millKhata }}</td>
+            <td>{{ data.voucherCode }}</td>
+            <td>{{ data.bookNumber }}</td>
+            <td>{{ data.partyName }}</td>
+            <td>{{ data.truck }}</td>
+            <td>{{ data.itemName }},{{ data.bags }},{{ data.safiKg }},{{ data.rate }},{{ data.millTax }},{{ data.bankTax }},
+              {{ data.freight }},{{ data.silai }},{{ data.baradana }},{{ data.other }},
+              {{ data.brokeryAmount }}</td>
+            <td>{{data.amount}}</td>
+            <td>{{data.remarks}}</td>
+         </tr>
         </tbody>
-      </table>
+      </nz-table>
     </div>
-    <app-custom-pagination></app-custom-pagination>
+    <!-- <app-custom-pagination></app-custom-pagination> -->
   </div>
 </div>
 <!-- /product list -->

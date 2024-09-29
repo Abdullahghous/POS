@@ -1,0 +1,198 @@
+
+<div class="page-header">
+    <p>new-voucher works!</p>
+   <!-- <div class="page-btn">
+      <a href="javascript:void(0);" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-sales-new"><i
+       class="feather icon-plus-circle me-2"></i>Add New Sales Order</a>
+     </div> -->
+     <div class="page-btn">
+      <a [routerLink] = "routes.voucherList" class="btn btn-secondary"><i class="feather icon-arrow-left me-2"></i>Back To
+    Voucher List</a>
+  </div>
+ </div>
+
+ <div class="card table-list-card">
+  <div class="card-body">
+      <div class="table-top">
+        <div class="col-lg-4 col-sm-6 col-12">
+          <div  class="input-blocks add-product" style="display: flex;">
+            <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+              FROM DATE </label>
+              <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                <input type="date" class="form-control" 
+                [(ngModel)]="purchaseOrder.fromDate" [ngModelOptions]="{standalone: true}"  />
+           </div>
+          </div>
+         </div>
+         <div class="col-lg-4 col-sm-6 col-12">
+          <div  class="input-blocks add-product" style="display: flex;">
+            <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
+              TO DATE </label>
+              <div nz-col nzSm="17" nzMd="17" nzLg="17">
+                <input type="date" class="form-control" 
+                [(ngModel)]="purchaseOrder.toDate" [ngModelOptions]="{standalone: true}"/>
+           </div>
+          </div>
+         </div>
+         <div class="col-lg-3 col-sm-6 col-12 text-end">
+          <div class="input-blocks">
+           <a class="btn btn-filters ms-auto" (click)="search()" > <i class="feather icon-search  feather-search"></i>
+           Search </a>
+          </div>
+        </div>
+        <div class="search-path" style="margin-top: -25px;">
+          <div class="d-flex align-items-center">
+            <a class="btn btn-filter" id="filter_search" (click)="openFilter()"
+             [ngClass]="{'setclose': filter === true}">
+             <i class="feather icon-filter filter-icon"></i>
+             <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+            </a>
+           </div>
+        </div>
+      </div>  
+      <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
+          <div class="card-body pb-0">
+              <div class="row">
+                  <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="input-blocks add-product">
+                        <label>Company <span class="required-span-color">*</span></label>
+                        <nz-select
+                          [(ngModel)]="purchaseOrder.company.id"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="w-100"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Unit"
+                        >
+                          <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+                        </nz-select>
+                      </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-sm-6 col-12">
+                      <div>
+                        <label>Branche <span class="required-span-color">*</span></label>
+                        <nz-select
+                          [(ngModel)]="purchaseOrder.branch.id"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="w-100"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Company">
+                          <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                        </nz-select>
+                      </div>
+                    </div>
+                    <!-- <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="input-blocks add-product">
+                        <label>Financial Year <span class="required-span-color">*</span></label>
+                        <nz-select
+                          [(ngModel)]="purchaseOrder.financialYear.id"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="w-100"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Unit">
+                          <nz-option *ngFor="let f of financialYear" [nzLabel]="f.name" [nzValue]="f.id"></nz-option>
+                        </nz-select>
+                      </div>
+                    </div> -->
+                    <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="input-blocks add-product">
+                        <label>MILL KHATA <span class="required-span-color">*</span></label>
+                       <nz-select
+                       [(ngModel)]="purchaseOrder.millKhata"
+                       [ngModelOptions]="{ standalone: true }"
+                        class="w-100"
+                        nzShowSearch
+                        nzAllowClear
+                        nzPlaceHolder="Select Unit">
+                        <nz-option *ngFor="let i of mills" [nzLabel]="i.accountName " [nzValue]="i.id"></nz-option>
+                      </nz-select>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="input-blocks add-product">
+                        <label>CUSTOMER ACCOUNT <span class="required-span-color">*</span></label>
+                       <nz-select
+                        [(ngModel)]="purchaseOrder.branch.id"
+                        [ngModelOptions]="{ standalone: true }"
+                        class="w-100"
+                        nzShowSearch
+                        nzAllowClear
+                        nzPlaceHolder="Select Custmor">
+                        <nz-option *ngFor="let i of parties" [nzLabel]="i.accountName" [nzValue]="i.code"></nz-option>
+                      </nz-select>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="input-blocks add-product">
+                        <label>Item <span class="required-span-color">*</span></label>
+                        <nz-select
+                        [(ngModel)]="purchaseOrder.branch.id"
+                        [ngModelOptions]="{ standalone: true }"
+                        class="w-100"
+                        nzShowSearch
+                        nzAllowClear
+                        nzPlaceHolder="Select Unit">
+                        <nz-option *ngFor="let i of itemDefs" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+                      </nz-select>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-3 col-6">
+                      <div class="input-blocks add-product">
+                        <label>SEARCH BY DATE<span class="required-span-color">*</span></label>
+                        <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type"
+                         [(ngModel)]="purchaseOrder.voucherStatus">
+                          <nz-option nzLabel="CREATE DATE" nzValue="BOTH"></nz-option>
+                          <nz-option nzLabel="VOUCHER DATE"></nz-option>
+                          <nz-option nzLabel="UPDATE DATE"></nz-option>
+                        </nz-select>
+                      </div>
+                    </div>
+          </div>
+      </div>
+    </div>
+      <div class="table-responsive">
+          <nz-table>
+              <thead>
+                  <tr>
+                    <th>#</th>
+                <th>PO # <br> STATUS</th>
+                <th>PO DATE</th>
+                <th>SUPPLIER NAME <br>MILL KHATA</th>
+                <th>PRODUCT <br> PAYMENT TYPE</th>
+                <th>RATE</th>
+                <th>B(KG)</th>
+                <th>R(KG)</th>
+                <th>P(KG)</th>
+                <th>TRUCK</th>
+                <th>CREAT BY <br>MODI BY</th>
+                <th>Vouchers</th>
+                <th>VIEW</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of items ; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{ item?.purchaseOrderCode }} <br> {{ item?.status }}</td>
+                    <td>{{ item?.paymentDate }}</td>
+                    <td>{{ item?.account?.accountName }} <br> {{ item?.millKhata }}</td>
+                    <td>{{ item?.itemDef?.name }} <br> {{ item?.paymentType }}</td>
+                    <td>{{ item?.rate }}</td>
+                    <td>{{ item?.kg }}</td>
+                    <td>{{ item?.receivedWeight }}</td>
+                    <td>{{ item?.pendingWeight }}</td>
+                    <td>{{ item?.vehical }}</td>
+                    <td>{{item?.createdBy}} <br>{{item?.modifiedBy}}</td>
+                    <td>{{item?.vouchers.name}}</td>
+                    <!-- <td>
+                        <button (click)="viewDetails(item?.purchaseOrderId)">View</button>
+                    </td> -->
+                </tr>
+                </tbody>
+          </nz-table>
+      </div>
+
+  </div> 
+</div>  

@@ -49,9 +49,9 @@ export class Signin2Component {
       .pipe(
         switchMap((loginRes: any) => {
           this.authService.setAccessToken(loginRes.access_token);
-          this.authService.setRefreshToken(loginRes.access_token);
+          // this.authService.setRefreshToken(loginRes.access_token);
           return this.apiService.get(
-            `user/get-by-email?email=${loginRes.companyName}`
+            `user/get-by-email?email=${loginRes.user.email}`
           );
         })
       )

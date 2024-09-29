@@ -7,10 +7,11 @@
 export const environment = {
   production: false,
   PROTOCOL: 'http',
-  PRODUCT_NAME: 'Ahmed Enterprises',
+  PRODUCT_NAME: 'Golden Ace Food',
   // FOR IAMGE PATH
   IAMGE_PATH: '',
   // FOR API's
-  baseURL: '45.8.148.212:8021',
+  //  baseURL: '45.8.148.212:8040',
+  baseURL: '192.168.0.102:8025',
   ROOT_URL: 'localhost', // LOCAL
 };

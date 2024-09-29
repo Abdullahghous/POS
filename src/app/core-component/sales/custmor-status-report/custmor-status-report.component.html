@@ -1,0 +1,158 @@
+<div class="page-header">
+  <div class="add-item d-flex">
+    <div class="page-title">
+      <h4>New Order</h4>
+      <h6>Create new sale order</h6>
+    </div>
+  </div>
+  <ul class="table-top-head">
+    <li>
+      <div class="page-btn">
+        <a [routerLink]="routes.salesOrder" class="btn btn-secondary"><i class="feather icon-arrow-left me-2"></i>Back
+          to Sale Order</a>
+      </div>
+    </li>
+    <li>
+      <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" title="Collapse"
+        id="collapse-header" matTooltip="Collapse"> @if (!isCollapsed) {
+        <i class="feather icon-chevron-up feather-chevron-up"></i>
+        }
+        @if (isCollapsed) {
+        <i class="feather icon-chevron-down feather-chevron-down"></i>
+        }</a>
+    </li>
+  </ul>
+</div>
+
+<div class="card table-list-card">
+  <div class="card-body">
+      <div class="table-top"> 
+          <div class="card-body pb-0">
+              <div class="row">
+                  <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="input-blocks add-product">
+                        <label>Company <span class="required-span-color">*</span></label>
+                        <nz-select
+                          [(ngModel)]="saleOrder.company.id"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="w-100"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Unit"
+                        >
+                          <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+                        </nz-select>
+                      </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="input-blocks add-product">
+                        <label>Branche <span class="required-span-color">*</span></label>
+                        <nz-select
+                          [(ngModel)]="saleOrder.branch.id"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="w-100"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Unit">
+                          <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                        </nz-select>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="input-blocks add-product">
+                        <label>Financial Year <span class="required-span-color">*</span></label>
+                        <nz-select
+                          [(ngModel)]="saleOrder.financialYear.id"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="w-100"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Unit">
+                          <nz-option *ngFor="let f of financialYear" [nzLabel]="f.name" [nzValue]="f.id"></nz-option>
+                        </nz-select>
+                      </div>
+                    </div>
+            <div class="col-lg-4 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>Sale Order No <span class="required-span-color">*</span></label>
+                <input type="text" class="form-control" readonly
+                [(ngModel)]="saleOrder.saleOrderCode" [ngModelOptions]="{standalone: true}"  />
+              </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>Sale Order Date <span class="required-span-color">*</span></label>
+                <input type="date" class="form-control" 
+                [(ngModel)]="saleOrder.saleOrderDate" [ngModelOptions]="{standalone: true}"  />
+              </div>
+            </div>
+          </div>
+      </div>
+      </div>   
+      <div class="table-responsive">
+          <nz-table>
+              <thead>
+                  <tr>
+                    <th>#</th>
+                    <th style="width: 12%;">ITEM</th>
+                    <th style="width: 12%;">ACCOUNT</th>
+                    <th style="width: 12%;">MILL</th>
+                    <th>RATE</th>
+                    <th>KG</th>
+                    <th>VEHICAL</th>
+                    <th>DATE</th>
+                    <th>TYPE</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of saleOrder.saleOrderEntries; let i = index">
+                    <td><span>{{i + 1}}</span></td>
+                    <td>
+                      <mat-select   id class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Item"
+                      [(ngModel)]=data.itemDef.id [ngModelOptions]="{standalone: true}" class="space-select select">
+                      <mat-option *ngFor="let item of itemDefs" [value]="item.id">{{ item.name }}</mat-option>
+                      </mat-select>
+                    </td>
+                   <td>
+                    <nz-select   id class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select parties"
+                    [(ngModel)]=data.customerAccount.code [ngModelOptions]="{standalone: true}">
+                      <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.id"></nz-option>
+                    </nz-select>
+                   </td>
+                   <td>
+                    <nz-select   id class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select mill"
+                    [(ngModel)]=data.millKhata.id [ngModelOptions]="{standalone: true}">
+                      <nz-option *ngFor="let m of mills" [nzLabel]="m.accountName" [nzValue]="m.id"></nz-option>
+                    </nz-select>
+                   </td>
+                    <!-- <td><input type="text" class="form-control"  [(ngModel)]="data.account" [ngModelOptions]="{standalone: true}" (ngModelChange)="add(data)" /></td> -->
+                    <!-- <td><input type="text" class="form-control" [(ngModel)]="data.mill" [ngModelOptions]="{standalone: true}" (ngModelChange)="add(data)" /></td> -->
+                    <td><input type="text" class="form-control" [(ngModel)]="data.rate" [ngModelOptions]="{standalone: true}"  /></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="data.kg" [ngModelOptions]="{standalone: true}" /></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="data.vehical" [ngModelOptions]="{standalone: true}"/></td>
+                    <td><input type="date" class="form-control" [(ngModel)]="data.paymentDate" [ngModelOptions]="{standalone: true}" /></td>
+                    <td><input type="text" class="form-control" [(ngModel)]="data.paymentType" [ngModelOptions]="{standalone: true}"  /></td>
+                    <!-- <td>
+                      <div class="edit-delete-action">
+                        <a href="javascript:void(0);" class="btn btn-added" (click)="addNewRow(data, i)">
+                          <i class="feather icon-plus-circle me-2"></i>
+                        </a>
+                        <a class="confirm-text p-2" href="javascript:void(0);" (click)="deleteRow(i)" style="color: red;">
+                          <i class="feather icon-trash-2 feather-trash-2"></i>
+                        </a>
+                      </div>
+                    </td> -->
+                  </tr>
+                </tbody>
+          </nz-table>
+          <div class="col-lg-12 text-end">
+              <!-- <button type="button" class="btn btn-cancel add-cancel me-3"
+              data-bs-dismiss="modal">Cancel</button> -->
+              <button type="submit" class="btn btn-submit add-sale" (click)="add()" >Submit</button>
+            </div>
+      </div>
+
+  </div> 
+</div>  

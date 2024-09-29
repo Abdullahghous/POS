@@ -6,14 +6,16 @@ import { environment } from '../../../../environments/environment';
 
 @Injectable()
 export class HttpService {
-
     // currentLanguage = new BehaviorSubject<string>('en');
     // currentLanguage$ = this.currentLanguage.asObservable();
   
     // langData: any = null;
     // currentLang: string =  localStorage.getItem('lang') || 'en';
 
-    private apiUrl = 'http://45.8.148.212:8020/';
+    // private apiUrl = 'http://45.8.148.212:8025/';
+    private apiUrl = 'http://45.8.148.212:8040/';
+    // private apiUrl = 'http://localhost:8025/';
+    // private apiUrl = 'http://192.168.0.104:8025/';
   
     constructor(private http: HttpClient) {
     //   this.getLang();
@@ -45,7 +47,13 @@ export class HttpService {
     get<T>(endpoint: string, params?: HttpParams): Promise<T> {
       return lastValueFrom(this.http.get<T>(`${this.apiUrl}${endpoint}`, { params }));
     }
+    // public get<T>( thisapiUrl: string , params?: unknown): Observable<T> {
+    //   let headers = new HttpHeaders();
+    //   const queryParams = this.prepareParams(params);
+    //   headers = this.setHeaders(headers);
   
+    //   return this.httpClient.get<T>(`${url}${queryParams}`, { headers });
+    // }
     getObservable<T>(endpoint: string, params?: HttpParams): Observable<T> {
       return this.http.get<T>(`${this.apiUrl}${endpoint}`, { params });
     }

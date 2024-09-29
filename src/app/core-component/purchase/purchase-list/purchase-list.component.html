@@ -34,7 +34,7 @@
   </ul>
   <div class="d-flex purchase-pg-btn">
     <div class="page-btn">
-      <a href="javascript:void(0);" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-units"><i
+      <a   href="javascript:void(0);" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-new-vouccer"><i
       class="feather icon-plus-circle me-2"></i>Add New Purchase</a>
     </div>
     <div class="page-btn import">
@@ -60,6 +60,21 @@
             </div>
           </div>
         </div>
+         <div class="col-lg-3 col-sm-3 col-6">
+          <div class="input-blocks add-product">
+            <label>FROM DATE<span class="required-span-color">*</span></label>
+            <input nz-input type="date" name="" id="" [(ngModel)]="obj.fromDate"
+             [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-6">
+          <div class="input-blocks add-product">
+            <label>TO DATE<span class="required-span-color">*</span></label>
+            <input nz-input type="date" name="" id="" [(ngModel)]="obj.toDate"
+            [ngModelOptions]="{standalone: true}" >
+          </div>
+        </div>
+        
         <div class="search-path">
           <a class="btn btn-filter" id="filter_search" (click)="openFilter()"
             [ngClass]="{'setclose': filter === true}">
@@ -81,136 +96,206 @@
       <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
         <div class="card-body pb-0">
           <div class="row">
-            <div class="col-lg-2 col-sm-6 col-12">
-              <div class="input-blocks">
-                <i class="feather icon-user info-img"></i>
-                <mat-select [(ngModel)]="selectedValue2" [ngModelOptions]="{standalone: true}"
-                  class="space-select select" placeholder="Choose Supplier Name">
-                  <mat-option value="Choose Supplier Name">Choose Supplier Name</mat-option>
-                  <mat-option value="Apex Computers">Apex Computers</mat-option>
-                  <mat-option value="Beats Headphones">Beats Headphones</mat-option>
-                  <mat-option value="Dazzle Shoes">Dazzle Shoes</mat-option>
-                  <mat-option value="Best Accessories">Best Accessories</mat-option>
-                </mat-select>
+            <div class="col-lg-4 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>Company <span class="required-span-color">*</span></label>
+                <nz-select
+                          [(ngModel)]="obj.branch.id"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="w-100"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select Company">
+                          <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                        </nz-select>
               </div>
             </div>
-            <div class="col-lg-2 col-sm-6 col-12">
-              <div class="input-blocks">
-                <i class="feather icon-stop-circle info-img"></i>
-                <mat-select [(ngModel)]="selectedValue3" [ngModelOptions]="{standalone: true}"
-                  class="space-select select" placeholder="Choose Status">
-                  <mat-option value="Choose Status">Choose Status</mat-option>
-                  <mat-option value="Received">Received</mat-option>
-                  <mat-option value="Ordered">Ordered</mat-option>
-                  <mat-option value="Pending">Pending</mat-option>
-                </mat-select>
+            
+            <div class="col-lg-4 col-sm-6 col-12">
+              <div>
+                <label>Branche <span class="required-span-color">*</span></label>
+                <nz-select
+                  [(ngModel)]="obj.branch.id"
+                  [ngModelOptions]="{ standalone: true }"
+                  class="w-100"
+                  nzShowSearch
+                  nzAllowClear
+                  nzPlaceHolder="Select Unit">
+                  <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                </nz-select>
               </div>
             </div>
-            <div class="col-lg-2 col-sm-6 col-12">
-              <div class="input-blocks">
-                <i class="feather icon-file info-img"></i>
-                <mat-select [(ngModel)]="selectedValue4" [ngModelOptions]="{standalone: true}"
-                  class="space-select select" placeholder="Enter Reference">
-                  <mat-option value="Enter Reference">Enter Reference</mat-option>
-                  <mat-option value="PT001">PT001</mat-option>
-                  <mat-option value="PT002">PT002</mat-option>
-                  <mat-option value="PT003">PT003</mat-option>
-                </mat-select>
+            <div class="col-lg-4 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>SEARCH BY DATE<span class="required-span-color">*</span></label>
+                <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type"
+                 [(ngModel)]="obj.searchByDate">
+                 <nz-option nzLabel="VOUCHERDATE" nzValue="1"></nz-option>
+                      <nz-option nzLabel="CREATDATE" nzValue="2"></nz-option>
+                      <nz-option nzLabel="UPDATEDATE" nzValue="3"></nz-option>
+                </nz-select>
               </div>
             </div>
-            <div class="col-lg-2 col-sm-6 col-12">
-              <div class="input-blocks">
-                <i class="fas fa-money-bill info-img"></i>
-                <mat-select [(ngModel)]="selectedValue5" [ngModelOptions]="{standalone: true}"
-                  class="space-select select" placeholder="Choose Payment Status">
-                  <mat-option value="Choose Payment Status">Choose Payment Status</mat-option>
-                  <mat-option value="Paid">Paid</mat-option>
-                  <mat-option value="Partial">Partial</mat-option>
-                  <mat-option value="Unpaid">Unpaid</mat-option>
-                </mat-select>
+            <div class="col-lg-4 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>INVENTORY VOUCHER <span class="required-span-color">*</span></label>
+                <nz-select class="w-100" [(ngModel)]="obj.inventoryVoucherType" [ngModelOptions]="{standalone: true}" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Select VoucherType">
+                    <nz-option nzLabel="SJV" nzValue="SJV"></nz-option>
+                    <nz-option nzLabel="STV" nzValue="STV"></nz-option>
+                 </nz-select>
               </div>
             </div>
-            <div class="col-lg-4 col-sm-6 col-12 ms-auto">
-              <div class="input-blocks">
-                <a class="btn btn-filters ms-auto"> <i class="feather icon-search feather-search"></i>
-              Search </a>
+            <div class="col-lg-4 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>POSTED/UNPOSTED <span class="required-span-color">*</span></label>
+                <nz-select class="w-100" [(ngModel)]="obj.inventoryVoucherType" [ngModelOptions]="{standalone: true}" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Select VoucherType">
+                    <nz-option nzLabel="BOTH" nzValue="2"></nz-option>
+                    <nz-option nzLabel="POSTED" nzValue="P"></nz-option>
+                    <nz-option nzLabel="UNPOSTED" nzValue="U"></nz-option>
+                 </nz-select>
+              </div>
             </div>
-          </div>
+            <div class="col-lg-4 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>VOUCHER NO.<span class="required-span-color">*</span></label>
+                <input [(ngModel)]="obj.voucherCode" [ngModelOptions]="{standalone: true}" nz-input type="text" name="" id="">
+              </div>
+            </div>
+           
+            <div class="col-lg-4 col-sm-6 col-12 text-end" style="margin-top: 3%;">
+              <button type="submit" class="btn btn-submit add-sale" (click)="search()">SEARCH</button>
+            </div>
         </div>
       </div>
     </div>
     <!-- /Filter -->
-    <div class="table-responsive product-list">
-      <table matSort (matSortChange)="sortData($event)" class="table  datanew list">
+    <div class="table-responsive">
+      <nz-table #ITableRef [nzData]="['*']" [nzFrontPagination]="false" class="table  datanew">
         <thead>
           <tr>
-            <th class="no-sort">
+            <!-- <th class="no-sort">
                 <label class="checkboxs"  (click)="selectAll(initChecked)">
                   <input type="checkbox" id="select-all" [(ngModel)]="initChecked" >
                   <span class="checkmarks"></span>
                 </label>
-              </th>
-            <th mat-sort-header="supplierName">Supplier Name</th>
-            <th mat-sort-header="reference">Reference</th>
-            <th mat-sort-header="date">Date</th>
-            <th mat-sort-header="status">Status</th>
-            <th mat-sort-header="grandTotal">Grand Total</th>
-            <th mat-sort-header="paid">Paid</th>
-            <th mat-sort-header="due">Due</th>
-            <th mat-sort-header="createdBy">Created by</th>
-            <th class="no-sort">Action</th>
+              </th> -->
+              <th>#</th>
+              <th>PARY NAME (CLICK SHOW LEDGER)</th>
+              <th>VOUCHER NO.</th>
+              <th>VOUCHER DATE</th>
+              <th>UPDATED AT</th>
+              <th>AMOUNT</th>
+              <th>USERNAME</th>
+              <th>P/U</th>
+              <th>Book</th>
           </tr>
         </thead>
-        <tbody>
-          @for (data of tableData; track data) {
-            <tr>
+        <tbody class="sales-list">
+          <!-- @for (data of tableData; track data) { -->
+            <tr *ngFor="let data of voucher.voucherDetailList ; let i = index">
               <td>
-                  <label class="checkboxs">
-                    <input type="checkbox" [(ngModel)]="data.isSelected">
-                    <span class="checkmarks"></span>
-                  </label>
+                 {{i + 1}}
                 </td>
-              <td>{{data.supplierName}}</td>
-              <td>{{data.reference}} </td>
-              <td>{{data.date}}</td>
-              <td>
-                            <span class="badges"  [ngClass]="{
-                                'status-badge': data.status === 'Received',
-                                'unstatus-badge': data.status === 'Pending',
-                                'status-badge-ordered': data.status === 'Ordered'
-                              }">
-                  {{ data.status }}
-                </span>
-              </td>
-              <td>{{data.grandTotal}}</td>
-              <td>{{data.paid}}</td>
-              <td>{{data.due}}</td>
-                <td><span
-                [ngClass]="{'badge-linesuccess': data.createdBy === 'Paid', 'badge-linedanger': data.createdBy === 'Unpaid', 'badges-warning': data.createdBy === 'Partial'}">{{data.createdBy}}</span>
-              </td>
-              <td class="action-table-data">
-                <div class="edit-delete-action">
-                  <a class="me-2 p-2" href="javascript:void(0);">
-                    <i class="feather icon-eye action-eye"></i>
-                  </a>
-                  <a class="me-2 p-2" data-bs-toggle="modal" data-bs-target="#edit-units">
-                    <i class="feather icon-edit feather-edit"></i>
-                  </a>
-                  <a class="confirm-text p-2" href="javascript:void(0);" (click)=confirmColor()>
-                    <i class="feather icon-trash-2 feather-trash-2"></i>
-                  </a>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+              <td>{{data.accountName}}</td>
+              <td>{{data.voucherCode}}</td>
+              <td>{{data.voucherDate}}</td>
+              <td>{{data.updatedAt}}</td>
+            <td>{{data.voucherAmount}}</td>
+            <td>{{data.userName}}</td>
+            <td>{{data.postedUnPosted}}</td>
+            <td>{{data.register}}</td>
+          <td>{{data.biller}}</td>
+          <!-- <td class="text-center">
+            <a class="action-set" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="true">
+              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
+                  data-bs-target="#sales-details-new"><i class="feather icon-eye info-img"></i>Sale Detail</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
+                    data-bs-target="#edit-sales-new"><i class="feather icon-edit info-img"></i>Edit
+                  Sale</a>
+                </li>
+                <li>
+                  <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
+                    data-bs-target="#showpayment"><i class="feather icon-dollar-sign info-img"></i>Show Payments</a>
+                  </li>
+                  <li>
+                    <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
+                      data-bs-target="#createpayment"><i class="feather icon-plus-circle info-img"></i>Create Payment</a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);" class="dropdown-item"><i
+                      class="feather icon-download info-img"></i>Download pdf</a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);" class="dropdown-item confirm-text mb-0"><i
+                      class="feather icon-trash-2 info-img"></i>Delete Sale</a>
+                    </li>
+                  </ul>
+                </td> -->
+              </tr>
+            <!-- } -->
+          </tbody>
+        </nz-table>
+      </div>
     <app-custom-pagination></app-custom-pagination>
   </div>
 </div>
 <!-- /product list -->
 <!-- Add Purchase -->
+
+<div class="modal fade" id="add-new-vouccer">
+  <div class="modal-dialog add-centered">
+    <div class="modal-content">
+      <div class="page-wrapper p-0 m-0">
+        <div class="content p-0">
+          <div class="modal-header border-0 custom-modal-header">
+            <div class="page-header">
+              <h2>Details </h2>
+              
+              
+              <!-- <div class="search-path" style="margin-left: 5%;">
+                <div class="d-flex align-items-center">
+                  <a class="btn btn-filter" id="details" (click)="openFilter()" [ngClass]="{'setclose': filter === true}">
+                    <i class="feather icon-filter filter-icon"></i>
+                    <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+                  </a>
+      
+                </div>
+              </div> -->
+              <div class="search-path" style="background-color: red;">
+                <div class="d-flex align-items-center" id="details" (click)="openFilter()" [ngClass]="{'setclose': filter === true}">
+                  <div style="background-color: yellowgreen;" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-controls="collapseOne">
+                  </div>
+                </div>
+              </div>
+           </div>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+           </div>
+          <div class="card">
+            <div class="card-body">
+              <form>
+                <!-- <div  style="height: 600px;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"style="display: flex;flex-wrap: wrap;"> -->
+                  
+                    
+              <!-- </div> -->
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal fade" id="add-units">
   <div class="modal-dialog purchase modal-dialog-centered stock-adjust-modal">
     <div class="modal-content">

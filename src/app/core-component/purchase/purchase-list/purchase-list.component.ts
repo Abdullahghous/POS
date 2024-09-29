@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component , OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -7,18 +7,20 @@ import {
   pageSelection,
   apiResultFormat,
   routes,
-  SidebarService,
+  SidebarService,HttpService
 } from 'src/app/core/core.index';
 import { purchaseList } from 'src/app/shared/model/page.model';
 import { PaginationService, tablePageSize } from 'src/app/shared/shared.index';
 import Swal from 'sweetalert2';
+import { AllApiService } from 'src/app/core/service/allApi/all-api.service';
+import { VoucherService } from 'src/app/core/service/voucher/voucher.service';
 
 @Component({
   selector: 'app-purchase-list',
   templateUrl: './purchase-list.component.html',
   styleUrl: './purchase-list.component.scss',
 })
-export class PurchaseListComponent {
+export class PurchaseListComponent implements OnInit {
   initChecked = false;
   selectedValue1 = '';
   selectedValue2 = '';
@@ -43,25 +45,116 @@ export class PurchaseListComponent {
   showFilter = false;
   dataSource!: MatTableDataSource<purchaseList>;
   public searchDataValue = '';
+  isButtonDisabled = false;
+  itemDefs: any[] = [];
+  parties: any[] = [];
+  mills: any[] = [];
+  allParties:any[]= [];
+  getBranches:any[]= [];
+  getCompanies:any[]= [];
+  financialYear:any[]= [];
+  voucher:any=[];
   //** / pagination variables
 
   constructor(
     private data: DataService,
     private pagination: PaginationService,
     private router: Router,
-    private sidebar: SidebarService
+    private sidebar: SidebarService,
+    private apiService: HttpService,
+    private allApiService:AllApiService,
+    private voucherService:VoucherService
   ) {
-    this.data.getDataTable().subscribe((apiRes: apiResultFormat) => {
-      this.totalData = apiRes.totalData;
-      this.pagination.tablePageSize.subscribe((res: tablePageSize) => {
-        if (this.router.url == this.routes.purchaseList) {
-          this.getTableData({ skip: res.skip, limit: this.totalData  });
-          this.pageSize = res.pageSize;
-        }
-      });
-    });
+      
+    // this.data.getDataTable().subscribe((apiRes: apiResultFormat) => {
+    //   this.totalData = apiRes.totalData;
+    //   this.pagination.tablePageSize.subscribe((res: tablePageSize) => {
+    //     if (this.router.url == this.routes.purchaseList) {
+    //       this.getTableData({ skip: res.skip, limit: this.totalData  });
+    //       this.pageSize = res.pageSize;
+    //     }
+    //   });
+    // });
+  
   }
+  
+  ngOnInit(): void {
+    this.getAll()
+  }
+  obj={
+    "company": {
+        "id": "1",
+        "name": ""
+    },
+    "branch": {
+        "id": "26",
+        "name": ""
+    },
+    "voucherType": {
+        "name": ""
+    },
+    "voucherCode": "0",
+    "inventoryVoucherType": "PJV",
+    "searchByDate": "3",
+    "fromDate": "2024-01-07",
+    "toDate": "2024-09-07",
+    "postedUnPosted": "2"
+}
+search(){
+  this.apiService.post('receivables/inventory_voucher_list', this.obj).subscribe((res) => {
+    if (res) {
 
+      this.voucher = res;
+      console.log(res ,'pppppplisttt===')
+    //
+    }
+  });
+}
+
+
+
+
+getAll(){
+  
+  let items: any = localStorage.getItem('itemDefs');
+  let parties: any = localStorage.getItem('parties');
+  let mills: any = localStorage.getItem('mills');
+  let getBranches: any = localStorage.getItem('branch');
+  let getCompanies: any = localStorage.getItem('companies');
+  let financialYear: any = localStorage.getItem('financialYear');
+  // console.log(getCompanies,'compnayyyy====8')
+  if (items && parties && mills && getBranches && getCompanies && financialYear
+     != null && JSON.parse(items).length != 0) {
+    this.itemDefs = JSON.parse(items);
+    this.parties =JSON.parse(parties);
+    this.mills = JSON.parse(mills); 
+    this.getBranches = JSON.parse(getBranches);
+    this.getCompanies = JSON.parse(getCompanies);
+    this.financialYear = JSON.parse(financialYear);
+    // debugger
+  }
+  else{
+    this.allApiService.getItemDefs();
+    items = localStorage.getItem('itemDefs');
+    this.itemDefs = JSON.parse(items);
+    this.allApiService.getMills();
+    mills = localStorage.getItem('mills');
+    this.mills = JSON.parse(mills);
+    this.allApiService.getParties();
+    parties = localStorage.getItem('parties');
+    this.parties = JSON.parse(parties);
+    this.allApiService.getBranches();
+    getBranches = localStorage.getItem('branch');
+    this.getBranches = JSON.parse(getBranches);
+    this.allApiService.getCompanies();
+    getCompanies = localStorage.getItem('companies');
+    this.getCompanies = JSON.parse(getCompanies);
+    this.allApiService.financialYear();
+    financialYear = localStorage.getItem('financialYear');
+    this.financialYear = JSON.parse(financialYear);
+     debugger
+  }
+}
   private getTableData(pageOption: pageSelection): void {
     this.data.getPurchaseList().subscribe((apiRes: apiResultFormat) => {
       this.tableData = [];
@@ -109,6 +202,7 @@ export class PurchaseListComponent {
   }
   public filter = false;
   openFilter() {
+   
     this.filter = !this.filter;
   }
 

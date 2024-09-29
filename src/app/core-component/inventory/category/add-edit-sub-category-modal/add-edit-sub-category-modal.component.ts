@@ -75,7 +75,7 @@ export class AddEditSubCategoryModalComponent {
           },
           error: (err) => {
             this.snackBarService.showError(err.error.error);
-            // this.dialogRef.close('created');
+            this.dialogRef.close('created');
           },
           complete: () => {},
         });

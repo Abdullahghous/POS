@@ -1,0 +1,559 @@
+<p>direct-sale works!</p>
+
+<div  style="height:480px;overflow: auto;">
+
+    <div style="display: flex;flex-wrap: wrap;text-align: center;">
+
+        <!-- <div class="col-lg-2 col-sm-6 col-12">
+            <div class="input-blocks">
+              <label>To Date</label>
+              <div class="input-groupicon calender-input date-input1">
+                <i class="feather icon-calendar info-img"></i>
+                <input [(ngModel)]="payLoad.toDate" [ngModelOptions]="{standalone: true}" type="text" class="datetimepicker" bsDatepicker container=".date-input1" placeholder="Choose">
+              </div>
+            </div>
+          </div> -->
+
+      <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
+        <div style="display: flex;">
+          <span style=" text-align: right;white-space: normal" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" >
+            VOUCHER  NUMBER</span>
+           <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+            <input nz-input="tel" [(ngModel)]="sjvVoucher.voucherNumber" name="voucherNumber" [ngModelOptions]="{standalone: true}" >
+           </div>
+       </div>
+      </div> 
+      <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
+        <div style="display: flex;">
+          <span style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" >
+            UNIT</span>
+           <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+             <input [(ngModel)]="sjvVoucher.branch.id" name="id"  nz-input="tel">
+           </div>
+       </div>
+      </div>
+      
+      <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
+        <div style="display: flex;">
+          <span style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" >
+            PPV NUMBER</span>
+           <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+             <input  nz-input="tel">
+           </div>
+       </div>
+      </div>
+      <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
+        <div style="display: flex;">
+          <span style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" >
+            PAYMENT TYPE</span>
+           <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+             <input [(ngModel)]="sjvVoucher.paymentType" name="paymentType" nz-input="tel">
+           </div>
+       </div>
+      </div>
+      <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
+        <div style="display: flex;">
+          <span style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" >
+            DATE</span>
+           <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+             <input [(ngModel)]="sjvVoucher.voucherDate" name="voucherDate" nz-input="tel">
+           </div>
+       </div>
+      </div>
+      <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
+        <div style="display: flex;">
+          <span style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" >
+            PRODUCT NAME</span>
+           <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+             <input [(ngModel)]="sjvVoucher.itemStock.itemDef.id" name="id" nz-input="tel">
+            
+           </div>
+       </div>
+      </div>  
+      <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
+        <div style="display: flex;">
+          <span class="form-label" style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" >
+            FINANCIAL YEAR</span>
+           <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+            <input [(ngModel)]="sjvVoucher.itemStock.financialYear" name="financialYear" nz-input="tel">
+           </div>
+       </div>
+      </div>  
+       
+    
+  </div>
+  <div  style="height: 600px;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"style="display: flex;flex-wrap: wrap;">
+  
+   <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="15" nzXl="12" style="display: flex;flex-wrap:wrap; border: 1px solid #f8f7fa;border-radius: 10px;text-align: right; width: 100%;">
+    <div  nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <h1 style="text-align: center;color: #29022b;">Purchase Voucher</h1>
+    </div>
+  
+    <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="15" nzXl="12" style="flex-wrap:wrap;border: 1px solid #c0b8db;text-align: right; width: 100%;">
+      <div style="margin-top: 2%; display: flex; flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right; margin: 0;">
+          PARTY ACCOUNT
+        </span>
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+          <input  [(ngModel)]="sjvVoucher.itemStock.account.code" name="code" 
+          (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+        </div>
+      </div>
+      <div style="margin-top: 4%; display: flex; flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <span  nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+          VEHICLE NUMBER 
+        </span>
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+          <input  [(ngModel)]="sjvVoucher.vehicalNumber" name="vehicalNumber" 
+          (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+        </div>
+      </div>
+      <div style="margin-top: 4%; display: flex; flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+          BOOK NUMBER
+        </span>
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+          <input  [(ngModel)]="sjvVoucher.bookNumber" name="bookNumber" 
+          (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+        </div>
+      </div>
+      <div style="margin-top: 4%; display: flex; flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+         BAG
+        </span>
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+          <input  [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].bags" name="bardanaAmount" 
+          (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+        </div>
+      </div>
+      <div style="margin-top: 4%; display: flex; flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+          GROSS WEIGHT
+        </span>
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+          <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].totalKg" name="totalKg" 
+          (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+        </div>
+      </div>
+       <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <span style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+          BAG WT</span>
+        <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].bagWeightDeduction" name="bagWeightDeduction" 
+        (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+        <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+          <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].totalBagWeightDeduction" name="totalBagWeightDeduction" 
+          (ngModelChange)="calculcate()"style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+        </div>
+      </div>
+      <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+          DEDUCTION</nz-form-label>
+        <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].katoti" name="katoti" 
+        (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+        <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+          <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].totalKatoti" name="totalKatoti" 
+          (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+        </div>
+      </div>
+      <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+          QTY</nz-form-label>
+        <input  [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].itemQuantity" name="itemQuantity" 
+        (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+        <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+          <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].manWithKg" name="manWithKg" 
+          (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+        </div>
+      </div>
+      <div style="margin-top: 4%; display: flex; flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+          WT/BAG
+        </span>
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+          <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].otherBagWeight" name="otherBagWeight" 
+          (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+        </div>
+      </div>
+    </div>
+
+   <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="15" nzXl="12" style="flex-direction: column;overflow: auto; border: 1px solid #cfc3f3;text-align: right; width: 100%;">
+    <div style="margin-top: 4%; display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+        SALE
+        RATE
+      </span>
+      <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+        <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].saleRate" name="saleRate" 
+        (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+      </div>
+    </div>
+    <div style="margin-top: 4%; display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+        SALE AMOUNT
+      </span>
+      <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+        <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].amount" name="amount" 
+        (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+      </div>
+    </div>
+    <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        W.H TAX(-)</nz-form-label>
+      <input [(ngModel)]="sjvVoucher.itemStock.millTaxRate" name="millTaxRate" 
+      (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+      <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+        <input  [(ngModel)]="sjvVoucher.itemStock.millTaxAmount" name="millTaxAmount" 
+        (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+      </div>
+    </div>
+    
+    <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        SALES TAX(+)</nz-form-label>
+      <input  [(ngModel)]="sjvVoucher.itemStock.silaiRate" name="silaiRate" 
+      (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+      <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+        <input  [(ngModel)]="sjvVoucher.itemStock.silaiAmount" name="silaiAmount" 
+        (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+      </div>
+    </div>
+    <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        BANK TAX(-)</nz-form-label>
+      <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+      (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+      <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+        <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxAmount" name="bankTaxAmount" 
+        (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+      </div>
+    </div>
+    <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        BARDANA(+)</nz-form-label>
+      <input  [(ngModel)]="sjvVoucher.itemStock.bardanaRate" name="bardanaRate"
+      (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+      <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+        <input  [(ngModel)]="sjvVoucher.itemStock.bardanaAmount" name="bardanaAmount" 
+        (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+      </div>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; flex-wrap: wrap;margin-top: 4%;">
+      <nz-form-label nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+        OTHER EXP
+      </nz-form-label>
+      <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+        <input  [(ngModel)]="sjvVoucher.itemStock.otherExp" name="otherExp" 
+        (ngModelChange)="calculcate()" nz-input="text">
+      </div>
+    </div>
+      <div style="margin-top: 4%; display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+          CARRIAGE(-)
+        </span>
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+          <input [(ngModel)]="sjvVoucher.itemStock.freightCharges" name="freightCharges" 
+          (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+        </div>
+      </div>
+      <div style="margin-top: 4%; display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+          NET
+          SALES
+        </span>
+        <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex; align-items: center;">
+          <input [(ngModel)]="sjvVoucher.itemStock.netAmount" name="netAmount" 
+          (ngModelChange)="calculcate()" style="margin: 0;" nz-input="text">
+        </div>
+      </div>
+  </div>
+   <div style="margin-top: 4%;"  nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+   <input nz-input="text">
+  </div>
+  <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+   <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="15" nzXl="12">
+    <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+      BROKER AMOUNT</nz-form-label>
+    <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+    (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+   </div>
+   <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="15" nzXl="12">
+    <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        RATE</nz-form-label>
+      <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+      (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+     </div>
+     <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="6" nzXl="12">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        AMT</nz-form-label>
+      <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+      (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+     </div>
+   </div>
+   <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="15" nzXl="12">
+    <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        B_W</nz-form-label>
+      <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+      (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+     </div>
+     <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="6" nzXl="12">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        K_W</nz-form-label>
+      <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+      (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+     </div>
+   </div>
+   <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="15" nzXl="12">
+    <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        Mois</nz-form-label>
+      <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+      (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+     </div>
+     <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="6" nzXl="12">
+      <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+        P_N</nz-form-label>
+      <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+      (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+     </div>
+   </div>
+  </div>
+  
+  </div>
+  
+   
+  
+       <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="15" nzXl="12" style="display: flex;flex-wrap:wrap; border: 1px solid #fcfcfd;border-radius: 10px;text-align: right; width: 100%;">
+        <div  nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <h1 style="text-align: center;">Sale Voicher</h1>
+        </div>
+        <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="15" nzXl="12" style="flex-wrap:wrap;border: 1px solid #d5caf7;text-align: right; width: 100%;">
+          <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; flex-wrap: wrap;">
+            <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;margin-top: 4%;;">
+              PARTY ACCOUNT
+            </span>
+            <div style="margin-top: 2%;" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+              <input nz-input="text" [(ngModel)]="sjvVoucher.itemStock.account.code" name="code" >
+            </div>
+          </div>
+          <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; flex-wrap: wrap;margin-top: 4%;">
+            <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+              VEHICLE NUMBER
+            </span>
+            <div  nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+              <input nz-input="text" [(ngModel)]="sjvVoucher.vehicalNumber" name="vehicalNumber" >
+            </div>
+          </div>
+          <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; flex-wrap: wrap;margin-top: 4%;">
+            <span nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+              BOOK NUMBER
+            </span>
+            <div  nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+              <input nz-input="text" [(ngModel)]="sjvVoucher.bookNumber" name="bookNumber" >
+            </div>
+          </div>
+          <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+            <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+              BAG</nz-form-label>
+            <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].bags" name="bags" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+           <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+             <input style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+          </div>
+        </div> 
+          <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+              <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+                GROSS WEIGHT</nz-form-label>
+              <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].totalKg" name="totalKg" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+             <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+               <input style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+            </div>
+          </div> 
+          <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+            <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+              BAG WT</nz-form-label>
+            <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].bagWeightDeduction" name="bagWeightDeduction" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+           <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+             <input style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+          </div>
+        </div> 
+        <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+            DEDUCTION</nz-form-label>
+          <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].katoti" name="katoti" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+         <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+           <input style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+        </div>
+      </div> 
+      <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+          QTY</nz-form-label>
+        <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].itemQuantity" name="itemQuantity" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+       <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+         <input  style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+      </div>
+      </div> 
+          <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; flex-wrap: wrap;margin-top: 4%;">
+            <nz-form-label nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+              WT/BAG
+            </nz-form-label>
+            <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+              <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].otherBagWeight" name="otherBagWeight" nz-input="text">
+            </div>
+          </div>
+        </div>
+       
+       <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="15" nzXl="12" style="flex-direction: column;overflow: auto; border: 1px solid #d0c5f1;text-align: right; width: 100%;">
+        <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+           <span style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+            PURCHASE RATE</span>
+           <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].purchaseRate" name="purchaseRate" 
+           (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+           <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+             <input style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+           </div>
+         </div> 
+         <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; flex-wrap: wrap;margin-top: 4%;">
+          <nz-form-label nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+            PURCHASE AMOUNT
+          </nz-form-label>
+          <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+            <input [(ngModel)]="sjvVoucher.itemStock.itemStockEntries[0].amount" name="amount" 
+            (ngModelChange)="calculcate()" nz-input="text">
+          </div>
+        </div>
+         <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+            W.H TAX(-)</nz-form-label>
+          <input [(ngModel)]="sjvVoucher.itemStock.millTaxRate" name="millTaxRate" 
+          (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+          <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+            <input  [(ngModel)]="sjvVoucher.itemStock.millTaxAmount" name="millTaxAmount" 
+            (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+          </div>
+        </div>
+        <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+            SALES TAX(+)</nz-form-label>
+          <input  [(ngModel)]="sjvVoucher.itemStock.silaiRate" name="silaiRate" 
+          (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+          <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+            <input  [(ngModel)]="sjvVoucher.itemStock.silaiAmount" name="silaiAmount" 
+            (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+          </div>
+        </div>
+        <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+            BANK TAX(-)</nz-form-label>
+          <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+          (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+          <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+            <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxAmount" name="bankTaxAmount" 
+            (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+          </div>
+        </div>
+        <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+            BARDANA(+)</nz-form-label>
+          <input  [(ngModel)]="sjvVoucher.itemStock.bardanaRate" name="bardanaRate"
+          (ngModelChange)="calculcate()" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+          <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+            <input  [(ngModel)]="sjvVoucher.itemStock.bardanaAmount" name="bardanaAmount" 
+            (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+          </div>
+        </div>
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; flex-wrap: wrap;margin-top: 4%;">
+          <nz-form-label nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+            OTHER EXP
+          </nz-form-label>
+          <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+            <input  [(ngModel)]="sjvVoucher.itemStock.otherExp" name="otherExp" 
+            (ngModelChange)="calculcate()" nz-input="text">
+          </div>
+        </div>
+         <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+          <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+            CARRIAGE(-)</nz-form-label>
+          <input nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+          <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
+            <input [(ngModel)]="sjvVoucher.itemStock.freightCharges" name="freightCharges" 
+            (ngModelChange)="calculcate()" style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel">
+          </div>
+        </div>
+        <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; flex-wrap: wrap;margin-top: 4%;">
+          <nz-form-label nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: right;">
+            NET PURCHASE
+          </nz-form-label>
+          <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
+            <input [(ngModel)]="sjvVoucher.itemStock.netAmount" name="netAmount" 
+            (ngModelChange)="calculcate()" nz-input="text">
+          </div>
+        </div>
+       </div>
+ 
+      <div style="margin-top: 4%;"  nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <input nz-input="text">
+       </div>
+       <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+        <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="15" nzXl="12">
+         <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+           BROKER AMOUNT</nz-form-label>
+         <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+         (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+        </div>
+        <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="15" nzXl="12">
+         <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+           <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+             RATE</nz-form-label>
+           <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+           (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+          </div>
+          <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="6" nzXl="12">
+           <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+             AMT</nz-form-label>
+           <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+           (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+          </div>
+        </div>
+        <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="15" nzXl="12">
+         <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+           <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+             B_W</nz-form-label>
+           <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+           (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+          </div>
+          <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="6" nzXl="12">
+           <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+             K_W</nz-form-label>
+           <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+           (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+          </div>
+        </div>
+        <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="15" nzXl="12">
+         <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+           <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+             Mois</nz-form-label>
+           <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+           (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+          </div>
+          <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="6" nzXl="12">
+           <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
+             P_N</nz-form-label>
+           <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+           (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+          </div>
+        </div>
+       </div>
+      </div>
+      <div style="display: flex;flex-wrap: wrap;margin-top: 1%;" nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="15" nzXl="12">
+        <nz-form-label class="form-sort" style="white-space: normal; text-align: right;" nz-col nzXs="5" nzSm="5" nzMd="5" nzLg="5" nzXl="5">
+          REMARKS</nz-form-label>
+        <input  [(ngModel)]="sjvVoucher.itemStock.bankTaxRate" name="bankTaxRate" 
+        (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
+       </div>
+  </div> 
+  <div  style="display: flex; flex-direction: row-reverse; margin-right: 40px;">
+    <button  nz-button nzType="primary" class="btn btn-submit add-sale" (click)="calculcate()" >Saved</button>
+  </div>
+  </div> 
+

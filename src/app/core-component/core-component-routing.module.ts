@@ -114,6 +114,21 @@ const routes: Routes = [
         loadChildren: () =>
           import('./reports/reports.module').then((m) => m.ReportsModule),
       },
+      {
+        path: 'voucher',
+        loadChildren: () =>
+          import('./voucher/voucher.module').then((m) => m.VoucherModule),
+      },
+      {
+        path: 'labour',
+        loadChildren: () =>
+          import('./labour/labour-module.module').then((m) => m.LabourModuleModule),
+      },
+      {
+        path: 'kanta',
+        loadChildren: () =>
+          import('./kanta/kanta.module').then((m) => m.KantaModule),
+      },
     ],
   },
 ];

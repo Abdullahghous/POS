@@ -14,6 +14,15 @@ import { SalesReportComponent } from './sales-report/sales-report.component';
 import { SupplierReportComponent } from './supplier-report/supplier-report.component';
 import { TaxReportComponent } from './tax-report/tax-report.component';
 import { sharedModule } from 'src/app/shared/shared.module';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
+import { PrePurchaseReportComponent } from './pre-purchase-report/pre-purchase-report.component';
+import { PrePurchaseFormComponent } from './pre-purchase-form/pre-purchase-form.component';
+
+
 
 @NgModule({
   declarations: [
@@ -28,7 +37,17 @@ import { sharedModule } from 'src/app/shared/shared.module';
     SalesReportComponent,
     SupplierReportComponent,
     TaxReportComponent,
+    GeneralLedgerComponent,
+    PrePurchaseReportComponent,
+    PrePurchaseFormComponent
   ],
-  imports: [CommonModule, ReportsRoutingModule, sharedModule],
+  imports: [CommonModule,
+     ReportsRoutingModule, 
+     sharedModule,
+     NzSelectModule,
+     NzTableModule,
+    NzFormModule,
+    NzInputModule
+    ],
 })
 export class ReportsModule {}

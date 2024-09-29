@@ -7,23 +7,29 @@ import {
 } from '@angular/common/http';
 import { catchError, finalize, Observable, throwError } from 'rxjs';
 import { SpinnerService } from '../../core.index';
+import { LoadingService } from '../../service/allApi/loadingService';
+
 
 @Injectable()
 export class SpinnerInterceptor implements HttpInterceptor {
-  constructor(private spinner: SpinnerService) {}
+  constructor(private spinner: SpinnerService,
+    private loadingService: LoadingService
+  ) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    this.spinner.show();
+    //debugger
+    this.loadingService.show();
+    //debugger
     return next.handle(request).pipe(
       finalize(() => {
-        this.spinner.hide();
+        this.loadingService.hide();
       }),
       catchError((error) => {
         if (error) {
-          this.spinner.hide();
+          this.loadingService.hide();
         }
         return throwError(error);
       })

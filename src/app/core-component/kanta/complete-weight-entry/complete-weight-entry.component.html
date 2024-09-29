@@ -1,0 +1,304 @@
+<div class="page-header transfer">
+    <div class="add-item d-flex">
+      <div class="page-title">
+        <h4>Kanta Weight</h4>
+        <h6>Manage your Weight</h6>
+      </div>
+    </div>
+    <ul class="table-top-head">
+      <li>
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Pdf" matTooltipPosition="above"><img
+        src="assets/img/icons/pdf.svg" alt="img"></a>
+      </li>
+      <li>
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Excel" matTooltipPosition="above"><img
+        src="assets/img/icons/excel.svg" alt="img"></a>
+      </li>
+      <li>
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Print" matTooltipPosition="above"><i
+        class="feather icon-printer feather-rotate-ccw"></i></a>
+      </li>
+      <li>
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Refresh" matTooltipPosition="above"><i
+        class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
+      </li>
+      <li>
+        <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Collapse"
+          matTooltipPosition="above" id="collapse-header"> @if (!isCollapsed) {
+          <i class="feather icon-chevron-up feather-chevron-up"></i>
+        }
+        @if (isCollapsed) {
+          <i class="feather icon-chevron-down feather-chevron-down"></i>
+        }</a>
+      </li>
+    </ul>
+    <div class="d-flex purchase-pg-btn">
+      <!-- <div class="page-btn">
+        <a   href="javascript:void(0);" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-new-vouccer"><i
+        class="feather icon-plus-circle me-2"></i>Add New Purchase</a>
+      </div> -->
+      
+    </div>
+  
+  </div>
+  
+  <!-- /product list -->
+  <div class="card table-list-card">
+    <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-input">
+            <a href="javascript:void(0);" class="btn btn-searchset"><i class="feather icon-search feather-search"></i></a>
+            <div class="dataTables_filter">
+              <label>
+                <!-- <input [(ngModel)]="searchQuery" placeholder="Search by name" (input)="filterByName()" 
+                  type="search" class="form-control" placeholder="Search..." /> -->
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search" (click)="openFilter()"
+              [ngClass]="{'setclose': filter === true}">
+              <i class="feather icon-filter filter-icon"></i>
+              <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+            </a>
+          </div>
+          <!-- <div class="form-sort">
+            <i class="feather icon-sliders info-img"></i>
+            <mat-select [(ngModel)]="selectedValue1" [ngModelOptions]="{standalone: true}"
+              class="space-select select" placeholder="Sort by Date">
+              <mat-option value="Sort by Date">Sort by Date</mat-option>
+              <mat-option value="Newest">Newest</mat-option>
+              <mat-option value="Oldest">Oldest</mat-option>
+            </mat-select>
+          </div> -->
+        </div>
+        <!-- /Filter -->
+        <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
+          <div class="card-body pb-0">
+            <div class="row">
+              <!-- <div class="col-lg-4 col-sm-6 col-12">
+                <div class="input-blocks add-product">
+                  <label>Company <span class="required-span-color">*</span></label>
+                  <nz-select
+                           
+                            class="w-100"
+                            nzShowSearch
+                            nzAllowClear
+                            nzPlaceHolder="Select Company">
+                            <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                          </nz-select>
+                </div>
+              </div> -->
+              <div class="col-lg-4 col-sm-6 col-12">
+                <div class="input-blocks add-product">
+                  <label>SUPPLIER NAME <span class="required-span-color">*</span></label>
+                  <nz-select
+                            [(ngModel)]="obj.supplierAccount.id"
+                            [ngModelOptions]="{ standalone: true }"
+                            class="w-100"
+                            nzShowSearch
+                            nzAllowClear
+                            nzPlaceHolder="Select name">
+                            <nz-option *ngFor="let u of parties" [nzLabel]="u.accountName" [nzValue]="u.id"></nz-option>
+                          </nz-select>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 col-12">
+                <div class="input-blocks">
+                  <label>COMPANY<span class="required-span-color">*</span></label>
+                  <nz-select
+                    class="w-100"
+                    nzShowSearch
+                    nzAllowClear
+                    nzPlaceHolder="Select company">
+                    <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+                  </nz-select>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 col-12">
+                <div class="input-blocks add-product">
+                  <label>FROM DATE<span class="required-span-color">*</span></label>
+                  <input class="w-100" nz-input type="date" name="" id="" [(ngModel)]="obj.fromDate"
+                   [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 col-12">
+                <div class="input-blocks add-product">
+                  <label>TO DATE<span class="required-span-color">*</span></label>
+                  <input class="w-100" nz-input type="date" name="" id="" [(ngModel)]="obj.toDate"
+                  [ngModelOptions]="{standalone: true}" >
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-6 col-12">
+                <div class="input-blocks add-product">
+                  <label>ITEM <span class="required-span-color">*</span></label>
+                  <nz-select
+                            [(ngModel)]="obj.itemDef.id"
+                            [ngModelOptions]="{ standalone: true }"
+                            class="w-100"
+                            nzShowSearch
+                            nzAllowClear
+                            nzPlaceHolder="Select Company">
+                            <nz-option *ngFor="let i of itemDefs" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+                          </nz-select>
+                </div>
+              </div> 
+              <div class="col-lg-4 col-sm-6 col-12 text-end" style="margin-top: 3%;">
+                <button type="submit" class="btn btn-submit add-sale" (click)="search()">SEARCH</button>
+              </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Filter -->
+      <div class="table-responsive">
+        
+          <cdk-virtual-scroll-viewport
+          orientation="vertical"
+          class="scroll-demo"
+          itemSize="50">
+      
+        <nz-table #ITableRef [nzData]="['*']" [nzFrontPagination]="false" class="table  datanew">
+          <thead>
+            <tr>
+              <!-- <th class="no-sort">
+                  <label class="checkboxs"  (click)="selectAll(initChecked)">
+                    <input type="checkbox" id="select-all" [(ngModel)]="initChecked" >
+                    <span class="checkmarks"></span>
+                  </label>
+                </th> -->
+                <th>#</th>
+                <th>VEHICAL <br></th>
+                <th>PARTY <br>REMARKS</th>
+                <th><i style="color: green;">1st.WEIGHT </i><br>1st DATE</th>
+                <th><i style="color: green;"> 2nd.WEIGHT </i><br>2nd DATE</th>
+                <th>NET WEIGHT</th>
+                <th>PARTY <br> WEIGHT</th>
+                <!-- <th>USER</th> -->
+                <th>ACTION <br></th>
+            </tr>
+          </thead>
+          <tbody class="sales-list">
+            <!-- @for (data of tableData; track data) { -->
+              <tr *ngFor="let data of kanta; let i = index">
+                <td>
+                   {{i + 1}}
+                  </td>
+                <td>{{data.vehicalNo}}</td>
+                <td style="width: 25%px; flex-wrap: wrap;white-space: normal;">{{ data.supplierAccount ? data.supplierAccount.accountName : 'N/A' }}</td>
+                <!-- <td>{{data.number}}</td> -->
+                <td><i i style="color: green;">{{data.firstWeight}}</i> <br>{{data.dummyFirstDate}} <br>{{data.firstTime}}</td>
+              <td><i i style="color: green;">{{data.secondWeight}}</i> <br>{{data.dummySecondDate}} <br>{{data.secondTime}}</td>
+              <td>{{data.netWeight}}</td>
+              <td></td>
+              <td class="action-table-data">
+                <div class="edit-delete-action">
+                  <a class="me-2 p-2" href="javascript:void(0);" (click)="editWeight(data)" data-bs-toggle="modal" data-bs-target="#editpayment">
+                    <i class="feather icon-edit feather-edit"></i>
+                  </a>
+                </div>
+              </td>
+          
+                </tr>
+              <!-- } -->
+           
+            </tbody>
+          </nz-table>
+        </cdk-virtual-scroll-viewport>
+      
+    </div>
+      <!-- <app-custom-pagination></app-custom-pagination> -->
+      <!-- <app-loading-spinner [isLoading]="isLoading"></app-loading-spinner> -->
+    </div>
+  </div>
+ 
+  <div class="modal fade" id="editpayment" tabindex="-1" aria-labelledby="editpayment" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 custom-modal-header">
+          <div class="page-title">
+            <h4>Complete Weight Entry</h4>
+          </div>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body custom-modal-body">
+          <form>
+           
+            <div class="row">
+              <div class="col-sm-6 col-12">
+                <div class="input-blocks">
+                  <label>Location<span class="required-span-color">*</span></label>
+                  <nz-select [(ngModel)]="entry.location.id" name="location" class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select location">
+                    <nz-option *ngFor="let u of location" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                  </nz-select>
+                </div>
+              </div>
+              
+              <div class="col-sm-6 col-12">
+                <div class="input-blocks">
+                  <label>Thekedar <span class="required-span-color">*</span></label>
+                  <nz-select [(ngModel)]="entry.thekedar.id" name="thekedar" class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select thekedar">
+                    <nz-option *ngFor="let u of thekedar" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                  </nz-select>
+                </div>
+              </div>
+              <div class="col-sm-6 col-12">
+                <div class="input-blocks">
+                  <label>Munshi <span class="required-span-color">*</span></label>
+                  <nz-select [(ngModel)]=entry.monshi.id [ngModelOptions]="{standalone: true}"
+                   class="w-100" nzShowSearch nzAllowClear
+                  nzPlaceHolder="Select monshi">
+                 <nz-option *ngFor="let u of monshi" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+               </nz-select>
+                </div>
+              </div>
+              <div class="col-sm-6 col-12">
+                <div class="input-blocks">
+                  <label> Jute Bags</label>
+                  <input class="w-100" [(ngModel)]="entry.juteBag" [ngModelOptions]="{standalone:true}" type="text" >
+                </div>
+              </div>
+              <div class="col-sm-6 col-12">
+                <div class="input-blocks">
+                  <label>PP Bags</label>
+                  <input class="w-100" type="text" [(ngModel)]="entry.plasticBag" [ngModelOptions]="{standalone:true}">
+                </div>
+              </div>
+               <div class="col-sm-6 col-12">
+                <div class="input-blocks">
+                  <label>Moisture</label>
+                  <div class="input-groupicon calender-input">
+                    <input type="text" [(ngModel)]=entry.moisture name="moisture" >
+                  </div>
+                </div>
+              </div> 
+              <div class="col-sm-6 col-12">
+                <div class="input-blocks">
+                  <label>Remarks</label>
+                  <input class="w-100" type="text" [(ngModel)]="entry.monshiRemarks" [ngModelOptions]="{standalone: true}">
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="input-blocks">
+                  <label >Bags</label>
+                </div>
+                {{ entry.bags }}
+              </div>
+            </div>
+            
+            <div class="col-lg-12">
+              <div class="modal-footer-btn mb-3 me-3">
+                <button type="button" id="cancelButton" class="btn btn-cancel me-2" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-submit" (click)="editSave()">Save Changes</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

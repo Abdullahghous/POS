@@ -1,0 +1,43 @@
+<div class="card table-list-card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table >
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Location</th>
+                        <th>Bags</th>
+                        <th>Activity</th>
+                        <th>Mazdory</th>
+                        <th>Stuts</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td><input type="text" name=""></td>
+                        <td><nz-select [(ngModel)]="obj.location">
+                            <nz-option *ngFor="let l of getLocation" [nzLabel]="l.name" [nzValue]="l.id"></nz-option>
+                        </nz-select> </td>
+                        <td><input class="p-0" type="text" name=""></td>
+                        <td><input class="w-100" type="text"></td>
+                        <td><input class="w-100" type="text" name=""></td>
+                        <td><input class="w-100" type="text" name=""></td>
+                        <td>
+                            <div class="edit-delete-action">
+                              <a href="javascript:void(0);" class="btn btn-added" >
+                                <i class="feather icon-plus-circle me-2"></i>
+                              </a>
+                              <a class="confirm-text p-2" href="javascript:void(0);"  style="color: red;">
+                                <i class="feather icon-trash-2 feather-trash-2"></i>
+                              </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

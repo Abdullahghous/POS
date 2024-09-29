@@ -30,6 +30,7 @@ export class PurchaseOrderReportComponent {
   showFilter = false;
   dataSource!: MatTableDataSource<purchaseOrderReport>;
   public searchDataValue = '';
+  
   //** / pagination variables
 
   constructor(
