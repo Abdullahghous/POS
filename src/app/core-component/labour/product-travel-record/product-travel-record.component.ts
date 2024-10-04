@@ -68,7 +68,7 @@ export class ProductTravelRecordComponent {
       //     total = item.hiddenRate * item.bags;
       //   }
       // });
-        // console.log(res,'trrrrrvll');
+        console.log(res,'trrrrrvll');
         this.travel=res;
       }
     )

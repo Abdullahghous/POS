@@ -154,13 +154,14 @@
               <td>{{data.date}}</td>
               <td>{{data.supplier}} </td>
               <td>{{data.reference}}</td>
-            <td><span class="badges" [ngClass]="{
-                            'status-badge': data.status === 'Received',
-                            'unstatus-badge': data.status === 'Pending',
-                            'status-badge-ordered': data.status === 'Ordered'
-                          }">
-                {{ data.status }}
-              </span></td>
+            <td><span 
+              class="badges" 
+              [ngClass]="{
+                'status-badge': data.status === true,
+                'unstatus-badge': data.status === false
+              }">
+              {{ data.status === true ? 'COMPLETED' : 'PENDING' }} 
+            </span></td>
               <td>{{data.grandTotal}}</td>
               <td>{{data.paid}}</td>
               <td>{{data.due}}</td>
