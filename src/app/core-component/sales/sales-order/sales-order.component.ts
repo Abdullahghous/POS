@@ -47,7 +47,11 @@ export class SalesOrderComponent implements OnInit {
      private el: ElementRef,
      private allApiService:AllApiService
     
-  ) {}
+  ) {
+    const today = new Date();
+    this.obj.fromDate = today.toISOString().split('T')[0];
+    this.obj.toDate = today.toISOString().split('T')[0];
+  }
 
 
 obj={

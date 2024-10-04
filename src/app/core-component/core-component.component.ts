@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, ChangeDetectorRef } from '@angular/core';
 import {
   NavigationEnd,
   NavigationStart,
@@ -14,7 +14,6 @@ import { url } from '../shared/model/sidebar.model';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AuthServiceService } from '../core/service/http/auth-service.service';
 import { environment } from 'src/environments/environment';
-import { SpinnerService } from '../core/core.index';
 import { LoadingService } from '../core/service/allApi/loadingService';
 
 @Component({
@@ -43,10 +42,10 @@ export class CoreComponentComponent implements OnInit {
   last = '';
   isLoading = false;
   private loadingSubscription: Subscription;
-  ngAfterViewInit() {
-    this.isLoading =false;
-    // Ensure Angular runs a new change detection cycle
-  }
+  // ngAfterViewInit() {
+  //   this.isLoading =false;
+  //   // Ensure Angular runs a new change detection cycle
+  // }
   constructor(
     private Router: Router,
     private settings: SettingsService,
@@ -55,7 +54,9 @@ export class CoreComponentComponent implements OnInit {
     private renderer: Renderer2,
     private authService: AuthServiceService,
     private loadingService:LoadingService,
+    private cdr: ChangeDetectorRef
   ) {
+
     this.sidebar.toggleMobileSideBar.subscribe((res: string) => {
       if (res == 'true' || res == 'true') {
         this.mobileSidebar = true;
@@ -101,11 +102,12 @@ export class CoreComponentComponent implements OnInit {
         this.renderer.removeClass(document.body, 'dark-select');
       }
     });
-    this.getRoutes(this.Router);
+    // this.getRoutes(this.Router);
     this.loadingSubscription = this.loadingService.isLoading$.subscribe(isLoading => {
       //debugger;
       // Update isLoading variable
       this.isLoading =  isLoading;
+      this.cdr.detectChanges();
     });
   }
 

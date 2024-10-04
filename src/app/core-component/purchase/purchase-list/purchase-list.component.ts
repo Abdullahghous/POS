@@ -96,8 +96,8 @@ export class PurchaseListComponent implements OnInit {
     "voucherCode": "0",
     "inventoryVoucherType": "PJV",
     "searchByDate": "3",
-    "fromDate": "2024-01-07",
-    "toDate": "2024-09-07",
+    "fromDate": new Date().toISOString().substring(0, 10),
+    "toDate": new Date().toISOString().substring(0, 10),
     "postedUnPosted": "2"
 }
 search(){

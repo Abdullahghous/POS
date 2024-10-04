@@ -34,16 +34,21 @@ export class ProductLocationEntryComponent {
       }
     );
   }
-  addMunshi() { 
-    this.isButtonDisabled = true;
+  addLocation() { 
+    if(! this.obj.name){
+      this.snackBarService.showError('please fill name requrid fields !');
+      return
+    }
     this.apiService.post('location/addOrUpdate', this.obj).subscribe(
       (res) => {
+        debugger
+        document.getElementById('cancelButton')?.click();
         if (res) {
           this.snackBarService.showSuccess('Record Added Successfully!');
           // Reload the page after showing the success message
           setTimeout(() => {
-            window.location.reload();
-          }, 1000); // Add a small delay to allow the user to see the success message
+            this.getLocationData();
+          }, ); // Add a small delay to allow the user to see the success message
         } else {
           this.snackBarService.showError('Please fill all the required fields!');
         }
@@ -54,7 +59,14 @@ export class ProductLocationEntryComponent {
       }
     );
   }
-  editMunshi(edit:any){ 
+  cancel(){
+    this.obj={
+      name:'',
+      address:'',
+      mobile:''
+    }
+  }
+  editLocatin(edit:any){ 
  
     this.obj =edit;
     console.log(this.obj,"dsddsdsdas");

@@ -1,68 +1,45 @@
 <div class="page-header">
-    <div class="add-item d-flex">
-        <div class="page-title">
-          <h4>Thekedar List</h4>
-          <h6>Manage Your Thekedar</h6>
-        </div>
+  <div class="add-item d-flex">
+      <div class="page-title">
+        <h4>Thekedar List</h4>
+        <h6>Manage Your Thekedar</h6>
       </div>
-      <ul class="table-top-head">
-        <li>
-          <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Pdf" matTooltipPosition="above"><img
-          src="assets/img/icons/pdf.svg" alt="img"></a>
-        </li>
-        <li>
-          <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Excel" matTooltipPosition="above"><img
-          src="assets/img/icons/excel.svg" alt="img"></a>
-        </li>
-        <li>
-          <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Print" matTooltipPosition="above"><i
-          class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
-        </li>
-        <li>
-          <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Refresh" matTooltipPosition="above"><i
-          class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
-        </li>
-        <li>
-          <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Collapse"
-            matTooltipPosition="above" id="collapse-header"> @if (!isCollapsed) {
-            <i class="feather icon-chevron-up feather-chevron-up"></i>
-          }
-          @if (isCollapsed) {
-            <i class="feather icon-chevron-down feather-chevron-down"></i>
-          }</a>
-        </li>
-      </ul>
-      <div class="page-btn">
-        <a href="javascript:void(0);" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-sales-new"><i
-        class="feather icon-plus-circle me-2"></i> Add New Thekedar</a>
-      </div>
+    </div>
+    <ul class="table-top-head">
+      <li>
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Pdf" matTooltipPosition="above"><img
+        src="assets/img/icons/pdf.svg" alt="img"></a>
+      </li>
+      <li>
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Excel" matTooltipPosition="above"><img
+        src="assets/img/icons/excel.svg" alt="img"></a>
+      </li>
+      <li>
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Print" matTooltipPosition="above"><i
+        class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
+      </li>
+      <li>
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Refresh" matTooltipPosition="above"><i
+        class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
+      </li>
+      <li>
+        <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Collapse"
+          matTooltipPosition="above" id="collapse-header"> @if (!isCollapsed) {
+          <i class="feather icon-chevron-up feather-chevron-up"></i>
+        }
+        @if (isCollapsed) {
+          <i class="feather icon-chevron-down feather-chevron-down"></i>
+        }</a>
+      </li>
+    </ul>
+    <div class="page-btn">
+      <a href="javascript:void(0);" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#product-record"><i
+      class="feather icon-plus-circle me-2"></i> Add New Thekedar</a>
+    </div>
 </div>
 <div  class="card table-list-card">
-     <div class="table-responsive">
-      <!-- <nz-table #nzTable [nzData]="listOfData" nzTableLayout="fixed">
-        <thead>
-          <tr>
-            <th nzWidth="60px"></th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Address</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (data of nzTable.data; track data) {
-            <tr>
-              <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
-              <td>{{ data.name }}</td>
-              <td>{{ data.age }}</td>
-              <td>{{ data.address }}</td>
-            </tr>
-            <tr [nzExpand]="expandSet.has(data.id)">
-              <span>{{ data.description }}</span>
-            </tr>
-          }
-        </tbody>
-      </nz-table> -->
-    </div><nz-table #nzTable [nzData]="thekedarList" nzTableLayout="fixed"></nz-table>
+   <div class="table-responsive">
+    <!-- <nz-table #nzTable [nzData]="listOfData" nzTableLayout="fixed">
       <thead>
         <tr>
           <th nzWidth="60px"></th>
@@ -84,165 +61,162 @@
           </tr>
         }
       </tbody>
-    </nz-table>
-</div>
- 
+    </nz-table> -->
+     <nz-table #nestedTable [nzData]="thekedarList" nzSize="middle" [nzPageSize]="10" [nzFrontPagination]="false" [nzBordered]="true" >
+       <thead>
+       <tr>
+         <th nzWidth="1%"></th>
+         <th nzWidth="25%">Name</th>
+         <th nzWidth="15%">Mobile</th>
+         <th nzWidth="35%">Address</th>
+         <th nzWidth="5%">Action</th>
+       </tr>
+       </thead>
+       <tbody>
+       <ng-template ngFor let-parentData [ngForOf]="thekedarList">
+         <tr>
+
+           <td [(nzExpand)]="parentData.expand"  ></td>
+           <td>{{ parentData.name }}</td>
+           <td>{{ parentData.mobile }}</td>
+           <td>{{ parentData.address }}</td>
+           <td class="action-table-data">
+             <div class="edit-delete-action">
+               <a class="me-2 p-2" href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
+               data-bs-target="#product-record" (click)="editThekedar(parentData)" >
+                 <i class="feather icon-edit feather-edit"></i>
+               </a>
+              
+             </div>
+           </td>
+         </tr>
+
+         <!-- Inner Table, expanded when parentData.expand is true -->
+
+         <tr [nzExpand]="parentData.expand"   >
+        <!-- <tr *ngFor="let heading of parentData.thekedarEntries; let chailIndex=index"  [nzExpand]="heading.expand">-->
+
+               <nz-table #innerTable1 [nzData]="parentData.thekedarEntries" nzSize="middle" [nzShowPagination]="false">
+                 <thead>
+                 <tr style="color: red">
+                   <th>Item Name</th>
+                   <th>Show Rate</th>
+                   <th>Hidden Rate</th>
+                   <th> Date</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 <tr *ngFor="let entry of parentData.thekedarEntries">
+                   <td>{{ entry.itemSubCategory?.formattedCode }} {{ entry.itemSubCategory?.name }}</td>
+                   <td>{{ entry.showRate }}</td>
+                   <td>{{ entry.hiddenRate }}</td>
+                   <td>{{ entry.date }}</td>
+                 </tr>
+                 </tbody>
+               </nz-table>
+
+
+         </tr>
+       </ng-template>
+       </tbody>
+     </nz-table>
+
+
+
+   </div>
+
 <!-- <model> -->
-    <div class="modal fade" id="add-sales-new" tabindex="-1" aria-labelledby="editpayment" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header border-0 custom-modal-header">
-              <div class="page-title">
-                <h4>ADD Details</h4>
+  <div class="modal fade" id="product-record" tabindex="-1" aria-labelledby="editpayment" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border-0 custom-modal-header">
+            <div class="page-title">
+              <h4>ADD Details</h4>
+            </div>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body custom-modal-body">
+            <form>
+              <div class="row">
+                <div class="col-lg-3 col-sm-6 col-12">
+                  <div class="input-blocks add-product">
+                    <label>NAME <span class="required-span-color">*</span></label>
+                    <input type="text" class="form-control" required
+                    [(ngModel)]="thekedar.name" [ngModelOptions]="{standalone: true}"  />
+                  </div>
+                </div>
+                 <div class="col-lg-3 col-sm-6 col-12">
+                  <div class="input-blocks add-product">
+                    <label>ADDRESS <span class="required-span-color">*</span></label>
+                    <input type="text" class="form-control"
+                    [(ngModel)]="thekedar.address" [ngModelOptions]="{standalone: true}" />
+                  </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 col-12">
+                  <div class="input-blocks add-product">
+                    <label>PHONE No <span class="required-span-color">*</span></label>
+                    <input type="text" class="form-control"
+                    [(ngModel)]="thekedar.mobile" [ngModelOptions]="{standalone: true}"  />
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th style="padding-right: 10px" nzWidth="45%">#</th>
+                        <th  style="width: 20%">Item</th>
+                        <th style="width: 20%">Activity</th>
+                        <th nzWidth="5%">Show Rate</th>
+                        <th nzWidth ="5%">Hidden Rate</th>
+                        <th> Date</th>
+                        <!-- <th>To Date</th> -->
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of thekedar.thekedarEntries ; let i=index">
+                        <td>{{i+1}}</td>
+                        <td> <nz-select class="w-100" [(ngModel)]="data.itemSubCategory.id" [ngModelOptions]="{standalone:true}"
+                          nzShowSearch nzAllowClear nzPlaceHolder="Select item">
+                         <nz-option *ngFor="let i of subCategory"   [nzLabel]="i.formattedCode + ' ' + i.name"  [nzValue]="i.id"></nz-option>
+                         </nz-select></td>
+                        <td><nz-select
+                          [(ngModel)]="data.activity.id"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="w-100"
+                          nzShowSearch
+                          nzAllowClear
+                          nzPlaceHolder="Select activity">
+                          <nz-option *ngFor="let i of activity" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+                        </nz-select></td>
+                        <td><input nz-input class="form-control"  onfocus="this.select()" [(ngModel)]="data.showRate" type="number" [ngModelOptions]="{standalone:true}"></td>
+                        <td><input nz-input class="form-control"  onfocus="this.select()" [(ngModel)]="data.hiddenRate" type="number" [ngModelOptions]="{standalone:true}"></td>
+                        <td><input nz-input class="form-control"  [(ngModel)]="data.date" type="date" [ngModelOptions]="{standalone: true}"></td>
+                        <!-- <td><input nz-input class="form-control"  [(ngModel)]="data.toDate" type="date" [ngModelOptions]="{standalone: true}"></td> -->
+                        <div class="edit-delete-action">
+                          <a href="javascript:void(0);" class="btn btn-added" (click)="addNewRow(data, i)">
+                            <i class="feather icon-plus-circle me-2"></i>
+                          </a>
+                          <a class="confirm-text p-2" href="javascript:void(0);" (click)="deleteRow(i)" style="color: red;">
+                            <i class="feather icon-trash-2 feather-trash-2"></i>
+                          </a>
+                        </div>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body custom-modal-body">
-              <form>
-                <div class="row">
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <div class="input-blocks add-product">
-                      <label>NAME <span class="required-span-color">*</span></label>
-                      <input type="text" class="form-control" 
-                      [(ngModel)]="thekedar.name" [ngModelOptions]="{standalone: true}"  />
-                    </div>
-                  </div>
-                   <!-- <div class="col-lg-4 col-sm-6 col-12">
-                    <div class="input-blocks add-product">
-                      <label>ADDRESS <span class="required-span-color">*</span></label>
-                      <input type="text" class="form-control" 
-                      [(ngModel)]="obj.address" [ngModelOptions]="{standalone: true}" />
-                    </div>
-                  </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
-                      <div class="input-blocks add-product">
-                        <label>HIDDEN RATE <span class="required-span-color">*</span></label>
-                        <input type="text" class="form-control" 
-                        [(ngModel)]="obj.hideen_rate" [ngModelOptions]="{standalone: true}" />
-                      </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
-                    <div class="input-blocks add-product">
-                      <label>SHOW RATE <span class="required-span-color">*</span></label>
-                      <input type="text" class="form-control" 
-                      [(ngModel)]="obj.showRate" [ngModelOptions]="{standalone: true}" />
-                    </div>
-                  </div>
-                  <div class="col-lg-4 col-sm-6 col-12">
-                    <div class="input-blocks add-product">
-                      <label>PHONE No <span class="required-span-color">*</span></label>
-                      <input type="text" class="form-control" 
-                      [(ngModel)]="obj.mobile" [ngModelOptions]="{standalone: true}"  />
-                    </div>
-                  </div> -->
-                  <div class="table-responsive">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Item</th>
-                          <th>Show Rate</th>
-                          <th>HIDDEN Rate</th>
-                          <th>Date</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let data of thekedar.thekedarEntries">
-                          <td></td>
-                          <td><nz-select
-                            [(ngModel)]="data.itemDef"
-                            [ngModelOptions]="{ standalone: true }"
-                            class="w-100"
-                            nzShowSearch
-                            nzAllowClear
-                            nzPlaceHolder="Select year">
-                            <nz-option *ngFor="let f of itemDefs" [nzLabel]="f.name" [nzValue]="f.id"></nz-option>
-                          </nz-select></td>
-                          <td><input nz-input class="form-control" [(ngModel)]="data.showRate" type="text" name="showRate" ></td>
-                          <td><input nz-input class="form-control" [(ngModel)]="data.hiddenRate" type="text" name="hiddenRate" ></td>
-                          <td><input nz-input class="form-control" [(ngModel)]="data.date" type="date" name="date"></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="col-lg-12 text-end">
-                  <button type="button" class="btn btn-cancel add-cancel me-3"
-                  data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" class="btn btn-submit add-sale" (click)="addThekedar()" >Submit</button>
-                </div>
-              </form>
-            </div>
+              <div class="col-lg-12 text-end">
+                <button type="button" class="btn btn-cancel add-cancel me-3" (click)="cancel()"
+                data-bs-dismiss="modal" id="cancelbtn">Cancel</button>
+                <button type="submit" class="btn btn-submit add-sale" (click)="addThekedar()" >Submit</button>
+              </div>
+            </form>
           </div>
         </div>
-      </div> 
-    
-      <div class="modal fade" id="edit-sales-new">
-        <div class="modal-dialog edit-sales-modal">
-          <div class="modal-content">
-            <div class="page-wrapper p-0 m-0">
-              <div class="content p-0">
-                <div class="page-header p-4 mb-0">
-                  <div class="add-item new-sale-items d-flex">
-                    <div class="page-title">
-                      <h4>Edit Thekedar</h4>
-                    </div>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-body">
-                    <form>
-                      <div class="row">
-                        <div class="col-lg-4 col-sm-6 col-12">
-                          <div class="input-blocks add-product">
-                            <label>NAME <span class="required-span-color">*</span></label>
-                            <input type="text" class="form-control" 
-                            [(ngModel)]="thekedar.name" [ngModelOptions]="{standalone: true}"  />
-                          </div>
-                        </div>
-                         <!-- <div class="col-lg-4 col-sm-6 col-12">
-                          <div class="input-blocks add-product">
-                            <label>ADDRESS <span class="required-span-color">*</span></label>
-                            <input type="text" class="form-control" 
-                            [(ngModel)]="obj.address" [ngModelOptions]="{standalone: true}"  />
-                          </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-12">
-                          <div class="input-blocks add-product">
-                            <label>HIDDEN RATE <span class="required-span-color">*</span></label>
-                            <input type="text" class="form-control" 
-                            [(ngModel)]="obj.hideen_rate" [ngModelOptions]="{standalone: true}" />
-                          </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 col-12">
-                        <div class="input-blocks add-product">
-                          <label>SHOW RATE <span class="required-span-color">*</span></label>
-                          <input type="text" class="form-control" 
-                          [(ngModel)]="obj.showRate" [ngModelOptions]="{standalone: true}" />
-                        </div>
-                      </div>
-                        <div class="col-lg-4 col-sm-6 col-12">
-                          <div class="input-blocks add-product">
-                            <label>PHONE No <span class="required-span-color">*</span></label>
-                            <input type="text" class="form-control" 
-                            [(ngModel)]="obj.mobile"  />
-                          </div>
-                        </div> -->
-                      </div>
-                    <div class="col-lg-12 text-end">
-                      <button type="button" class="btn btn-cancel add-cancel me-3"
-                      data-bs-dismiss="modal">Cancel</button>
-                      <button type="submit" class="btn btn-submit add-sale" (click)="addThekedar()" >Submit</button>
-                    </div>
-                    </form>
-                     </div>
-                   </div>
-               </div>
-            </div>
+      </div>
+    </div>
+
+  

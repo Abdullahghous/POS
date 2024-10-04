@@ -55,9 +55,11 @@ export class PurchaseReportComponent implements OnInit {
 }
 onSave() {
   
-  this.apiService.post('reports/purchase_report', this.obj).subscribe((res) => {
+  this.apiService.post('reports/purchase_report', this.obj).subscribe((res:any) => {
     if (res) {
-
+      res.forEach((element:any) => {
+        element.createdDate =  this.allApiService.formatDateDayMonthYear(element.createdDate);
+      });
       this.purchaseReport = res;
       // console.log(res ,'obnjjjjjj')
     //

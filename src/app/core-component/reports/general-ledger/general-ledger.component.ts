@@ -21,7 +21,11 @@ export class GeneralLedgerComponent implements OnInit {
   constructor(private sidebar: SidebarService,
     private apiService: HttpService,
     private allApiService:AllApiService,
-    ){}
+    ){
+      const today = new Date();
+      this.obj.fromDate = today.toISOString().split('T')[0];
+      this.obj.toDate = today.toISOString().split('T')[0];
+    }
     isCollapsed: boolean = false;
     toggleCollapse() {
       this.sidebar.toggleCollapse();
@@ -42,8 +46,8 @@ export class GeneralLedgerComponent implements OnInit {
     "branchId": "0",
     "voucherStatusId": "0",
     "financialYearId": "5",
-    "fromDate": "2022-08-16",
-    "toDate": "2023-08-16",
+    "fromDate": "",
+    "toDate": "",
     "accountCode": "22121011001",
     "paymentType": "0"
 }

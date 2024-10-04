@@ -22,7 +22,7 @@
             <div><h3>Purchase Voucher</h3></div>
             
                   <div *ngIf="pjvVoucher" style="display: flex;flex-wrap:wrap; border: 1px solid #fcfcfd;border-radius: 10px;
-                  text-align: right; width: 100%;background-color: azure;">
+                  text-align: right; width: 100%;background-color: rgb(241, 247, 248);">
                    
                    <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="12" nzXl="8" style="flex-wrap:wrap;text-align: right; width: 100%;">
                     <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24" style="display: flex; flex-wrap: wrap;margin-top: 4%;">
@@ -84,7 +84,8 @@
                      <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
                        <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
                          BAG</nz-form-label>
-                       <input [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].bags" onfocus="this.select()" name="bags" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+                       <input [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].bags" (ngModelChange)="calculcate()"
+                        onfocus="this.select()" name="bags" nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
                       <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
                         <input style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel" readonly>
                      </div>
@@ -92,7 +93,8 @@
                      <div style="display: flex;flex-wrap: wrap;margin-top: 4%;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
                          <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
                            GROSS WEIGHT</nz-form-label>
-                         <input [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].totalKg" onfocus="this.select()" name="totalKg"  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
+                         <input [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].totalKg" (ngModelChange)="calculcate()"
+                          onfocus="this.select()" name="totalKg"  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7" nz-input="tel">
                         <div  nz-col nzXs="7" nzSm="7" nzMd="7" nzLg="7" nzXl="7">
                           <input style="width: 90%;flex-direction: wrap;text-align: right;" nz-input="tel" readonly>
                        </div>
@@ -256,7 +258,7 @@
                    </div> -->
                   </div>
                   <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="8" nzXl="8" style="flex-direction: column;overflow: auto;text-align: right; width: 100%;">
-                    <!-- <div style="justify-content: center;text-align: center;margin-top: 4%;">
+                    <div style="justify-content: center;text-align: center;margin-top: 4%;">
                       <i><h3>Bardana Informition</h3></i>
                      
                     </div>
@@ -267,13 +269,13 @@
                       <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
                         <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
                           PP R</nz-form-label>
-                        <input [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].ppCredit" name="purchaseRate" 
+                        <input [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].plasticBag " name="purchaseRate" 
                         (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
                        </div>
                        <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="6" nzXl="12">
                         <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
-                          ISS</nz-form-label>
-                        <input  [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].ppDebit" name="bankTaxRate" 
+                          Rate</nz-form-label>
+                        <input  [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].plasticBagRate" name="bankTaxRate" 
                         (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
                        </div>
                       </div>
@@ -281,13 +283,13 @@
                         <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
                           <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
                             JUT R</nz-form-label>
-                          <input  [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].juteCredit" name="bankTaxRate" 
+                          <input  [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].juteBag" name="bankTaxRate" 
                           (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
                          </div>
                          <div style="display: flex;flex-wrap: wrap;" nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="6" nzXl="12">
                           <nz-form-label style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10">
-                            ISS</nz-form-label>
-                          <input  [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].juteDebit" name="bankTaxRate" 
+                            Rate</nz-form-label>
+                          <input  [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].juteBagRate" name="bankTaxRate" 
                           (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
                          </div>
                         </div>
@@ -296,7 +298,7 @@
                             REM</nz-form-label>
                           <input  [(ngModel)]="pjvVoucher.itemStock.itemStockEntries[0].rem" name="bankTaxRate" 
                           (ngModelChange)="calculcate()" nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" nz-input="tel">
-                         </div> -->
+                         </div>
                         <div class="col-lg-8 col-sm-8 col-8" style="flex-direction: column;overflow: auto;margin-left: 18%; margin-top: 4%; border: 2px solid #d0c5f1;text-align: right; width: 100%;">
 
                         </div>

@@ -9,7 +9,7 @@ import { ThekedarEntryComponent } from './thekedar-entry/thekedar-entry.componen
 // import { LoadingUnloadingEntryComponent } from './loading-unloading-entry/loading-unloading-entry.component';
 import { MonshiEntryComponent } from './monshi-entry/monshi-entry.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductTravelRecordComponent } from './product-travel-record/product-travel-record.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
@@ -32,7 +32,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     LabourModuleRoutingModule,
     NzTableModule,
     FormsModule,
-    NzSelectModule
+    NzSelectModule,
+    ReactiveFormsModule
   ]
 })
 export class LabourModuleModule { }

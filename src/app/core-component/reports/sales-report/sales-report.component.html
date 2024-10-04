@@ -104,7 +104,7 @@
                 <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
                   SUPPLIER ACCOUNT </label>
                   <div nz-col nzSm="17" nzMd="17" nzLg="17">
-                  <nz-select [(ngModel)]=obj.itemDefId [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear
+                  <nz-select  class="w-100" nzShowSearch nzAllowClear
                     nzPlaceHolder="Select Unit">
                    <nz-option *ngFor="let p of allParties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
                  </nz-select>
@@ -174,7 +174,7 @@
                   <div nz-col nzSm="17" nzMd="17" nzLg="17">
                   <nz-select [(ngModel)]=obj.accountCode [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear
                     nzPlaceHolder="Select Account">
-                   <nz-option ></nz-option>
+                   <nz-option *ngFor="let p of parties" [nzValue]="p.code" [nzLabel]="p.accountName"></nz-option>
                  </nz-select>
                </div>
               </div>

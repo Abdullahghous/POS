@@ -96,7 +96,7 @@
       <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
         <div class="card-body pb-0">
           <div class="row">
-            <div class="col-lg-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
                 <label>Company <span class="required-span-color">*</span></label>
                 <nz-select
@@ -111,7 +111,7 @@
               </div>
             </div>
             
-            <div class="col-lg-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-sm-6 col-12">
               <div>
                 <label>Branche <span class="required-span-color">*</span></label>
                 <nz-select
@@ -120,12 +120,12 @@
                   class="w-100"
                   nzShowSearch
                   nzAllowClear
-                  nzPlaceHolder="Select Unit">
+                  nzPlaceHolder="Select Branche">
                   <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
                 </nz-select>
               </div>
             </div>
-            <div class="col-lg-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
                 <label>SEARCH BY DATE<span class="required-span-color">*</span></label>
                 <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type"
@@ -136,7 +136,7 @@
                 </nz-select>
               </div>
             </div>
-            <div class="col-lg-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
                 <label>INVENTORY VOUCHER <span class="required-span-color">*</span></label>
                 <nz-select class="w-100" [(ngModel)]="obj.inventoryVoucherType" [ngModelOptions]="{standalone: true}" nzShowSearch nzAllowClear
@@ -146,7 +146,7 @@
                  </nz-select>
               </div>
             </div>
-            <div class="col-lg-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
                 <label>POSTED/UNPOSTED <span class="required-span-color">*</span></label>
                 <nz-select class="w-100" [(ngModel)]="obj.inventoryVoucherType" [ngModelOptions]="{standalone: true}" nzShowSearch nzAllowClear
@@ -157,14 +157,14 @@
                  </nz-select>
               </div>
             </div>
-            <div class="col-lg-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
                 <label>VOUCHER NO.<span class="required-span-color">*</span></label>
                 <input [(ngModel)]="obj.voucherCode" [ngModelOptions]="{standalone: true}" nz-input type="text" name="" id="">
               </div>
             </div>
            
-            <div class="col-lg-4 col-sm-6 col-12 text-end" style="margin-top: 3%;">
+            <div class="col-sm-6 col-12 text-end" style="margin-top: 3%;">
               <button type="submit" class="btn btn-submit add-sale" (click)="search()">SEARCH</button>
             </div>
         </div>

@@ -292,7 +292,7 @@ export class SidebarService {
       menu: [
         {
           menuValue: 'Complete Weight Entry',
-          icon: 'box',
+          icon: 'aperture',
           route: routes.completeWeightEntry,
           hasSubRoute: false,
           showSubRoute: false,
@@ -442,14 +442,14 @@ export class SidebarService {
         },
         {
           menuValue: 'Purchase Order Form',
-          icon: 'plus-square',
+          icon: 'file-plus',
           route: routes.purchaseOrderForm,
           hasSubRoute: false,
           showSubRoute: false,
         },
         {
           menuValue: 'Purchase Order List',
-          icon: 'file-minus',
+          icon: 'file',
           route: routes.purchaseOrderlist,
           hasSubRoute: false,
           showSubRoute: false,
@@ -538,7 +538,7 @@ export class SidebarService {
       menu: [
         {
           menuValue: 'New Voucher',
-          icon: 'plus-square',
+          icon: 'briefcase',
           route: routes.newVoucher,
           hasSubRoute: false,
           showSubRoute: false,
@@ -4418,7 +4418,7 @@ export class SidebarService {
     {
       tittle: 'Labour',
       hasSubRoute: true,
-      icon: 'assets/img/icons/printer.svg',
+      icon: 'assets/img/icons/Calculator .svg',
       showSubRoute: false,
       activeRoute: 'users',
       subRoutes: [

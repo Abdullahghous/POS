@@ -29,7 +29,7 @@
         <div class="table-top"> 
             <div class="card-body pb-0">
                 <div class="row">
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-3 col-sm-6 col-12">
                         <div class="input-blocks add-product">
                           <label>Company <span class="required-span-color">*</span></label>
                           <nz-select
@@ -38,14 +38,14 @@
                             class="w-100"
                             nzShowSearch
                             nzAllowClear
-                            nzPlaceHolder="Select Unit"
+                            nzPlaceHolder="Select Company"
                           >
                             <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
                           </nz-select>
                         </div>
                       </div>
                       
-                      <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="col-lg-3 col-sm-6 col-12">
                         <div class="input-blocks add-product">
                           <label>Branche <span class="required-span-color">*</span></label>
                           <nz-select
@@ -54,12 +54,12 @@
                             class="w-100"
                             nzShowSearch
                             nzAllowClear
-                            nzPlaceHolder="Select Unit">
+                            nzPlaceHolder="Select Branche">
                             <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
                           </nz-select>
                         </div>
                       </div>
-                      <div class="col-lg-4 col-sm-6 col-12">
+                      <div class="col-lg-3 col-sm-6 col-12">
                         <div class="input-blocks add-product">
                           <label>Financial Year <span class="required-span-color">*</span></label>
                           <nz-select
@@ -68,12 +68,12 @@
                             class="w-100"
                             nzShowSearch
                             nzAllowClear
-                            nzPlaceHolder="Select Unit">
+                            nzPlaceHolder="Select year">
                             <nz-option *ngFor="let f of financialYear" [nzLabel]="f.name" [nzValue]="f.id"></nz-option>
                           </nz-select>
                         </div>
                       </div>
-              <div class="col-lg-4 col-sm-6 col-12">
+              <div class="col-lg-3 col-sm-6 col-12">
                 <div class="input-blocks add-product">
                   <label>Purchase Order No <span class="required-span-color">*</span></label>
                   <input type="text" class="form-control" readonly />
@@ -128,7 +128,7 @@
                      </td>
                       <!-- <td><input type="text" class="form-control"  [(ngModel)]="data.account" [ngModelOptions]="{standalone: true}" (ngModelChange)="add(data)" /></td> -->
                       <!-- <td><input type="text" class="form-control" [(ngModel)]="data.mill" [ngModelOptions]="{standalone: true}" (ngModelChange)="add(data)" /></td> -->
-                      <td><input type="text" class="form-control" [(ngModel)]="data.rate" [ngModelOptions]="{standalone: true}"  /></td>
+                      <td><input required type="text" class="form-control" [(ngModel)]="data.rate" [ngModelOptions]="{standalone: true}"  /></td>
                       <td><input type="text" class="form-control" [(ngModel)]="data.kg" [ngModelOptions]="{standalone: true}" /></td>
                       <td><input type="text" class="form-control" [(ngModel)]="data.vehical" [ngModelOptions]="{standalone: true}"/></td>
                       <td><input type="date" class="form-control" [(ngModel)]="data.paymentDate" [ngModelOptions]="{standalone: true}" /></td>

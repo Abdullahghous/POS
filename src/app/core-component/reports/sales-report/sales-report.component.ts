@@ -62,6 +62,9 @@ export class SalesReportComponent implements OnInit {
         }
       });
     });
+    const today = new Date();
+    this.obj.fromDate = today.toISOString().split('T')[0];
+    this.obj.toDate = today.toISOString().split('T')[0];
   }
  
   
@@ -84,9 +87,11 @@ export class SalesReportComponent implements OnInit {
 }
   onSave() {
   
-    this.apiService.post('reports/sales_report', this.obj).subscribe((res) => {
+    this.apiService.post('reports/sales_report', this.obj).subscribe((res:any) => {
       if (res) {
-
+      res.forEach((element:any) => {
+        element.createdDate =  this.allApiService.formatDateDayMonthYear(element.createdDate);
+      });
         this.saleReport = res;
         console.log(res ,'obnjjjjjj')
       //
@@ -136,6 +141,13 @@ export class SalesReportComponent implements OnInit {
       this.financialYear = JSON.parse(financialYear);
        debugger
     }
+    const maxFinancialYear = this.financialYear.reduce((maxYear, currentYear) => {
+      debugger
+      return currentYear.id > maxYear.id ? currentYear : maxYear;
+  }, this.financialYear[0]);
+  this.obj.fromDate =maxFinancialYear.fromDate;
+  this.obj.toDate =maxFinancialYear.toDate;
+  this.obj.financialYearId =maxFinancialYear.id;
   }
   private getTableData(pageOption: pageSelection): void {
     this.data.getSalesReport().subscribe((apiRes: apiResultFormat) => {

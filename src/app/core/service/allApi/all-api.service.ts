@@ -16,6 +16,7 @@ export class AllApiService {
   searchButton: string | undefined;
   toggleTable: boolean | false = false;
   ledgerData: any;
+  itemDefs:any [] =[];
   partyList: any[] = [];
   branchList: any;
   AllBanks : AllBanks[] = [];
@@ -59,13 +60,13 @@ export class AllApiService {
   }
 
   public getBanks():Observable<AllBanks[]> {
-   return this.apiService.getObservable<AllBanks[]>('app/getAllBanks').pipe( 
+   return this.apiService.getObservable<AllBanks[]>('app/getAllBanks').pipe(
     catchError((error) => {
       console.error( 'Error fetching banks ', error);
       return of([]);
     }));
   }
- 
+
   public getItemDefs(): void {
     // Assuming getObservable method is used for consistency
     this.apiService.getObservable<any[]>('app/getAllItems').subscribe(
@@ -159,5 +160,16 @@ export class AllApiService {
     const day = d.getDate().toString().padStart(2, '0');
     const year = d.getFullYear();
     return `${day}-${month}-${year}`;
+  }
+  getItems(){
+    let items: any = localStorage.getItem('itemDefs');
+    if (items != null && JSON.parse(items).length != 0) {
+      this.itemDefs = JSON.parse(items);
+      return this.itemDefs;
+    }else{
+       this.getItemDefs();
+      items = localStorage.getItem('itemDefs');
+      return this.itemDefs = JSON.parse(items);
+    }
   }
 }

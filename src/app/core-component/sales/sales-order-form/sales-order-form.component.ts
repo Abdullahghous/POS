@@ -99,7 +99,7 @@ export class SalesOrderFormComponent implements OnInit {
       this.allApiService.financialYear();
       financialYear = localStorage.getItem('financialYear');
       this.financialYear = JSON.parse(financialYear);
-       debugger
+      //  debugger
     }
   }
   add(data:any){

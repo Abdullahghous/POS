@@ -47,13 +47,13 @@ export class PurchaseOrderFormComponent implements OnInit {
        {
            "id":  0,
        },
-    purchaseOrderDate: "2022-12-26",
+    purchaseOrderDate:new Date().toISOString().substring(0, 10),
     purchaseOrderEntries:[
       {"id": 0,
        "rate": 0,
         "kg": 0,
         "vehical": 0,
-          "paymentDate": "2022-12-26",
+          "paymentDate": new Date().toISOString().substring(0, 10),
         "itemDef":
        {
            "id": 0,

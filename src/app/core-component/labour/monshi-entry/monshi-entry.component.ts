@@ -38,12 +38,14 @@ export class MonshiEntryComponent {
     this.isButtonDisabled = true;
     this.apiService.post('monshi/addOrUpdate', this.obj).subscribe(
       (res) => {
+        debugger
+        document.getElementById('close')?.click();
         if (res) {
           this.snackBarService.showSuccess('Record Added Successfully!');
-          // Reload the page after showing the success message
+          
           setTimeout(() => {
-            window.location.reload();
-          }, 1000); // Add a small delay to allow the user to see the success message
+            this.getMonshiData();
+          }, 100); // Add a small delay to allow the user to see the success message
         } else {
           this.snackBarService.showError('Please fill all the required fields!');
         }
@@ -54,6 +56,13 @@ export class MonshiEntryComponent {
       }
     
     );
+  }
+  cancel(){
+    this.obj={
+      name:'',
+      address:'',
+      mobile:''
+    }
   }
   editMunshi(edit:any){ 
  

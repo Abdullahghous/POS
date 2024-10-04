@@ -126,7 +126,9 @@ export class SalesListComponent implements OnInit {
     private apiService: HttpService,
     private el: ElementRef
   ) {
-    
+    const today = new Date();
+    this.obj.fromDate = today.toISOString().split('T')[0];
+    this.obj.toDate = today.toISOString().split('T')[0];
     // this.addVoucher()
   }
 

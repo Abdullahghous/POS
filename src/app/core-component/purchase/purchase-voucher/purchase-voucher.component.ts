@@ -25,17 +25,17 @@ export class PurchaseVoucherComponent implements OnInit  {
     private el: ElementRef
   ){
     // const itemDefId = 1;
-     this.getItemById(this.itemDefId);
-    this.newVoucher();
+     this.newVoucher();
+    //  this.getItemById(this.itemDefId);
    
   }
   @HostListener('focus') onFocus() {
     this.el.nativeElement.select();
   }
   ngOnInit(): void {
-    this.newVoucher();
+    // this.newVoucher();
    
-    this.getItemById(this.itemDefId);
+    // this.getItemById(this.itemDefId);
     this.getAll()
   }
   public filter = false;
@@ -47,7 +47,7 @@ export class PurchaseVoucherComponent implements OnInit  {
 
   public getItemById(itemDefId: any) {
     console.log('Selected ItemDefId:', itemDefId); // Log the selected ID
-    debugger;
+    // debugger;
   
     this.apiService.getObservable(`app/item_def_detail?itemDefId=${itemDefId}&branchId=0&companyId=0&voucherStatusId=0`).subscribe(
       (res: any) => {
@@ -69,32 +69,48 @@ export class PurchaseVoucherComponent implements OnInit  {
     debugger
   }
   submitVoucher(){
-    this.isButtonDisabled = true;
+    const isValid = this.pjvVoucher.itemStock.itemStockEntries.every((item: any) => {
+      return (
+        item.bags !== null &&
+        item.bags !== 0 &&
+        // item.monshi.id !== null &&
+        // item.monshi.id !== 0 &&
+        item.amount !== null &&
+        item.amount !== 0 &&
+        item.totalKg !== null &&
+        item.totalKg !== 0 &&
+        item.itemDef.id !== null &&
+        item.itemDef.id !== 0 &&
+        this.pjvVoucher.itemStock.account.code  !==0
+      );
+    });
+    if (!isValid) {
+      this.snackBarService.showError('Please fill all the required fields input!');
+      return;
+    }
+  debugger
     this.apiService.post('app/add_or_update_voucher', this.pjvVoucher).subscribe(
         (res) => {
             console.log(res, 'looooog');
             if (res) {
               this.snackBarService.showSuccess('Order Added Successfully!');
-              // Reload the page after showing the success message
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000); // Add a small delay to allow the user to see the success message
+              this.newVoucher();
+              // Add a small delay to allow the user to see the success message
             } else {
               this.snackBarService.showError('Please fill all the required fields!');
             }
           },
           (error) => {
-            this.isButtonDisabled = false;
             this.snackBarService.showError('An error occurred while adding the record!');
           }
     );
   }
   newVoucher(){
-    this.isButtonDisabled = true;
+    debugger
     this.apiService.getObservable('app/new_voucher/pjv').subscribe(
         (res:any) => {
           this.pjvVoucher = res; 
-            console.log(res, 'looooog');
+            console.log(res, 'new===vouvher');
            
              if (res.itemStock) {
               res.itemStock.account = res.itemStock.account || { code: 0 };
