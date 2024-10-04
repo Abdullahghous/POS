@@ -40,7 +40,7 @@ export class ProductTravelRecordComponent {
       // thekedarEntry:{id:0},
       itemDef:{id:0},
       remarks: "",
-      status:true,
+      status:false,
       bags: 0,
       rate:0
       }
@@ -51,6 +51,7 @@ export class ProductTravelRecordComponent {
   activity: {id:0},
   thekedar:{id:0},
   itemDef:{id:0},
+  status:false,
   fromDate: new Date().toISOString().substring(0, 10),
   toDate: new Date().toISOString().substring(0, 10),
   
@@ -156,7 +157,7 @@ export class ProductTravelRecordComponent {
       // thekedarEntry:{id:0},
       itemDef:{id:0},
       remarks: "",
-      status:true,
+      status:false,
       bags: 0,
       rate:0
       }];
@@ -201,7 +202,7 @@ export class ProductTravelRecordComponent {
           // thekedarEntry:{id:0},
           itemDef:{id:0},
           remarks: "",
-          status:true,
+          status:false,
           bags: 0,
           rate:0
           })

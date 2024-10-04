@@ -128,6 +128,7 @@
                 <nz-select
                   [(ngModel)]="list.itemDef.id" [ngModelOptions]="{ standalone: true }"
                   class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select item">
+                  <nz-option nzLabel="All" [nzValue]="0"></nz-option>
                 <nz-option *ngFor="let i of itemDefs" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
                 </nz-select>
               </div>
@@ -137,6 +138,7 @@
                 <label>Location <span class="required-span-color">*</span></label>
                 <nz-select class="w-100" [(ngModel)]="list.location.id" [ngModelOptions]="{standalone:true}"
                  nzShowSearch nzAllowClear nzPlaceHolder="Select Location">
+                 <nz-option nzLabel="All" [nzValue]="0"></nz-option>
                 <nz-option *ngFor="let l of getLocation" [nzLabel]="l.name" [nzValue]="l.id"></nz-option>
                 </nz-select>
               </div>
@@ -146,6 +148,7 @@
                 <label>Activity <span class="required-span-color">*</span></label>
                 <nz-select class="w-100" [(ngModel)]="list.activity.id" [ngModelOptions]="{standalone:true}"
                 nzShowSearch nzAllowClear nzPlaceHolder="Select Activity">
+                <nz-option nzLabel="All" [nzValue]="0"></nz-option>
                   <nz-option *ngFor="let a of activity" [nzLabel]="a.name" [nzValue]="a.id"></nz-option>
                 </nz-select>
               </div>
@@ -155,6 +158,7 @@
                 <label>Mazdory<span class="required-span-color">*</span></label>
                 <nz-select class="w-100" [(ngModel)]="list.mazodory.id" [ngModelOptions]="{standalone:true}"
                 nzShowSearch nzAllowClear nzPlaceHolder="Select field">
+                <nz-option nzLabel="All" [nzValue]="0"></nz-option>
                   <nz-option *ngFor="let l of thekedarList" [nzLabel]="l.name" [nzValue]="l.id"></nz-option>
                 </nz-select>
               </div>
@@ -164,10 +168,31 @@
                 <label>Thekedar <span class="required-span-color">*</span></label>
                 <nz-select class="w-100" [(ngModel)]="list.location.id" [ngModelOptions]="{standalone:true}"
                 nzShowSearch nzAllowClear nzPlaceHolder="Select thekedar">
+                <nz-option nzLabel="All" [nzValue]="0"></nz-option>
                   <nz-option *ngFor="let t of thekedarList" [nzLabel]="t.name" [nzValue]="t.id"></nz-option>
+                  
                 </nz-select>
               </div>
             </div> 
+            <div class="col-lg-4 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>Status <span class="required-span-color">*</span></label>
+                <mat-select [(ngModel)]="list.status" [ngModelOptions]="{standalone: true}">
+                  <mat-option [value]="true">COMPLATED</mat-option>
+                  <mat-option [value]="false">PENDING</mat-option>
+                </mat-select>
+              </div>
+            </div> 
+            <!-- <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks">
+                <i class="feather icon-stop-circle info-img"></i>
+                <mat-select [(ngModel)]="list.status" [ngModelOptions]="{standalone: true}" class="space-select select"
+                  placeholder="Choose Status">
+                  <mat-option value="true">COMPLATED</mat-option>
+                  <mat-option value="false">PENDING</mat-option>
+                </mat-select>
+              </div>
+            </div>  -->
             <!-- <div class="col-lg-4 col-sm-6 col-12 text-end" style="margin-top: 3%;">
               <button type="submit" class="btn btn-submit add-sale" (click)="search()">SEARCH</button>
             </div> -->
@@ -175,6 +200,10 @@
       </div>
     </div>
         <div class="table-responsive datanew">
+          <cdk-virtual-scroll-viewport
+          orientation="vertical"
+          class="scroll-demo"
+          itemSize="50">
             <!-- <div class="table-top"> -->
             <nz-table #ITableRef [nzData]="['*']" [nzFrontPagination]="false"  class="table datanew">
                 <thead>
@@ -194,28 +223,29 @@
                 <tbody>
                   <tr *ngFor="let data of travel; let i = index">
                     <td><span>{{ i + 1 }}</span></td>
-                    <td>{{data.itemDef.displayName}}</td>
+                    <td>{{data.itemDef?.name}}</td>
                     <td>{{data.location.name}}</td>
                     <td>{{data.activityName}}</td>
                     <td></td>
                     <td>{{data.bags}}</td>
                     <td>{{data.hiddenRate}}</td>
                     <td>{{data.amount}}</td>
-                    <td> <span 
-                      class="badges" [ngClass]="{
-                        'status-badge': data.status === 'COMPLETED',
-                        'unstatus-badge': data.status === 'Pending',
-                        'status-badge-ordered': data.status === 'Ordered'
-                      }">
-                      {{data.status ? 'COMPLETED' : 'PENDING'}} 
-                    </span>
+                    <td>
+                      <span 
+                        class="badges" 
+                        [ngClass]="{
+                          'status-badge': data.status === true,
+                          'unstatus-badge': data.status === false
+                        }">
+                        {{ data.status === true ? 'COMPLETED' : 'PENDING' }} 
+                      </span>
                     </td>
                     <td><a href="javascript:void(0);" (click)="editTravel(data)" class="dropdown-item" data-bs-toggle="modal"
                       data-bs-target="#add-travel"><i class="feather icon-edit info-img"></i></a></td>
                   </tr>
                 </tbody>
               </nz-table>
-              
+              </cdk-virtual-scroll-viewport>
         <!-- </div> -->
     </div>
 </div>
@@ -237,12 +267,12 @@
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th style="width: 15%;">Product</th>
+                    <th style="width: 20%;">Product</th>
                     <th style="width: 15%;">Location</th>
                     <th style="width: 15%;">Thekadar</th>
-                    <th style="width: 10%;">Activity</th>
-                    <th style="width: 10%;">Bags</th>
-                    <th style="width: 10%;">Stuts</th>
+                    <th style="width: 15%;">Activity</th>
+                    <th style="width: 15%;">Bags</th>
+                    <th style="width: 15%;">Stuts</th>
                     <!-- <th style="width: 10%;">Rate</th> -->
                     <th>Action</th>
                   </tr>

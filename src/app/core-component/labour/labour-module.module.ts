@@ -12,6 +12,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductTravelRecordComponent } from './product-travel-record/product-travel-record.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { sharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -33,7 +34,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     NzTableModule,
     FormsModule,
     NzSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    sharedModule
   ]
 })
 export class LabourModuleModule { }

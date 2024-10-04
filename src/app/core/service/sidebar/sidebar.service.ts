@@ -4418,7 +4418,7 @@ export class SidebarService {
     {
       tittle: 'Labour',
       hasSubRoute: true,
-      icon: 'assets/img/icons/Calculator .svg',
+      icon: 'assets/img/icons/loader.svg',
       showSubRoute: false,
       activeRoute: 'users',
       subRoutes: [

@@ -12,6 +12,9 @@ export const environment = {
   IAMGE_PATH: '',
   // FOR API's
   //  baseURL: '45.8.148.212:8040',
-  baseURL: '192.168.0.102:8025',
-  ROOT_URL: 'localhost', // LOCAL
+  // baseURL: '192.168.0.102:8025',
+  // ROOT_URL: 'localhost', // LOCAL
+  baseURL: '45.8.148.212:8025/', // PROD LINK
+  ROOT_URL: '45.8.148.212:8080', // ADD PRDO
+
 };

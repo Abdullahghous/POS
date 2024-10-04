@@ -12,10 +12,10 @@ export class HttpService {
     // langData: any = null;
     // currentLang: string =  localStorage.getItem('lang') || 'en';
 
-    // private apiUrl = 'http://45.8.148.212:8025/';
+    private  apiUrl =`${environment.baseURL}`;
     // private apiUrl = 'http://45.8.148.212:8040/';
     // private apiUrl = 'http://localhost:8025/';
-    private apiUrl = 'http://192.168.0.104:8025/';
+    // private apiUrl = 'http://192.168.0.104:8025/';
   
     constructor(private http: HttpClient) {
     //   this.getLang();
