@@ -16,6 +16,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { SalesOrderFormComponent } from './sales-order-form/sales-order-form.component';
 import { SaleVoucherComponent } from './sale-voucher/sale-voucher.component';
+import { UpperCasePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,7 +32,7 @@ import { SaleVoucherComponent } from './sale-voucher/sale-voucher.component';
     DirectSalesComponent,
     SalesOrderComponent,
     SalesOrderFormComponent,
-    SaleVoucherComponent
+    SaleVoucherComponent,
   ],
   imports: [
     CommonModule,
@@ -39,8 +41,12 @@ import { SaleVoucherComponent } from './sale-voucher/sale-voucher.component';
     NzTableModule,
     NzFormModule,
     NzInputModule,
-    NzSelectModule
+    NzSelectModule,
+    UpperCasePipe,
+    FormsModule
+    
 
-  ]
+  ],
+ 
 })
 export class SalesModule { }

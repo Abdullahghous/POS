@@ -30,29 +30,29 @@ export class PurchaseOrderListComponent implements OnInit {
   // }
   
   purchaseOrder = {
-    company: {
-        id: "",
-        name: ""
+    "company": {
+        "id": "0",
+        "name": ""
     },
-    branch: {
-        id: "",
-        name: ""
+    "branch": {
+        "id": "0",
+        "name": ""
     },
-    voucherStatus: {
-        id: "0",
-        name: ""
+    "voucherStatus": {
+        "id": "0",
+        "name": ""
     },
-    pending: "true",
-    searchByDate: "4",
-    fromDate: " ",
-    toDate: " ",
-    accountCode: "0",
-    qty: "",
-    requestFromPjv: "0",
-    item: "0",
-    millKhata: '',
-    paymentType: "0",
-    status: "0"
+    "pending": "true",
+    "searchByDate": "4",
+    fromDate: new Date().toISOString().substring(0, 10),
+    toDate: new Date().toISOString().substring(0, 10),
+    "accountCode": "0",
+    "qty": "",
+    "requestFromPjv": "0",
+    "item": "0",
+    // millKhata:"0",
+    "paymentType": "0",
+    "status": "0"
   }
   
   constructor(private sidebar: SidebarService,

@@ -2,6 +2,7 @@ import { Component , OnInit,ElementRef } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { document } from 'ngx-bootstrap/utils';
 import {
   DataService,
   pageSelection,
@@ -41,7 +42,7 @@ export class SalesReportComponent implements OnInit {
   getBranches:any[]= [];
   getCompanies:any[]= [];
   financialYear:any[]= [];
-  saleReport:any = [];
+  saleReport:any[] = [];
   paymentType = '';
 
   constructor(
@@ -62,9 +63,7 @@ export class SalesReportComponent implements OnInit {
         }
       });
     });
-    const today = new Date();
-    this.obj.fromDate = today.toISOString().split('T')[0];
-    this.obj.toDate = today.toISOString().split('T')[0];
+   
   }
  
   
@@ -77,30 +76,60 @@ export class SalesReportComponent implements OnInit {
     "branchId": "0",
     "voucherStatusId": "0",
     "financialYearId": "0",
-    "fromDate": "2024-01-07",
-    "toDate": "2024-09-07",
-    "itemDefId": null,
+    "fromDate": new Date().toISOString().substring(0, 10),
+    "toDate": new Date().toISOString().substring(0, 10),
+    "itemDefId": "0",
     "itemCategoryId": "0",
     "accountCode": "0",
     "serchByDate": "1",
     "voucherType": "0"
-}
-  onSave() {
+  }
+  sqvSearch(obj: any) {
+    if (obj.voucherType === "SQV") {
+      obj.callingFrom = "detailSearch";  // Add callingFrom if voucherType is "SQV"
+      document.getElementById('pills-profile-tab').click()
+    } else {
+      delete obj.callingFrom;  // Remove callingFrom if voucherType is not "SQV"
+      document.getElementById('pills-home-tab').click();
+    }
   
-    this.apiService.post('reports/sales_report', this.obj).subscribe((res:any) => {
+    this.onSave(obj);  // Passing obj directly to onSave
+    return obj;
+  }
+  onSave(obj: any) {
+  
+    this.apiService.post('reports/sales_report', obj).subscribe((res:any) => {
       if (res) {
       res.forEach((element:any) => {
         element.createdDate =  this.allApiService.formatDateDayMonthYear(element.createdDate);
+        element.typeVoucher=this.splitFunctio(element.voucherCode)
       });
         this.saleReport = res;
-        console.log(res ,'obnjjjjjj')
+        console.log('sale report ::',res)
       //
       }
     });
   
   }
-
-  
+  splitFunctio(  voucherCode:any){
+    let splitValue: string[] = voucherCode.split('-');
+  let firstPart: string = splitValue[0];
+  return firstPart;
+  }
+  viwoVoucher(id:any ,typeVoucher:any){
+    console.log('voucher viwo',id ,typeVoucher);
+    const url = this.router.createUrlTree(['/sales/sales-list'], { queryParams: { id ,typeVoucher } });
+    const fullUrl = window.location.origin + url.toString();
+    console.log(fullUrl); 
+    window.open(fullUrl, '_blank');
+  }
+  editVoucher(id:any){
+    console.log('voucher ===view',id);
+    const url = this.router.createUrlTree(['/sales/sale-voucher'], { queryParams: { id } });
+    const fullUrl = window.location.origin + url.toString();
+    console.log(fullUrl); // Log the full URL to check it
+    window.open(fullUrl, '_blank');
+  }
   getAll(){
     
     let items: any = localStorage.getItem('itemDefs');
@@ -145,8 +174,8 @@ export class SalesReportComponent implements OnInit {
       debugger
       return currentYear.id > maxYear.id ? currentYear : maxYear;
   }, this.financialYear[0]);
-  this.obj.fromDate =maxFinancialYear.fromDate;
-  this.obj.toDate =maxFinancialYear.toDate;
+  // this.obj.fromDate =maxFinancialYear.fromDate;
+  // this.obj.toDate =maxFinancialYear.toDate;
   this.obj.financialYearId =maxFinancialYear.id;
   }
   private getTableData(pageOption: pageSelection): void {

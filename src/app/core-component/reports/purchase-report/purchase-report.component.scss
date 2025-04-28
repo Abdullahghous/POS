@@ -1,0 +1,58 @@
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.custom-table thead tr {
+  background-color: #4CAF50;
+  color: white;
+  text-align: left;
+}
+
+.custom-table th, .custom-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.custom-table tbody tr {
+  transition: background-color 0.3s;
+}
+
+.custom-table tbody tr:hover {
+  background-color: #7c7979;
+}
+
+.custom-table .btn-added {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.custom-table .btn-added:hover {
+  background-color: #0056b3;
+}
+
+.custom-table .dropdown-menu {
+  min-width: 200px;
+}
+
+.custom-table .dropdown-item {
+  padding: 10px 15px;
+}
+
+.custom-table .dropdown-item:hover {
+  background-color: #f1f1f1;
+}
+
+.text-wrap {
+  word-wrap: break-word; /* Allows long words to be broken and wrap onto the next line */
+  overflow-wrap: break-word; /* Similar to word-wrap, for better compatibility */
+  white-space: normal; /* Allows the text to wrap normally */
+  max-width: 150px; /* Set a max width for the cell to control the wrapping */
+}

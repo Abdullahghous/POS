@@ -1,0 +1,63 @@
+ .underline {
+    text-decoration: underline;
+  }
+  .modal-content {
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .card-body {
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+  
+  .table-striped tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+  
+  .table th, .table td {
+    text-align: left;
+    padding: 12px;
+    vertical-align: middle;
+  }
+  
+  .table th {
+    background-color: #117019b2;
+    color: white;
+  }
+  
+  h4 {
+    font-weight: bold;
+  }
+  
+  button.close {
+    font-size: 1.5rem;
+  }
+
+  .table-footer {
+    position: sticky;
+    bottom: 0;
+    background-color: #f8f9fa; /* Light background to distinguish it */
+    font-weight: bold;
+  }
+  
+  /* Ensure the table footer cells align well */
+  .table-footer td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 16px;
+    text-align: right;
+  }
+  .table-responsive {
+    overflow-y: auto;  /* Enables scrolling when needed */
+    max-height: 500px; /* Adjust this value depending on the desired scroll height */
+    position: relative;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  

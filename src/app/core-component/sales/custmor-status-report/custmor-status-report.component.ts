@@ -16,6 +16,7 @@ export class CustmorStatusReportComponent implements OnInit {
   getBranches:any[]= [];
   getCompanies:any[]= [];
   financialYear:any[]= [];
+  list:any = []
   public routes = routes;
   isCollapsed: boolean = false;
   constructor(
@@ -25,29 +26,15 @@ export class CustmorStatusReportComponent implements OnInit {
     private el: ElementRef,
   ) {}
   
-  saleOrder = {
-   
-    id: 0,
-    company: { id: 1 },
-    branch: { id: 1 },
-    financialYear: { id: 0 },
-    saleOrderCode: '',
-    
-    saleOrderDate: '',
-    saleOrderEntries: [
-      {
-        id: 0,
-        itemDef: { id: 0 },
-        customerAccount: { code: 0 },
-        millKhata: { id: 0 },
-        rate: 0,
-        kg: 0,
-        vehical: '',
-        paymentDate: '',
-        paymentType: '',
-      },
-    ],
-  };
+  obj:any={
+    "companyId": "0",
+    "branchId": "0",
+    "voucherStatusId": "M",
+    "financialYearId": "6",
+    "fromDate": "2024-08-01",
+    "toDate": "2025-08-01",
+    "days": "15"
+}
   toggleCollapse() {
     this.sidebar.toggleCollapse();
     this.isCollapsed = !this.isCollapsed;
@@ -56,6 +43,22 @@ export class CustmorStatusReportComponent implements OnInit {
     this.getAll();
    
   }
+  public filter = false;
+  openFilter() {
+    this.filter = !this.filter;
+  }
+ 
+  search(){
+    // console.log(data , 'paaaaaaac')
+    this.apiService.post('reports/customer_status_report', this.obj).subscribe(
+      (res) => {
+       console.log('custmer status::',res);
+        this.list=res; 
+      }
+      
+    );
+    
+  } 
   getAll(){
     
     let items: any = localStorage.getItem('itemDefs');
@@ -64,7 +67,7 @@ export class CustmorStatusReportComponent implements OnInit {
     let getBranches: any = localStorage.getItem('branch');
     let getCompanies: any = localStorage.getItem('companies');
     let financialYear: any = localStorage.getItem('financialYear');
-    // console.log(getCompanies,'compnayyyy====8')
+    // console.log(parties,'party')
     if (items && parties && mills && getBranches && getCompanies && financialYear
        != null && JSON.parse(items).length != 0) {
       this.itemDefs = JSON.parse(items);
@@ -73,6 +76,7 @@ export class CustmorStatusReportComponent implements OnInit {
       this.getBranches = JSON.parse(getBranches);
       this.getCompanies = JSON.parse(getCompanies);
       this.financialYear = JSON.parse(financialYear);
+      console.log(this.financialYear ,'yearrrr====')
       // debugger
     }
     else{
@@ -94,22 +98,17 @@ export class CustmorStatusReportComponent implements OnInit {
       this.allApiService.financialYear();
       financialYear = localStorage.getItem('financialYear');
       this.financialYear = JSON.parse(financialYear);
-       debugger
-    }
-  }
-  add(){
-    // console.log(data , 'paaaaaaac')
-    this.apiService.post('app/sale/add_or_update_sale_order', this.saleOrder).subscribe(
-      (res) => {
-          console.log(res, 'looooog333');
-          
-
-
-
-
-      }
       
-  );
-    
-  }  
+      //  debugger
+    }
+    const maxFinancialYear = this.financialYear.reduce((maxYear, currentYear) => {
+      debugger
+      return currentYear.id > maxYear.id ? currentYear : maxYear;
+    },  
+    this.financialYear[0]);
+    this.obj.fromDate =maxFinancialYear.fromDate;
+    this.obj.toDate =maxFinancialYear.toDate;
+    this.obj.financialYearId =maxFinancialYear.id;
+  
+  } 
 }

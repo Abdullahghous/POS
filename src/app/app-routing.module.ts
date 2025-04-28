@@ -13,6 +13,7 @@ const routes: Routes = [
       import('./core-component/core-component.module').then(
         (m) => m.CoreComponentModule
       ),
+      // canActivate: [PermissionGuadrf]
   },
   {
     path: '',

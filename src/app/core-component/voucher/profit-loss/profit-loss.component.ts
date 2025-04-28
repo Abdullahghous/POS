@@ -9,10 +9,6 @@ import { HttpService } from 'src/app/core/core.index';
 import { AllApiService } from 'src/app/core/service/allApi/all-api.service';
 
 
-interface Company {
-  id: number;
-  name: string;
-}
 
 @Component({
   selector: 'app-profit-loss',
@@ -26,53 +22,43 @@ export class ProfitLossComponent  implements OnInit {
  
  public allParties:any[]= [];
  
- companies: Company[] = [];
+//  companies: Company[] = [];
  isButtonDisabled = false;
   itemDefs: any[] = [];
   parties: any[] = [];
   mills: any[] = [];
   getBranches:any[]= [];
-  getCompanies:any[]= [];
+  getCompanies:any= [];
   financialYear:any[]= [];
   report:any=[];
   isCollapsed: boolean = false;
   searchQuery: string = ''; // Holds search input
   filteredReport: any[] = [];
+  totalProfit: number = 0;
   constructor(
-    private data: DataService,
-    private pagination: PaginationService,
-    private router: Router,
     private sidebar: SidebarService,
     private apiService: HttpService,
-     private el: ElementRef,
      private allApiService:AllApiService
     
   ) {}
 
 
-obj:any='';
-
   
   ngOnInit(): void {
     this.getAll();
-    const today = new Date();
-    const formattedDate = today.toISOString().substring(0, 10); // yyyy-MM-dd format
-
-    // Initialize your object with dynamic fromDate and toDate
-    this.obj = {
-      companyId: "0",
-      branchId: "0",
-      voucherStatusId: "0",
-      financialYearId: "0",
-      fromDate: formattedDate,  // Set to today's date
-      toDate: formattedDate,    // Set to today's date
-      itemDefId: 0,
-      itemCategoryId: "0",
-      accountCode: "0",
-      serchByDate: "0"
-    };
-   
   }
+  obj:any = {
+    companyId: "0",
+    branchId: "0",
+    voucherStatusId: "0",
+    financialYearId: "0",
+    fromDate: new Date().toISOString().substring(0, 10),  // Set to today's date
+    toDate: new Date().toISOString().substring(0, 10),    // Set to today's date
+    itemDefId: 0,
+    itemCategoryId: "0",
+    accountCode: "0",
+    serchByDate: "0"
+  };
 
   toggleCollapse() {
     this.sidebar.toggleCollapse();
@@ -88,10 +74,10 @@ obj:any='';
     let items: any = localStorage.getItem('itemDefs');
     let parties: any = localStorage.getItem('parties');
     let mills: any = localStorage.getItem('mills');
-    let getBranches: any = localStorage.getItem('getBranches');
-    let getCompanies: any = localStorage.getItem('getCompanies');
+    let getBranches: any = localStorage.getItem('branch');
+    let getCompanies: any = localStorage.getItem('companies');
     let financialYear: any = localStorage.getItem('financialYear');
-    console.log(getBranches,'milll====')
+    // console.log(getCompanies,'compnayyyy====8')
     if (items && parties && mills && getBranches && getCompanies && financialYear
        != null && JSON.parse(items).length != 0) {
       this.itemDefs = JSON.parse(items);
@@ -100,7 +86,7 @@ obj:any='';
       this.getBranches = JSON.parse(getBranches);
       this.getCompanies = JSON.parse(getCompanies);
       this.financialYear = JSON.parse(financialYear);
-      debugger
+      // debugger
     }
     else{
       this.allApiService.getItemDefs();
@@ -113,10 +99,10 @@ obj:any='';
       parties = localStorage.getItem('parties');
       this.parties = JSON.parse(parties);
       this.allApiService.getBranches();
-      getBranches = localStorage.getItem('getBranches');
+      getBranches = localStorage.getItem('branch');
       this.getBranches = JSON.parse(getBranches);
       this.allApiService.getCompanies();
-      getCompanies = localStorage.getItem('getCompanies');
+      getCompanies = localStorage.getItem('companies');
       this.getCompanies = JSON.parse(getCompanies);
       this.allApiService.financialYear();
       financialYear = localStorage.getItem('financialYear');
@@ -132,7 +118,11 @@ obj:any='';
            this.report = res;
            this.filteredReport = res;
             console.log(res, 'looooog');
-            
+            this.totalProfit = this.filteredReport.reduce((sum, data) => {
+              const profit = parseFloat(data.profit);
+              const validProfit = !isNaN(profit) ? parseFloat(profit.toFixed(2)) : 0;
+              return sum + validProfit;
+            }, 0); 
         },
        
     );

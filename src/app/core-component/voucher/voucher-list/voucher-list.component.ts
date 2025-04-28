@@ -1,17 +1,18 @@
 import { Component,OnInit , ElementRef} from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService,SidebarService,} from 'src/app/core/core.index';
 
 
 import { PaginationService, tablePageSize } from 'src/app/shared/shared.index';
-
+import { DatePipe } from '@angular/common';
 import { HttpService } from 'src/app/core/core.index';
 import { AllApiService } from 'src/app/core/service/allApi/all-api.service';
 
 @Component({
   selector: 'app-voucher-list',
   templateUrl: './voucher-list.component.html',
-  styleUrl: './voucher-list.component.scss'
+  styleUrl: './voucher-list.component.scss',
+  providers: [DatePipe]
 })
 export class VoucherListComponent implements OnInit {
   initChecked = false;
@@ -30,34 +31,49 @@ export class VoucherListComponent implements OnInit {
 
   constructor(
     private data: DataService,
-    private pagination: PaginationService,
+    private route: ActivatedRoute,
     private router: Router,
     private sidebar: SidebarService,
     private apiService: HttpService,
-     private allApiService:AllApiService
-    
-  ) {}
+    private allApiService:AllApiService,
+    private datePipe: DatePipe
+  ) {
+    this.route.queryParams.subscribe(params => {
+      const id = params['id']; 
+      // const typeVoucher = params['typeVoucher']; 
+      console.log('id',id)
+      if (id ) {
+        this.viwoVoucher(id); 
+      }
+    });
+  }
 
 
-obj={
-  "companyId": "1",
-  "branchId": "26",
-  "voucherStatusId": "0",
-  "financialYearId": "5",
-  "fromDate": "2023-09-05",
-  "toDate": "2024-09-05",
-  "itemDefId": "0",
-  "itemCategoryId": "0",
-  "accountCode": "0",
-  "serchByDate": "1",
-  "voucherType": "0"
-}
+  obj={
+    "company": {
+        "id": "0",
+        "name": ""
+    },
+    "voucherType": {
+        "id": "0",
+        "name": ""
+    },
+    "voucherStatus": {
+        "id": "M",
+        "name": ""
+    },
+    "voucherCode": "",
+    "voucherNarration": "",
+    "searchByDate": "3",
+    "fromDate":  new Date().toISOString().substring(0, 10) ,
+    "toDate":  new Date().toISOString().substring(0, 10) ,
+    "postedUnPosted": "2"
+  }
  
   
   ngOnInit(): void {
+   
     this.getAll();
-   
-   
   }
 
   toggleCollapse() {
@@ -95,7 +111,7 @@ obj={
       this.allApiService.financialYear();
       financialYear = localStorage.getItem('financialYear');
       this.financialYear = JSON.parse(financialYear);
-       debugger
+      //  debugger
     }
   }
    
@@ -109,5 +125,16 @@ obj={
         },
        
     );
+  }
+  
+  viwoVoucher(id:any){
+    console.log('view voucvhermmmmmmmmmm', id);
+    document.getElementById('voucher-view')?.click();
+    this.apiService.getObservable('vouchers/'+id).subscribe((res) => {
+      // document.getElementById('voucher-view')?.click();
+      this.voucher = res;
+      console.log('edit voucvher', res);
+            
+    });
   }
 }

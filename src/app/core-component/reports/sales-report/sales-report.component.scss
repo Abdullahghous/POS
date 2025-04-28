@@ -1,0 +1,6 @@
+.text-wrap {
+    word-wrap: break-word; /* Allows long words to be broken and wrap onto the next line */
+    overflow-wrap: break-word; /* Similar to word-wrap, for better compatibility */
+    white-space: normal; /* Allows the text to wrap normally */
+    max-width: 150px; /* Set a max width for the cell to control the wrapping */
+  }

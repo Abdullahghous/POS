@@ -7,6 +7,7 @@ import { ActivityComponent } from './activity/activity.component';
 import { ThekedarEntryComponent } from './thekedar-entry/thekedar-entry.component';
 import { MonshiEntryComponent } from './monshi-entry/monshi-entry.component';
 import { ProductTravelRecordComponent } from './product-travel-record/product-travel-record.component';
+import { MillRateComponent } from './mill-rate/mill-rate.component';
 
 
 
@@ -21,7 +22,7 @@ const routes: Routes = [
       { path: 'thekedar-entry', component: ThekedarEntryComponent},
       { path: 'monshi-entry', component: MonshiEntryComponent },
       { path: 'product-travel-record', component: ProductTravelRecordComponent },
-      // { path: 'purchase-voucher', component: PurchaseVoucherComponent },
+      { path: 'mill-rate', component: MillRateComponent },
     ],
   },
 ];

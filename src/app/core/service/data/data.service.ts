@@ -1,13 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable,from } from 'rxjs';
 import { apiResultFormat } from '../../models/models';
+import { HttpService } from 'src/app/core/core.index';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private api :HttpService
+  ) {}
 
   public getCountryList(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/JSON/countrys.json').pipe(
@@ -276,8 +280,18 @@ export class DataService {
   }
 
   public getDataTable() {
+    // debugger
     return this.http.get<apiResultFormat>('assets/JSON/datatables.json').pipe(
       map((res: apiResultFormat) => {
+        return res;
+      })
+    );
+  }
+  public getDataTable1() {
+    debugger
+    return from(this.api.getObservable<apiResultFormat>('app/getAllParties')).pipe(
+      map((res: apiResultFormat) => {
+        console.log('test api', res);
         return res;
       })
     );
@@ -438,6 +452,16 @@ export class DataService {
       .get<apiResultFormat>('assets/JSON/roles-permissions.json')
       .pipe(
         map((res: apiResultFormat) => {
+          return res;
+        })
+      );
+  }
+  public getRolesPermissions1(): Observable<apiResultFormat> {
+    return from(this.api.getObservable<apiResultFormat>('app/getAllParties'))
+      .pipe(
+        map((res: apiResultFormat) => {
+          console.log('test===end', res)
+          console.log('test===lenght', res.lenght)
           return res;
         })
       );

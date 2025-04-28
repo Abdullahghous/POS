@@ -5,33 +5,43 @@
           <h6>Manage product</h6>
         </div>
       </div>
-      <ul class="table-top-head">
-        <li>
-          <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Pdf" matTooltipPosition="above"><img
-          src="assets/img/icons/pdf.svg" alt="img"></a>
-        </li>
-        <li>
-          <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Excel" matTooltipPosition="above"><img
-          src="assets/img/icons/excel.svg" alt="img"></a>
-        </li>
-        <li>
-          <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Print" matTooltipPosition="above"><i
-          class="feather icon-printer feather-rotate-ccw"></i></a>
-        </li>
-        <li>
-          <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Refresh" matTooltipPosition="above"><i
-          class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
-        </li>
-        <li>
-          <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Collapse"
-            matTooltipPosition="above" id="collapse-header"> @if (!isCollapsed) {
-            <i class="feather icon-chevron-up feather-chevron-up"></i>
-          }
-          @if (isCollapsed) {
-            <i class="feather icon-chevron-down feather-chevron-down"></i>
-          }</a>
-        </li>
-      </ul>
+      <div class="row">
+        <ul class="table-top-head">
+          <li>
+            <div>
+              <button type="submit" class="btn btn-added" style="margin-right: 3%;" (click)="travelpdf()"><i
+                class="feather icon-printer"></i> Location Wise Report</button>
+            </div>
+          </li>
+          <li>
+            <div>
+              <button type="submit" class="btn btn-added" style="margin-right: 3%;"  (click)="travelThekedarPdf()"><i
+                class="feather icon-printer"></i> Thekedar Wise Report</button>
+            </div>
+          </li>
+          <li (click)="generatePDF()">
+            <a data-bs-toggle="tooltip" data-bs-placement="top" title="Table Pdf" matTooltip="Table Pdf" matTooltipPosition="above"><img
+            src="assets/img/icons/pdf.svg" alt="img"></a>
+          </li>
+          <li>
+            <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Print" matTooltipPosition="above"><i
+            class="feather icon-printer feather-rotate-ccw"></i></a>
+          </li>
+          <li (click)="search()">
+            <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Refresh" matTooltipPosition="above"><i
+            class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
+          </li>
+          <li>
+            <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Collapse"
+              matTooltipPosition="above" id="collapse-header"> @if (!isCollapsed) {
+              <i class="feather icon-chevron-up feather-chevron-up"></i>
+            }
+            @if (isCollapsed) {
+              <i class="feather icon-chevron-down feather-chevron-down"></i>
+            }</a>
+          </li>
+        </ul>
+      </div>
       <div class="page-btn">
         <a href="javascript:void(0);" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-travel"><i
         class="feather icon-plus-circle me-2"></i> Add Travel Details</a>
@@ -45,144 +55,129 @@
 <div class="card table-list-card">
     <div class="card-body">
       <div class="table-top">
-        <!-- <div class="search-set">
-            <div class="search-input">
-              <a href="javascript:void(0);" class="btn btn-searchset"><i class="feather icon-search feather-search"></i></a>
-              <div class="dataTables_filter">
-                <label>
-                  <input placeholder="Search by name" 
-                    type="search" class="form-control" placeholder="Search..." />
-                  </label>
-                </div>
-              </div>
-            </div> -->
-            
-            <div class="col-lg-4 col-sm-6 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  FROM DATE </label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
-                    <input type="date" class="form-control" 
-                    [(ngModel)]="list.fromDate" [ngModelOptions]="{standalone: true}"  />
-               </div>
-              </div>
-             </div>
-             <div class="col-lg-4 col-sm-6 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  TO DATE </label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
-                    <input type="date" class="form-control" 
-                    [(ngModel)]="list.toDate" [ngModelOptions]="{standalone: true}"/>
-               </div>
-              </div>
-             </div>
-             <div class="col-lg-2 col-sm-6 col-12">
-              <div class="input-blocks">
-               <a class="btn btn-filters ms-auto" (click)="search()" > <i class="feather icon-search  feather-search"></i>
-               Search </a>
-              </div>
+           <div class="col-lg-4 col-sm-4 col-12">
+            <div class="input-blocks add-product">
+              <label>FROM DATE<span class="required-span-color">*</span></label>
+              <input class="form-control" type="date" (ngModelChange)="updateTravelReport('fromDate', $event)" name="fromDate" [(ngModel)]="list.fromDate"
+               [ngModelOptions]="{standalone: true}">
             </div>
-            <div class="search-path">
-              <a class="btn btn-filter" id="filter_search" (click)="openFilter()"
-                [ngClass]="{'setclose': filter === true}">
-                <i class="feather icon-filter filter-icon"></i>
-                <span><img src="assets/img/icons/closes.svg" alt="img"></span>
-              </a>
+          </div>
+          <div class="col-lg-4 col-sm-4 col-12">
+            <div class="input-blocks add-product">
+              <label>TO DATE<span class="required-span-color">*</span></label>
+              <input class="form-control" type="date"  id="" [(ngModel)]="list.toDate"
+              [ngModelOptions]="{standalone: true}" (ngModelChange)="updateTravelReport('toDate', $event)" name="toDate" >
             </div>
+          </div>
+          <div class="col-lg-3 col-sm-3 col-6 text-end">
+              
+            <button type="submit" class="btn btn-submit add-sale" (click)="search()">SEARCH</button>
+          </div>
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search" (click)="openFilter()"
+              [ngClass]="{'setclose': filter === true}">
+              <i class="feather icon-filter filter-icon"></i>
+              <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+            </a>
+          </div>
+          <!-- <div class="form-sort">
+            <i class="feather icon-sliders info-img"></i>
+            <mat-select 
+              class="space-select select" placeholder="Sort by Date">
+              <mat-option value="Sort by Date">Sort by Date</mat-option>
+              <mat-option value="Newest">Newest</mat-option>
+              <mat-option value="Oldest">Oldest</mat-option>
+            </mat-select>
+          </div> -->
     </div>
   </div>
     <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
         <div class="card-body pb-0">
           <div class="row">
-           
-            <!-- <div class="col-lg-4 col-sm-6 col-12">
-              <div class="input-blocks">
-                <label>COMPANY<span class="required-span-color">*</span></label>
-                <nz-select
-                  class="w-100"
-                  nzShowSearch
-                  nzAllowClear
-                  nzPlaceHolder="Select company">
-                  <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
-                </nz-select>
-              </div>
-            </div> -->
-            <!-- <div class="col-lg-4 col-sm-6 col-12">
-              <div class="input-blocks add-product">
-                <label>FROM DATE<span class="required-span-color">*</span></label>
-                <input class="w-100" nz-input type="date" name="" id="" [(ngModel)]="obj.fromDate"
-                 [ngModelOptions]="{standalone: true}">
-              </div>
-            </div>
-            <div class="col-lg-4 col-sm-6 col-12">
-              <div class="input-blocks add-product">
-                <label>TO DATE<span class="required-span-color">*</span></label>
-                <input class="w-100" nz-input type="date" name="" id="" [(ngModel)]="obj.toDate"
-                [ngModelOptions]="{standalone: true}" >
-              </div>
-            </div> -->
-            <div class="col-lg-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
                 <label>ITEM <span class="required-span-color">*</span></label>
-                <nz-select
-                  [(ngModel)]="list.itemDef.id" [ngModelOptions]="{ standalone: true }"
-                  class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select item">
+                <nz-select [(ngModel)]="list.itemDef.id" [ngModelOptions]="{ standalone: true }"
+                  (ngModelChange)="updateTravelReport('itemDefId', $event)"
+                  class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select item" name="itemDef">
                   <nz-option nzLabel="All" [nzValue]="0"></nz-option>
-                <nz-option *ngFor="let i of itemDefs" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+                  <nz-option *ngFor="let i of itemDefs" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
                 </nz-select>
               </div>
-            </div> 
-            <div class="col-lg-4 col-sm-6 col-12">
+            </div>
+            
+            <!-- Location -->
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
-                <label>Location <span class="required-span-color">*</span></label>
-                <nz-select class="w-100" [(ngModel)]="list.location.id" [ngModelOptions]="{standalone:true}"
-                 nzShowSearch nzAllowClear nzPlaceHolder="Select Location">
-                 <nz-option nzLabel="All" [nzValue]="0"></nz-option>
-                <nz-option *ngFor="let l of getLocation" [nzLabel]="l.name" [nzValue]="l.id"></nz-option>
+                <label>From Location <span class="required-span-color">*</span></label>
+                <nz-select [(ngModel)]="list.fromLocation.id" [ngModelOptions]="{standalone: true }"
+                  (ngModelChange)="updateTravelReport('fromLocationId', $event)"
+                  class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Location" name="location">
+                  <nz-option nzLabel="All" [nzValue]="0"></nz-option>
+                  <nz-option *ngFor="let l of getLocation" [nzLabel]="l.name" [nzValue]="l.id"></nz-option>
                 </nz-select>
               </div>
-            </div> 
-            <div class="col-lg-4 col-sm-6 col-12">
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>To Location <span class="required-span-color">*</span></label>
+                <nz-select [(ngModel)]="list.toLocation.id" [ngModelOptions]="{standalone: true }"
+                  (ngModelChange)="updateTravelReport('toLocationId', $event)"
+                  class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Location" name="location">
+                  <nz-option nzLabel="All" [nzValue]="0"></nz-option>
+                  <nz-option *ngFor="let l of getLocation" [nzLabel]="l.name" [nzValue]="l.id"></nz-option>
+                </nz-select>
+              </div>
+            </div>
+            <!-- Activity -->
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
                 <label>Activity <span class="required-span-color">*</span></label>
-                <nz-select class="w-100" [(ngModel)]="list.activity.id" [ngModelOptions]="{standalone:true}"
-                nzShowSearch nzAllowClear nzPlaceHolder="Select Activity">
-                <nz-option nzLabel="All" [nzValue]="0"></nz-option>
+                <nz-select [(ngModel)]="list.activity.id" [ngModelOptions]="{standalone: true }"
+                  (ngModelChange)="updateTravelReport('activityId', $event)"
+                  class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Activity" name="activity">
+                  <nz-option nzLabel="All" [nzValue]="0"></nz-option>
                   <nz-option *ngFor="let a of activity" [nzLabel]="a.name" [nzValue]="a.id"></nz-option>
                 </nz-select>
               </div>
-            </div> 
-            <div class="col-lg-4 col-sm-6 col-12">
-              <div class="input-blocks add-product">
-                <label>Mazdory<span class="required-span-color">*</span></label>
-                <nz-select class="w-100" [(ngModel)]="list.mazodory.id" [ngModelOptions]="{standalone:true}"
-                nzShowSearch nzAllowClear nzPlaceHolder="Select field">
-                <nz-option nzLabel="All" [nzValue]="0"></nz-option>
-                  <nz-option *ngFor="let l of thekedarList" [nzLabel]="l.name" [nzValue]="l.id"></nz-option>
-                </nz-select>
-              </div>
-            </div> 
-            <div class="col-lg-4 col-sm-6 col-12">
+            </div>
+            
+            <!-- Thekedar -->
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
                 <label>Thekedar <span class="required-span-color">*</span></label>
-                <nz-select class="w-100" [(ngModel)]="list.location.id" [ngModelOptions]="{standalone:true}"
-                nzShowSearch nzAllowClear nzPlaceHolder="Select thekedar">
-                <nz-option nzLabel="All" [nzValue]="0"></nz-option>
+                <nz-select [(ngModel)]="list.thekedar.id" [ngModelOptions]="{standalone: true }"
+                  (ngModelChange)="updateTravelReport('thekedarId', $event)"
+                  class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select thekedar" name="thekedar">
+                  <nz-option nzLabel="All" [nzValue]="0"></nz-option>
                   <nz-option *ngFor="let t of thekedarList" [nzLabel]="t.name" [nzValue]="t.id"></nz-option>
-                  
                 </nz-select>
               </div>
-            </div> 
-            <div class="col-lg-4 col-sm-6 col-12">
+            </div>
+            
+            <!-- Status -->
+            <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks add-product">
                 <label>Status <span class="required-span-color">*</span></label>
-                <mat-select [(ngModel)]="list.status" [ngModelOptions]="{standalone: true}">
-                  <mat-option [value]="true">COMPLATED</mat-option>
-                  <mat-option [value]="false">PENDING</mat-option>
+                <mat-select [(ngModel)]="list.status" [ngModelOptions]="{standalone: true}" 
+                  (ngModelChange)="updateTravelReport('status', $event)" name="status">
+                  <mat-option [value]="2">All</mat-option>
+                  <mat-option [value]="1">COMPLETED</mat-option>
+                  <mat-option [value]="0">PENDING</mat-option>
                 </mat-select>
               </div>
-            </div> 
+            </div>
+            <!-- <div class="search-set">
+              <div class="search-input">
+                <a href="javascript:void(0);" class="btn btn-searchset"><i class="feather icon-search feather-search"></i></a>
+                <div class="dataTables_filter">
+                  <label>
+                    <input [(ngModel)]="searchDataValue" [ngModelOptions]="{standalone: true}" (ngModelChange)="searchData(searchDataValue)"
+                      type="search" class="form-control" placeholder="Search..." />
+                    </label>
+                  </div>
+                </div>
+              </div> -->
             <!-- <div class="col-lg-3 col-sm-6 col-12">
               <div class="input-blocks">
                 <i class="feather icon-stop-circle info-img"></i>
@@ -193,61 +188,85 @@
                 </mat-select>
               </div>
             </div>  -->
-            <!-- <div class="col-lg-4 col-sm-6 col-12 text-end" style="margin-top: 3%;">
-              <button type="submit" class="btn btn-submit add-sale" (click)="search()">SEARCH</button>
-            </div> -->
+            
         </div>
       </div>
     </div>
-        <div class="table-responsive datanew">
-          <cdk-virtual-scroll-viewport
-          orientation="vertical"
-          class="scroll-demo"
-          itemSize="50">
-            <!-- <div class="table-top"> -->
-            <nz-table #ITableRef [nzData]="['*']" [nzFrontPagination]="false"  class="table datanew">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Product</th>
-                    <th>Location</th>
-                    <th>Activity</th>
-                    <th>Mazdory</th>
-                    <th>Bags</th>
-                    <th>Hidden Rate</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let data of travel; let i = index">
-                    <td><span>{{ i + 1 }}</span></td>
-                    <td>{{data.itemDef?.name}}</td>
-                    <td>{{data.location.name}}</td>
-                    <td>{{data.activityName}}</td>
-                    <td></td>
-                    <td>{{data.bags}}</td>
-                    <td>{{data.hiddenRate}}</td>
-                    <td>{{data.amount}}</td>
-                    <td>
-                      <span 
-                        class="badges" 
-                        [ngClass]="{
-                          'status-badge': data.status === true,
-                          'unstatus-badge': data.status === false
-                        }">
-                        {{ data.status === true ? 'COMPLETED' : 'PENDING' }} 
-                      </span>
-                    </td>
-                    <td><a href="javascript:void(0);" (click)="editTravel(data)" class="dropdown-item" data-bs-toggle="modal"
-                      data-bs-target="#add-travel"><i class="feather icon-edit info-img"></i></a></td>
-                  </tr>
-                </tbody>
-              </nz-table>
-              </cdk-virtual-scroll-viewport>
-        <!-- </div> -->
+        <div class="table-responsive table-sm">
+          
+             
+          <table matSort (matSortChange)="sortData($event)" class="table-bordered" id="table-container">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th class=" hide-in-pdf">
+                  <label class="checkboxs">
+                    <input type="checkbox" id="select-all" (click)="selectAll(initChecked)">
+                    <!-- <input type="checkbox" id="select-all" [(ngModel)]="initChecked" (change)="selectAll()"> -->
+                    <span class="checkmarks" [(ngModel)]="initChecked"></span>
+                  </label>
+                </th>
+                <th mat-sort-header="itemDef?.name">Product</th>
+                <th mat-sort-header="thekedar?.name">Thekedar Name</th>
+                <th mat-sort-header="fromLocation?.name">From Location</th>
+                <th mat-sort-header="toLocation?.name">To Location</th>
+                <th mat-sort-header="activityName?">ActivityName</th>
+                <th mat-sort-header="date">Date</th>
+                <th mat-sort-header="bags">Bags</th>
+                <th mat-sort-header="hiddenRate">Hidden Rate</th>
+                <th mat-sort-header="amount">Amount</th>
+                <th mat-sort-header="status">Status</th>
+                <th class="no-sort  hide-in-pdf" >Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of tableData ;let i = index">
+                <td>{{i +1}}</td>
+                <td class="hide-in-pdf">
+                  <label class="checkboxs">
+                    <input type="checkbox" [(ngModel)]="data.isSelected">
+                    <span class="checkmarks"></span>
+                  </label>
+                </td>
+                <td>{{data.itemSubCategory?.name}} {{data.itemDef?.name}}</td>
+                <td>{{data.thekedar?.name}}</td>
+                <td class="text-wrap">{{data.fromLocation?.name}}</td>
+                <td class="text-wrap">{{data.toLocation?.name}}</td>
+                <td class="text-wrap">{{data?.activityName}}</td>
+                <td>{{data?.dummydate}}</td>
+                <td>{{data.bags}}</td>
+                <td>{{data.hiddenRate}}</td>
+                <td>{{data.amount}}</td>
+                <td>
+                  <span class="badges" [ngClass]="{
+                    'status-badge': data.status,
+                    'unstatus-badge': !data.status
+                  }">
+                    {{ data.status ? 'COMPLETED' : 'PENDING' }} 
+                  </span>
+                </td>
+                <td class="hide-in-pdf">
+                  <a href="javascript:void(0);" (click)="editTravel(data)" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#add-travel">
+                    <i class="feather icon-edit info-img"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="7"><strong>Total</strong></td>
+                <td class="hide-in-pdf"></td>
+                <td>{{ getTotalBags() }}</td>
+                <td></td>
+                <td>{{ getTotalAmount() }}</td>
+              </tr>
+            </tfoot>
+          </table>
+          
+    
+           
     </div>
+    <app-custom-pagination></app-custom-pagination>
 </div>
 <div class="modal fade" id="add-travel" tabindex="-1" aria-labelledby="editpayment" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
@@ -260,18 +279,22 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <div class="table-top"></div>
         <form>
+          
            <div class="table-responsive">
-            <nz-table #ITableRef [nzData]="['*']" [nzFrontPagination]="false"  class="table datanew">
+            <table class="table datanew">
                 
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th style="width: 20%;">Product</th>
-                    <th style="width: 15%;">Location</th>
+                    <th style="width: 15%;">Product</th>
+                    <th style="width: 15%;"> From Location</th>
+                    <th style="width: 15%;">To Location</th>
                     <th style="width: 15%;">Thekadar</th>
                     <th style="width: 15%;">Activity</th>
                     <th style="width: 15%;">Bags</th>
+                    <th>Date</th>
                     <th style="width: 15%;">Stuts</th>
                     <!-- <th style="width: 10%;">Rate</th> -->
                     <th>Action</th>
@@ -281,30 +304,37 @@
                   <tr *ngFor="let data of obj ; let i = index">
                     <td><span>{{ i + 1 }}</span></td>
                     <td>
-                      <nz-select class="w-100" [(ngModel)]="data.itemDef.id" [ngModelOptions]="{standalone:true}"
-                       nzShowSearch nzAllowClear nzPlaceHolder="Select item">
-                      <nz-option *ngFor="let i of itemDefs" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+                      <nz-select class="w-100" [(ngModel)]="data.itemDef.id" name="itemDef-{{i}}" [ngModelOptions]="{standalone: true}"
+                      (ngModelChange)="thekedarGetId(data)"  nzShowSearch nzAllowClear nzPlaceHolder="Select item">
+                        <nz-option *ngFor="let def of itemDefs" [nzLabel]="def.name" [nzValue]="def.id"></nz-option>
                       </nz-select>
                     </td>
                     <td>
-                      <nz-select class="w-100" [(ngModel)]="data.location.id" [ngModelOptions]="{standalone:true}"
+                      <nz-select class="w-100" [(ngModel)]="data.fromLocation.id" [ngModelOptions]="{standalone:true}"
+                      nzShowSearch nzAllowClear nzPlaceHolder="Select Location">
+                      <nz-option *ngFor="let l of getLocation" [nzLabel]="l.name" [nzValue]="l.id"></nz-option>
+                      </nz-select>
+                    </td>
+                    <td>
+                      <nz-select class="w-100" [(ngModel)]="data.toLocation.id" [ngModelOptions]="{standalone:true}"
                       nzShowSearch nzAllowClear nzPlaceHolder="Select Location">
                       <nz-option *ngFor="let l of getLocation" [nzLabel]="l.name" [nzValue]="l.id"></nz-option>
                       </nz-select>
                     </td>
                     <td><nz-select class="w-100" [(ngModel)]="data.thekedar.id" [ngModelOptions]="{standalone:true}"
-                      nzShowSearch nzAllowClear nzPlaceHolder="Select Company" (ngModelChange)="getEntries(i)">
+                     (ngModelChange)="thekedarGetId(data)" nzShowSearch nzAllowClear nzPlaceHolder="Select Thekedar">
                         <nz-option *ngFor="let i of thekedarList" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
                       </nz-select></td>
                       <td> <nz-select class="w-100" [(ngModel)]="data.activity.id" [ngModelOptions]="{standalone:true}"
-                        nzShowSearch nzAllowClear nzPlaceHolder="Select Company">
-                          <nz-option *ngFor="let i of activity" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+                        nzShowSearch nzAllowClear nzPlaceHolder="Select Activity">
+                          <nz-option *ngFor="let i of filterActivity"  [nzLabel]="i?.name" [nzValue]="i?.id"></nz-option>
                         </nz-select></td>
                         <td><input onfocus="this.select()" class="form-control" type="text" [(ngModel)]="data.bags" [ngModelOptions]="{standalone:true}"></td>
-                      <td><nz-select class="w-100" [(ngModel)]="data.status" [ngModelOptions]="{standalone:true}">
-                        <nz-option nzLabel="COMPLATED" nzValue=true></nz-option>
-                        <nz-option nzLabel="PENDING" nzValue=false></nz-option>
-                      </nz-select></td>
+                       <td><input nz-input class="form-control" type="date" [(ngModel)]="data.date" [ngModelOptions]="{standalone:true}"></td>
+                        <td><mat-select [(ngModel)]="data.status" [ngModelOptions]="{standalone: true}">
+                          <mat-option [value]="true">COMPLATED</mat-option>
+                          <mat-option [value]="false">PENDING</mat-option>
+                        </mat-select></td>
                      
                     <!-- <td><input class="form-control" onfocus="this.select()" type="text" [(ngModel)]="data.rate" [ngModelOptions]="{standalone:true}"></td> -->
                     <td>
@@ -319,7 +349,7 @@
                     </td>
                   </tr>
                 </tbody>
-              </nz-table>
+              </table>
               <div class="col-lg-12 text-end">
                 <button type="button" id="cancelButton" class="btn btn-cancel add-cancel me-3"
                 data-bs-dismiss="modal" (click)="cancel()">Cancel</button>

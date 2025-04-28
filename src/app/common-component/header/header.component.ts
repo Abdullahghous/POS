@@ -95,6 +95,7 @@ export class HeaderComponent  {
       this.sidebar.expandSideBar.next(false);
     }
   }
+  
 
   fullscreen() {
     if (!document.fullscreenElement) {

@@ -1,3 +1,58 @@
+ origanal bus yeh aik
 #sidebar .sidebar-inner {
   width: 100%;
+}
+// @media (max-width: 768px) {
+//   .sidebar.horizontal-sidebar {
+//     overflow-x: scroll; /* Allow scrolling on small screens */
+//   }
+// }
+.sidebar.horizontal-sidebar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.sidebar.horizontal-sidebar::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.sidebar.horizontal-sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+/* Style for horizontal sidebar */
+// .sidebar.horizontal-sidebar {
+//   overflow-x: auto; /* Enables horizontal scrolling */
+//   white-space: nowrap; /* Prevents wrapping of items */
+//   width: 100%; /* Ensures the sidebar takes up full width */
+// }
+
+/* Prevents the sidebar items from wrapping and keeps them on a single line */
+.sidebar.horizontal-sidebar .sidebar-menu {
+  display: flex;
+  flex-direction: row; /* Align items horizontally */
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Style for each menu item */
+.sidebar.horizontal-sidebar .sidebar-menu .submenu {
+  display: inline-block; /* Keeps items in a horizontal line */
+  padding: 10px;
+  margin-right: 15px; /* Space between menu items */
+  white-space: normal; /* Allows text to wrap if necessary */
+}
+
+.sidebar.horizontal-sidebar .sidebar-menu .submenu a {
+  text-decoration: none;
+  // color: #333;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  // transition: background-color 0.3s ease;
+}
+
+/* Add hover effect to menu items */
+.sidebar.horizontal-sidebar .sidebar-menu .submenu a:hover {
+  background-color: #ddd;
 }

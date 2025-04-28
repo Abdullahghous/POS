@@ -61,8 +61,8 @@
                           class="w-100"
                           nzShowSearch
                           nzAllowClear
-                          nzPlaceHolder="Select Unit"
-                        >
+                          nzPlaceHolder="Select Company" >
+                          <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                           <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
                         </nz-select>
                       </div>
@@ -77,7 +77,8 @@
                           class="w-100"
                           nzShowSearch
                           nzAllowClear
-                          nzPlaceHolder="Select Company">
+                          nzPlaceHolder="Select Branch">
+                          <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                           <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
                         </nz-select>
                       </div>
@@ -91,7 +92,8 @@
                           class="w-100"
                           nzShowSearch
                           nzAllowClear
-                          nzPlaceHolder="Select Company">
+                          nzPlaceHolder="Select Account">
+                          <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                           <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
                         </nz-select>
                       </div>
@@ -106,12 +108,13 @@
                         class="w-100"
                         nzShowSearch
                         nzAllowClear
-                        nzPlaceHolder="Select Unit">
+                        nzPlaceHolder="Select Item">
+                        <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                         <nz-option *ngFor="let i of itemDefs" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
                       </nz-select>
                       </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <!-- <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>MILL ACCOUNT <span class="required-span-color">*</span></label>
                         <nz-select
@@ -121,16 +124,18 @@
                         nzShowSearch
                         nzAllowClear
                         nzPlaceHolder="Select Unit">
+                        <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                         <nz-option *ngFor="let i of mills" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
                       </nz-select>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>SEARCH BY DATE<span class="required-span-color">*</span></label>
                         <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type"
-                         [(ngModel)]="purchaseOrder.voucherStatus" [ngModelOptions]="{ standalone: true }">
-                          <nz-option nzLabel="CREATE DATE" nzValue="4"></nz-option>
+                         [(ngModel)]="purchaseOrder.searchByDate" [ngModelOptions]="{ standalone: true }">
+                         
+                         <nz-option nzLabel="CREATE DATE" nzValue="4"></nz-option>
                           <nz-option nzLabel="PURCHASE ORDER DATE" nzValue="3"></nz-option>
                           <nz-option nzLabel="DELIVERY DATE" nzValue="0"></nz-option>
                           <nz-option nzLabel="UPDATED DATE" nzValue="2"></nz-option>
@@ -142,7 +147,7 @@
                         <label>Stuts<span class="required-span-color">*</span></label>
                         <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type"
                          [(ngModel)]="purchaseOrder.voucherStatus" [ngModelOptions]="{ standalone: true }">
-                          <nz-option nzLabel="ALL" nzValue="all"></nz-option>
+                          <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                           <nz-option nzLabel="CONFROM" nzValue="conform"></nz-option>
                           <nz-option nzLabel="CONVERTED" nzValue="conveted"></nz-option>
                           <nz-option nzLabel="CANCEL" nzValue="concel"></nz-option>
@@ -155,9 +160,9 @@
                       <div class="input-blocks add-product">
                         <label>Payment Type<span class="required-span-color">*</span></label>
                         <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type"
-                         [(ngModel)]="purchaseOrder.voucherStatus" [ngModelOptions]="{ standalone: true }">
-                          <nz-option nzLabel="CREATE DATE" nzValue="cash"></nz-option>
-                          <nz-option nzLabel="ALL" nzValue="all"></nz-option>
+                         [(ngModel)]="purchaseOrder.paymentType" [ngModelOptions]="{ standalone: true }">
+                          <nz-option nzLabel="CASH" nzValue="cash"></nz-option>
+                          <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                           <nz-option nzLabel="ROUTINE" nzValue="routine"></nz-option>
                           <nz-option nzLabel="PERCENTAGE" nzValue="percentage"></nz-option>
                         </nz-select>
@@ -173,7 +178,7 @@
       </div>
     </div>
       <div class="table-responsive">
-          <nz-table>
+          <table class="table datanew">
               <thead>
                   <tr>
                     <th>#</th>
@@ -205,12 +210,22 @@
                     <td>{{ item?.vehical }}</td>
                     <td>{{item?.createdBy}} <br>{{item?.modifiedBy}}</td>
                     <td>{{item?.vouchers.name}}</td>
-                    <!-- <td>
-                        <button (click)="viewDetails(item?.purchaseOrderId)">View</button>
-                    </td> -->
+                    <td class="action-table-data">
+                      <div class="edit-delete-action data-row">
+                        <a class="me-2 p-2 mb-0" href="javascript:void(0);">
+                          <i class="feather icon-eye action-eye"></i>
+                        </a>
+                        <a class="me-2 p-2 mb-0" data-bs-toggle="modal" data-bs-target="#edit-units">
+                          <i class="feather icon-edit feather-edit"></i>
+                        </a>
+                        <!-- <a class="me-2 confirm-text p-2 mb-0" href="javascript:void(0);" (click)=confirmColor()>
+                          <i class="feather icon-trash-2 feather-trash-2"></i>
+                        </a> -->
+                      </div>
+                    </td>
                 </tr>
                 </tbody>
-          </nz-table>
+          </table>
       </div>
 
   </div> 

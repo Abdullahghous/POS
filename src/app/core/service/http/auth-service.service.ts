@@ -18,8 +18,9 @@ export class AuthServiceService {
     }
   }
 
-  setLoggedInUserInfo(user: unknown) {
-    localStorage.setItem('loggedInUser', JSON.stringify(user));
+  setLoggedInUserInfo(user:any) {
+    debugger
+    localStorage.setItem('loggedInUser', JSON.stringify(user.user));
   }
 
   getLoggedInUserInfo() {

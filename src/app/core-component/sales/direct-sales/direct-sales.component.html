@@ -1,18 +1,1065 @@
-<p>direct-sale works!</p>
+<div class="table-top">
+  <h4>Combine Voucher</h4>
+  <button  href="javascript:void(0);" id="filter_search" (click)="openFilter()"
+   [ngClass]="{'setclose': filter === true}" >DETAILS</button>
+</div>
+<div class="card table-list-card">
+  <div class="card-body">
+    <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
+        <div class="table table-responsive">
+          <div *ngIf="voucher" class="row ">
+            <div class="col-lg-6 col-12">
+              <table class="table table-sm datanew">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>UNIT</th>
+                    <th>ACCOUNT</th>
+                    <th>NARRATION</th>
+                    <th>DEBIT</th>
+                    <th>CREDIT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of voucher.pjvVoucher.voucherEntries ; let i=index">
+                    <td>{{i + 1}}</td>
+                    <td class="text-wrap">{{data.branch.name}}</td>
+                    <td class="text-wrap">{{data.account.formattedCode}} <br>{{data.account.accountName}}</td>
+                    <td>{{data.narration}}</td>
+                    <td>{{data.debit}}</td>
+                    <td>{{data.credit}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-lg-6 col-12">
+              <table class="table table-sm datanew">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>UNIT</th>
+                    <th>ACCOUNT</th>
+                    <th>NARRATION</th>
+                    <th>DEBIT</th>
+                    <th>CREDIT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of voucher.sjvVoucher.voucherEntries ; let i=index">
+                    <td>{{i + 1}}</td>
+                    <td class="text-wrap">{{data.branch.name}}</td>
+                    <td class="text-wrap">{{data.account.formattedCode}} <br>{{data.account.accountName}} </td>
+                    <td>{{data.narration}}</td>
+                    <td>{{data.debit}}</td>
+                    <td>{{data.credit}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div  style="height:480px;overflow: auto;">
+
+<div class="table-top"  *ngIf="voucher">
+  <div class="col-md-12">
+    <!-- <form *ngIf="someCondition"> -->
+      <div class="row">
+      <div class="col-lg-3 col-sm-6 col-12">
+      <div class="input-blocks add-product">
+        <label>Voucher Number<span class="required-span-color">*</span></label>
+        <input type="text" class="form-control border border-dark" [(ngModel)]="voucher.pjvVoucher.voucherCode"
+        [ngModelOptions]="{standalone: true}" >
+      </div>
+      </div>
+      <!-- <div class="col-lg-3 col-sm-6 col-12">
+        <div class="input-blocks add-product">
+          <label>Company <span class="required-span-color">*</span></label>
+          <nz-select [(ngModel)]="voucher.pjvVoucher.Company.id" class="w-100 border border-dark" nzShowSearch nzAllowClear
+          nzPlaceHolder="Select Company" [ngModelOptions]="{standalone: true}">
+         <nz-option *ngFor="let b of getCompanies" [nzLabel]="b.name" [nzValue]="b.id"></nz-option>
+         </nz-select>
+        </div>
+        </div> -->
+      <div class="col-lg-3 col-sm-6 col-12">
+      <div class="input-blocks add-product">
+        <label>Branch <span class="required-span-color">*</span></label>
+        <nz-select [(ngModel)]="voucher.pjvVoucher.branch.id" class="w-100 border border-dark" nzShowSearch nzAllowClear
+        nzPlaceHolder="Select Company" [ngModelOptions]="{standalone: true}">
+       <nz-option *ngFor="let b of getBranches" [nzLabel]="b.name" [nzValue]="b.id"></nz-option>
+       </nz-select>
+      </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-12">
+        <div class="input-blocks add-product">
+          <label>PPV Number<span class="required-span-color">*</span></label>
+          <input *ngIF="voucher.pjvVoucher.itemStock.itemStockEntries[0].prePurchaseEntry" class="form-control border border-dark" type="text" class="form-control border border-dark" 
+          [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].prePurchaseEntry.prePurchaseCode"
+         readonly name="vehicalNumber" [ngModelOptions]="{standalone: true}">
+        </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="input-blocks add-product">
+            <label>Voucher Date<span class="required-span-color">*</span></label>
+            <input class="form-control border border-dark" type="date" class="form-control border border-dark" 
+            [(ngModel)]="voucher.pjvVoucher.voucherDate"
+           readonly name="date" [ngModelOptions]="{standalone: true}">
+          </div>
+          </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+        <div class="input-blocks add-product">
+          <label>Payment Type <span class="required-span-color">*</span></label>
+          <mat-select *ngIf="voucher.pjvVoucher.itemStock.itemStockEntries[0].prePurchaseEntry" class="w-100 border border-dark" 
+          [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].prePurchaseEntry.paymentType" [ngModelOptions]="{standalone: true}"
+           [ngModelOptions]="{standalone: true}">
+            <mat-option [value]="'routine'">Routine</mat-option>
+            <mat-option [value]="'cash'">Cash</mat-option>
+            <mat-option [value]="'percentage'">Percentage</mat-option>
+          </mat-select>
+        </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="input-blocks add-product">
+            <label>Financial Year<span class="required-span-color">*</span></label>
+            <nz-select [(ngModel)]="voucher.pjvVoucher.financialYear.id" class="w-100 border border-dark" nzShowSearch nzAllowClear
+              nzPlaceHolder="Select Year" >
+             <nz-option *ngFor="let i of financialYear" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+            </nz-select>
+          </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 col-12">
+          <div class="input-blocks add-product">
+            <label>Product <span class="required-span-color">*</span></label>
+            <nz-select [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].itemDef.id" class="w-100 border border-dark" nzShowSearch nzAllowClear
+              nzPlaceHolder="Select Item" (ngModelChange)="getItemById($event)">
+             <nz-option *ngFor="let i of itemDefs" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
+            </nz-select>
+          </div>
+          </div>
+      </div>
+    <!-- </form>    -->
+  </div>
+</div> 
+ <div class="row">
+  <div class="col-md-12">
+    <div class="card input-blocks add-product">
+      <div class="card-body">
+        <form  *ngIf="voucher">
+          <div class="row">
+            <!-- <h4 class="row mb-3">Purchase & Sale voucher</h4> -->
+            <div class="card col-md-6" >
+              <div class=" col-lg-12" style="padding-top: 2%;">
+                <h4 class="row mb-3">Purchase Voucher</h4>
+              </div>
+              <div class="row">
+                <div class="col-xl-6" style="margin-top: 5px;">
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Suplir Ac</label>
+                    <div class="col-lg-8">
+                       <nz-select   id class="w-100 border border-dark" nzShowSearch nzAllowClear nzPlaceHolder="Select parties"
+                        [(ngModel)]=voucher.pjvVoucher.itemStock.account.code [ngModelOptions]="{standalone: true}">
+                          <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
+                        </nz-select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Vehicle No</label>
+                    <div class="col-lg-8">
+                      <input type="text" class="form-control border border-dark" onfocus="this.select()"
+                      [(ngModel)]="voucher.pjvVoucher.vehicalNumber"  [ngModelOptions]="{standalone: true}"
+                      (input)="voucher.pjvVoucher.vehicalNumber = voucher.pjvVoucher.vehicalNumber.toUpperCase()">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Book No</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.pjvVoucher.bookNumber" (ngModelChange)="calculcate()" 
+                       type="text" class="form-control border border-dark" onfocus="this.select()"[ngModelOptions]="{standalone: true}">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-lg-4 col-form-label">Bag</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].bags" (ngModelChange)="calculcate()"
+                            onfocus="this.select()" [ngModelOptions]="{standalone: true}"
+                            type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Gross Weight</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].totalKg" onfocus="this.select()"
+                            [ngModelOptions]="{standalone: true}" (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-lg-4 col-form-label">Bag WT</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].bagWeightDeduction" onfocus="this.select()"
+                            [ngModelOptions]="{standalone: true}" (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input type="text" [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].totalBagWeightDeduction" readonly [ngModelOptions]="{standalone: true}"
+                             class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Deduction</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].katoti"[ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].totalKatoti" readonly
+                            [ngModelOptions]="{standalone: true}"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">QTY</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].itemQuantity" readonly
+                            [ngModelOptions]="{standalone: true}"
+                            type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].manWithKg" readonly
+                            [ngModelOptions]="{standalone: true}"
+                             type="text"  class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">WT/Bag</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].otherBagWeight" readonly
+                      [ngModelOptions]="{standalone: true}" nz-input="text"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xl-6" style="margin-top: 5px;">
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Purchase Rate</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].price" onfocus="this.select()"
+                      [ngModelOptions]="{standalone: true}" 
+                     (ngModelChange)="calculcate()"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Pur Amt</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.pjvVoucher.itemStock.itemStockEntries[0].amount" readonly [ngModelOptions]="{standalone: true}"
+                      (ngModelChange)="calculcate()"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-lg-4 col-form-label">W.H Tax(-)</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.millTaxRate" onfocus="this.select()" [ngModelOptions]="{standalone: true}" 
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.millTaxAmount" [ngModelOptions]="{standalone: true}" readonly
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Sales Tax(+)</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.silaiRate" [ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                            (ngModelChange)="calculcate()"
+                             type="text"  class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.silaiAmount" [ngModelOptions]="{standalone: true}" readonly
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Bank Tax(-)</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.bankTaxRate" [ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                            (ngModelChange)="calculcate()"
+                             type="tel" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.bankTaxAmount" [ngModelOptions]="{standalone: true}" readonly
+                            (ngModelChange)="calculcate()"
+                             type="text"  class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Bardana(+)</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input  [(ngModel)]="voucher.pjvVoucher.itemStock.bardanaRate" [ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.pjvVoucher.itemStock.bardanaAmount" [ngModelOptions]="{standalone: true}" readonly
+                            (ngModelChange)="calculcate()"
+                            type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Other EXP</label>
+                    <div class="col-lg-8">
+                      <input  [(ngModel)]="voucher.pjvVoucher.itemStock.otherExp" [ngModelOptions]="{standalone: true}"
+                      (ngModelChange)="calculcate()" onfocus="this.select()"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Carriage(-)</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.pjvVoucher.itemStock.freightCharges" [ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                      (ngModelChange)="calculcate()"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Net Purchase</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.pjvVoucher.itemStock.netAmount" [ngModelOptions]="{standalone: true}" 
+                      (ngModelChange)="calculcate()" disabled
+                       type="text" class="form-control border-dark">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12" style="margin-top: -15px;">
+                <div class="col-lg-12">
+                  <input [(ngModel)]="voucher.pjvVoucher.voucherNarration" [ngModelOptions]="{standalone: true}" 
+                  readonly class="form-control">
+                </div>
+              </div> 
+              <div class="row" style="padding-top: 3%;">
+                    <label class="col-lg-2 col-form-label">Broker Account</label>
+                     <div class="col-lg-4">
+                      <div class="row">
+                          <div class="mb-3">
+                            <input class="form-control border border-dark">
+                          </div>
+                      </div>
+                    </div>
+                    <label class="col-lg-1 col-form-label">Rate</label>
+                     <div class="col-lg-2">
+                      <div class="row">
+                          <div class="mb-3">
+                            <input onfocus="this.select()" type="tel" [(ngModel)]="voucher.pjvVoucher.itemStock.brokriRate" [ngModelOptions]="{standalone: true}" [ngModelOptions]="{standalone:true}"
+                            (ngModelChange)="calculcate()"
+                            type="text" class="form-control border border-dark">
+                          </div>
+                      </div>
+                    </div>
+                    <label class="col-lg-1 col-form-label">Amt</label>
+                     <div class="col-lg-2">
+                      <div class="row">
+                          <div class="mb-3">
+                            <input readonly [(ngModel)]="voucher.pjvVoucher.itemStock.brokriAmount" [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="calculcate()" disabled
+                            type="text" class="form-control border border-dark">
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+             <div class="card col-md-6">
+              <div class=" col-lg-12" style="margin-top: 2%;">
+                <h4 class="row mb-3 text-end">Sale Voucher</h4>
+              </div>  
+              <div class="row">
+                <div class="col-xl-6" style="margin-top: 5px;">
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Party Ac</label>
+                    <div class="col-lg-8">
+                      <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select parties"
+                        [(ngModel)]=voucher.sjvVoucher.itemStock.account.code [ngModelOptions]="{standalone: true}">
+                          <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
+                        </nz-select>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Vehicle No</label>
+                    <div class="col-lg-8">
+                      <input type="text" class="form-control border border-dark" onfocus="this.select()" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="voucher.sjvVoucher.vehicalNumber" [ngModelOptions]="{standalone: true}"style="text-transform: uppercase;">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Book No</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.sjvVoucher.bookNumber" (ngModelChange)="calculcate()" 
+                       type="text" class="form-control border border-dark" onfocus="this.select()" [ngModelOptions]="{standalone: true}">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-lg-4 col-form-label">Bag</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].bags" (ngModelChange)="calculcate()"
+                            onfocus="this.select()" [ngModelOptions]="{standalone: true}"
+                            type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input readonly type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Gross Weight</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].totalKg" onfocus="this.select()"
+                            [ngModelOptions]="{standalone: true}" (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input readonly type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-lg-4 col-form-label">Bag WT</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].bagWeightDeduction" onfocus="this.select()"
+                            [ngModelOptions]="{standalone: true}" (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input type="text" [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].totalBagWeightDeduction" readonly 
+                            [ngModelOptions]="{standalone: true}"
+                             class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Deduction</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].katoti"[ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].totalKatoti" readonly
+                            [ngModelOptions]="{standalone: true}"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">QTY</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].itemQuantity" readonly
+                            [ngModelOptions]="{standalone: true}"
+                            type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].manWithKg" readonly
+                            [ngModelOptions]="{standalone: true}"
+                             type="text"  class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">WT/Bag</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].otherBagWeight" readonly
+                      [ngModelOptions]="{standalone: true}" nz-input="text"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                 </div>
+                 <div class="col-xl-6" style="margin-top: 5px;">
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Sale Rate</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].price" onfocus="this.select()"
+                      [ngModelOptions]="{standalone: true}" 
+                     (ngModelChange)="calculcate()"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Sale Amount</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.sjvVoucher.itemStock.itemStockEntries[0].amount" readonly [ngModelOptions]="{standalone: true}" 
+                      (ngModelChange)="calculcate()"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-lg-4 col-form-label">W.H Tax(-)</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.millTaxRate" onfocus="this.select()" [ngModelOptions]="{standalone: true}" 
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.millTaxAmount" [ngModelOptions]="{standalone: true}" readonly
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Sales Tax(+)</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.silaiRate" [ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                            (ngModelChange)="calculcate()"
+                             type="text"  class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.silaiAmount" [ngModelOptions]="{standalone: true}" readonly
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Bank Tax(-)</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.bankTaxRate" [ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                            (ngModelChange)="calculcate()"
+                             type="tel" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.bankTaxAmount" [ngModelOptions]="{standalone: true}" readonly
+                            (ngModelChange)="calculcate()"
+                             type="text"  class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                   <div class="row">
+                    <label class="col-lg-4 col-form-label">Bardana(+)</label>
+                     <div class="col-lg-8">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input  [(ngModel)]="voucher.sjvVoucher.itemStock.bardanaRate" [ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                            (ngModelChange)="calculcate()"
+                             type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <input [(ngModel)]="voucher.sjvVoucher.itemStock.bardanaAmount" [ngModelOptions]="{standalone: true}" readonly
+                            (ngModelChange)="calculcate()"
+                            type="text" class="form-control border border-dark">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Other EXP</label>
+                    <div class="col-lg-8">
+                      <input  [(ngModel)]="voucher.sjvVoucher.itemStock.otherExp" [ngModelOptions]="{standalone: true}" 
+                      (ngModelChange)="calculcate()" onfocus="this.select()"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Carriage(-)</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.sjvVoucher.itemStock.freightCharges" [ngModelOptions]="{standalone: true}" onfocus="this.select()"
+                      (ngModelChange)="calculcate()"
+                       type="text" class="form-control border border-dark">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-lg-4 col-form-label">Net Sale</label>
+                    <div class="col-lg-8">
+                      <input [(ngModel)]="voucher.sjvVoucher.itemStock.netAmount" readonly 
+                      (ngModelChange)="calculcate()" [ngModelOptions]="{standalone: true}"
+                       type="text" class="form-control border-dark">
+                    </div>
+                  </div>
+                 </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="col-lg-12">
+                  <input [(ngModel)]="voucher.pjvVoucher.voucherNarration" [ngModelOptions]="{standalone: true}" 
+                  readonly
+                  type="text" class="form-control ">
+                </div>
+              </div> 
+              <div class="row" style="padding-top: 3%;">
+                <label class="col-lg-2 col-form-label">Broker Account</label>
+                 <div class="col-lg-4">
+                  <div class="row">
+                      <div class="mb-3">
+                        <input class="form-control border border-dark">
+                      </div>
+                  </div>
+                </div>
+                <label class="col-lg-1 col-form-label">Rate</label>
+                 <div class="col-lg-2">
+                  <div class="row">
+                      <div class="mb-3">
+                        <input onfocus="this.select()" type="tel" [(ngModel)]="voucher.sjvVoucher.itemStock.brokriRate" [ngModelOptions]="{standalone:true}"
+                        (ngModelChange)="calculcate()"
+                        type="text" class="form-control border border-dark">
+                      </div>
+                  </div>
+                </div>
+                <label class="col-lg-1 col-form-label">Amt</label>
+                 <div class="col-lg-2">
+                  <div class="row">
+                      <div class="mb-3">
+                        <input readonly [(ngModel)]="voucher.sjvVoucher.itemStock.brokriAmount"
+                        (ngModelChange)="calculcate()" disabled [ngModelOptions]="{standalone: true}"
+                        type="text" class="form-control border border-dark">
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+             
+            
+          </div>
+          <div class="row col-lg-12">
+            <label class="col-lg-2 col-form-label">Remarks</label>
+            <div class="col-lg-5">
+              <input class="form-control border border-dark" [(ngModel)]="voucher.sjvVoucher.voucherNarration" [ngModelOptions]="{standalone: true}" 
+              type="text" class="form-control ">
+
+            </div>
+            <div class="col-lg-5 text-end">
+              <button type="button" class="btn btn-cancel add-cancel me-3"
+              data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-submit add-sale" (click)="saveVoucher()">Submit</button>
+             </div>
+          </div> 
+        </form>
+      </div>
+    </div>
+  </div>
+</div> 
+ <!-- view vouche -->
+ <button><a id="viewComine" data-bs-toggle="modal" data-bs-target="#spjv-view">jkiu</a></button>
+ <!-- view  -->
+<div class="modal fade" id="spjv-view">
+  <div class="modal-dialog add-centered">
+    <div class="modal-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card input-blocks add-product">
+            <div class="card-body">
+                <div *ngIf="viewo" class="row ">
+                  <h4 class="row mb-3">COMBINE JOUNRAL VOUCHER</h4>
+                  <div class="row form-label m-2 bg-light-gradient">
+                    <div class="col-lg-12 ms-auto mb-1">
+                      <div class="total-order w-75 m-auto mb-3 ">
+                      <tbody>
+                        <tr>
+                          <td class="col-lg-6" style="text-align: right;">COMPANY</td>
+                          <td>COMPANYCOMPAN</td>
+                        </tr>
+                        <tr>
+                         <td class="col-lg-6" style="text-align: right;">BRANCH</td>
+                         <td>COMPANY</td>
+                        </tr>
+                        <tr>
+                         <td class="col-lg-6" style="text-align: right;">ADDRESS</td>
+                         <td>COMPANY</td>
+                        </tr>
+                      </tbody>
+                    </div>
+                  </div> 
+                </div>
+                <div class="card col-md-6" >
+                    
+                    <div class=" col-lg-12" style="padding-top: 2%;">
+                      <h6 class="row mb-3">PURCHASE INVOICE</h6>
+                    </div>
+                    <div class="row total-order w-100 max-widthauto m-auto mb-2">
+                      <ul>
+                        <li><div class="row col-xl-6">
+                          <div class="row col-xl-7">
+                            <h6 class="row mb-2">VOUCHER No.</h6>
+                          </div >
+                          <div class="row col-xl-5">
+                            <h6 class="row mb-2">VOUCHER </h6>
+                          </div>
+                        </div>
+                        <div class="col-xl-6">
+                          <h6 class="row mb-2">VOUCHER DATE : dekho</h6>
+                        </div></li>
+                      </ul>
+                      <ul>
+                        <li><div class="col-xl-12">
+                          <h6 class="row mb-2">PARTY NAME</h6>
+                        </div></li>
+                      </ul>
+                      <ul>
+                        <li><div class="col-xl-12">
+                          <h6 class="row mb-2">PRODUCT</h6>
+                        </div></li>
+                      </ul>
+                      <ul>
+                        <li><div class=" col-xl-6">
+                          <h6 class="row mb-2">VEHICLE NO.</h6>
+                        </div>
+                        <div class="col-xl-6">
+                          <h6 class="row mb-2">BOOK NO. : dekho</h6>
+                        </div></li>
+                      </ul>
+                    </div>
+                    <div class="table table-responsive">
+                      <table class="table  datanew">
+                        <thead style="background-color: chartreuse;">
+                          <tr >
+                            <th>BAGS</th>
+                            <th>GRASS <br> WT(KG)</th>
+                            <th>BAG WT</th>
+                            <th>DEDUCTION</th>
+                            <th>NET <br> WT(KG)</th>
+                            <th>RATE</th>
+                            <th>GROSS <br> AMOUNT</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- <tr *ngFor="let data of voucher.itemStock.itemStockEntries">
+                            <td>{{voucher.vehicalNumber }}</td>
+                            <td>{{data.bags}}</td>
+                            <td>{{data.totalKg}}</td>
+                            <td>{{data.totalBagWeightDeduction}}</td>
+                            <td>{{data.katoti}}</td>
+                            <td>{{data.safiKg}}</td>
+                            <td>{{data.price}}</td>
+                            <td>{{voucher.itemStock.totalAmount}}</td>
+                          </tr> -->
+                        </tbody>
+                      </table>
+                    </div>
+      
+                     <div class="row mb-2">
+                      <div class="col-lg-11 ms-auto" style="margin-right: 25px;">
+                        <div class="total-order w-100 max-widthauto m-auto mb-3">
+                          <ul>
+                            <li>
+                              <h4>COM(W.H) TAX</h4>
+                              <!-- <h5>{{voucher.itemStock.millTaxRate}}</h5> -->
+                              <!-- <h5>{{voucher.itemStock.millTaxAmount}}</h5> -->
+                            </li>
+                            <li>
+                              <h4>SALES TAX</h4>
+                              <!-- <h5>{{voucher.itemStock.bankTaxRate}}</h5> -->
+                              <!-- <h5>{{voucher.itemStock.bankTaxAmount}}</h5> -->
+                            </li>
+                            <li>
+                              <h4>BANK TAX</h4>
+                              <!-- <h5>{{voucher.itemStock.silaiRate}}</h5> -->
+                              <!-- <h5>{{voucher.itemStock.silaiAmount}}</h5> -->
+                              <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                            </li>
+                            <li>
+                              <h4>BARDANA etc</h4>
+                              <!-- <h5>{{voucher.itemStock.bardanaRate}}</h5> -->
+                              <!-- <h5>{{voucher.itemStock.bardanaAmount}}</h5> -->
+                            </li>
+                            <li>
+                              <h4>OTHER EXPENSES</h4>
+                              <!-- <h5>{{voucher.itemStock.unloadingRate}}</h5> -->
+                              <!-- <h5>{{voucher.itemStock.unloadingCharges}}</h5> -->
+                              <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                            </li>
+                            <li>
+                              <h4>CARRIAGE</h4>
+                              <h5></h5>
+                              <!-- <h5>{{voucher.itemStock.otherExp}}</h5> -->
+                              <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                            </li>
+                            <li>
+                              <h4>NET PURCHASE</h4>
+                              <h5>$ 0.00</h5>
+                              <!-- <h5>{{voucher.itemStock.netAmount}}</h5> -->
+                              <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="card col-md-6" >
+                    
+                  <div class=" col-lg-12" style="padding-top: 2%;">
+                    <h6 class="row mb-3">PURCHASE INVOICE</h6>
+                  </div>
+                  <div class="row total-order w-100 max-widthauto m-auto mb-2">
+                    <ul>
+                      <li><div class="row col-xl-6">
+                        <div class="row col-xl-7">
+                          <h6 class="row mb-2">VOUCHER No.</h6>
+                        </div >
+                        <div class="row col-xl-5">
+                          <h6 class="row mb-2">VOUCHER </h6>
+                        </div>
+                      </div>
+                      <div class="col-xl-6">
+                        <h6 class="row mb-2">VOUCHER DATE : dekho</h6>
+                      </div></li>
+                    </ul>
+                    <ul>
+                      <li><div class="col-xl-12">
+                        <h6 class="row mb-2">PARTY NAME</h6>
+                      </div></li>
+                    </ul>
+                    <ul>
+                      <li><div class="col-xl-12">
+                        <h6 class="row mb-2">PRODUCT</h6>
+                      </div></li>
+                    </ul>
+                    <ul>
+                      <li><div class=" col-xl-6">
+                        <h6 class="row mb-2">VEHICLE NO.</h6>
+                      </div>
+                      <div class="col-xl-6">
+                        <h6 class="row mb-2">BOOK NO. : dekho</h6>
+                      </div></li>
+                    </ul>
+                  </div>
+                  <div class="table table-responsive">
+                    <table class="table  datanew">
+                      <thead style="background-color: chartreuse;">
+                        <tr >
+                          <th>BAGS</th>
+                          <th>GRASS <br> WT(KG)</th>
+                          <th>BAG WT</th>
+                          <th>DEDUCTION</th>
+                          <th>NET <br> WT(KG)</th>
+                          <th>RATE</th>
+                          <th>GROSS <br> AMOUNT</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- <tr *ngFor="let data of voucher.itemStock.itemStockEntries">
+                          <td>{{voucher.vehicalNumber }}</td>
+                          <td>{{data.bags}}</td>
+                          <td>{{data.totalKg}}</td>
+                          <td>{{data.totalBagWeightDeduction}}</td>
+                          <td>{{data.katoti}}</td>
+                          <td>{{data.safiKg}}</td>
+                          <td>{{data.price}}</td>
+                          <td>{{voucher.itemStock.totalAmount}}</td>
+                        </tr> -->
+                      </tbody>
+                    </table>
+                  </div>
+    
+                   <div class="row mb-2">
+                    <div class="col-lg-11 ms-auto" style="margin-right: 25px;">
+                      <div class="total-order w-100 max-widthauto m-auto mb-3">
+                        <ul>
+                          <li>
+                            <h4>COM(W.H) TAX</h4>
+                            <!-- <h5>{{voucher.itemStock.millTaxRate}}</h5> -->
+                            <!-- <h5>{{voucher.itemStock.millTaxAmount}}</h5> -->
+                          </li>
+                          <li>
+                            <h4>SALES TAX</h4>
+                            <!-- <h5>{{voucher.itemStock.bankTaxRate}}</h5> -->
+                            <!-- <h5>{{voucher.itemStock.bankTaxAmount}}</h5> -->
+                          </li>
+                          <li>
+                            <h4>BANK TAX</h4>
+                            <!-- <h5>{{voucher.itemStock.silaiRate}}</h5> -->
+                            <!-- <h5>{{voucher.itemStock.silaiAmount}}</h5> -->
+                            <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                          </li>
+                          <li>
+                            <h4>BARDANA etc</h4>
+                            <!-- <h5>{{voucher.itemStock.bardanaRate}}</h5> -->
+                            <!-- <h5>{{voucher.itemStock.bardanaAmount}}</h5> -->
+                          </li>
+                          <li>
+                            <h4>OTHER EXPENSES</h4>
+                            <!-- <h5>{{voucher.itemStock.unloadingRate}}</h5> -->
+                            <!-- <h5>{{voucher.itemStock.unloadingCharges}}</h5> -->
+                            <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                          </li>
+                          <li>
+                            <h4>CARRIAGE</h4>
+                            <h5></h5>
+                            <!-- <h5>{{voucher.itemStock.otherExp}}</h5> -->
+                            <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                          </li>
+                          <li>
+                            <h4>NET PURCHASE</h4>
+                            <h5>$ 0.00</h5>
+                            <!-- <h5>{{voucher.itemStock.netAmount}}</h5> -->
+                            <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- <div  style="height:480px;overflow: auto;">
 
     <div style="display: flex;flex-wrap: wrap;text-align: center;">
 
-        <!-- <div class="col-lg-2 col-sm-6 col-12">
-            <div class="input-blocks">
-              <label>To Date</label>
-              <div class="input-groupicon calender-input date-input1">
-                <i class="feather icon-calendar info-img"></i>
-                <input [(ngModel)]="payLoad.toDate" [ngModelOptions]="{standalone: true}" type="text" class="datetimepicker" bsDatepicker container=".date-input1" placeholder="Choose">
-              </div>
-            </div>
-          </div> -->
+       
 
       <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
         <div style="display: flex;">
@@ -23,15 +1070,6 @@
            </div>
        </div>
       </div> 
-      <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
-        <div style="display: flex;">
-          <span style="white-space: normal; text-align: right;" nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" >
-            UNIT</span>
-           <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14">
-             <input [(ngModel)]="sjvVoucher.branch.id" name="id"  nz-input="tel">
-           </div>
-       </div>
-      </div>
       
       <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="12" nzXl="6">
         <div style="display: flex;">
@@ -81,8 +1119,8 @@
       </div>  
        
     
-  </div>
-  <div  style="height: 600px;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"style="display: flex;flex-wrap: wrap;">
+  </div> -->
+  <!-- <div  style="height: 600px;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"style="display: flex;flex-wrap: wrap;">
   
    <div nz-col nzXs="24" nzSm="22" nzMd="18" nzLg="15" nzXl="12" style="display: flex;flex-wrap:wrap; border: 1px solid #f8f7fa;border-radius: 10px;text-align: right; width: 100%;">
     <div  nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
@@ -555,5 +1593,6 @@
   <div  style="display: flex; flex-direction: row-reverse; margin-right: 40px;">
     <button  nz-button nzType="primary" class="btn btn-submit add-sale" (click)="calculcate()" >Saved</button>
   </div>
-  </div> 
+  </div>  -->
 
+ 

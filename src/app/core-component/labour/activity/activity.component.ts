@@ -16,10 +16,11 @@ export class ActivityComponent {
   ){
     this.getActivity();
   }
-  obj={
-    id:0,
-    name:"",
-    data:""
+  obj:any={
+    name:'',
+    address:'',
+    mobile:'',
+    status:false
   }
   
  getActivity(){
@@ -68,4 +69,5 @@ export class ActivityComponent {
    this.sidebar.toggleCollapse();
    this.isCollapsed = !this.isCollapsed;
  }
+ 
 }

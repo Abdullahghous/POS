@@ -2,8 +2,9 @@ import { Component, Renderer2 } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { CommonService, SidebarService, apiResultFormat, pageSelection } from 'src/app/core/core.index';
+import { CommonService, HttpService, SidebarService, apiResultFormat, pageSelection } from 'src/app/core/core.index';
 import { routes } from 'src/app/core/helpers/routes';
+import { AllApiService } from 'src/app/core/service/allApi/all-api.service';
 import { DataService } from 'src/app/core/service/data/data.service';
 import { expensereport } from 'src/app/shared/model/page.model';
 import { PaginationService, tablePageSize } from 'src/app/shared/shared.index';
@@ -17,88 +18,121 @@ interface data {
   styleUrl: './expense-report.component.scss'
 })
 export class ExpenseReportComponent {
-  initChecked = false;
-  public routes = routes;
-  bsValue = new Date();
-  bsRangeValue: Date[];
-  maxDate = new Date();
-  // pagination variables
+  itemDefs: any = [];
+  parties: any[] = [];
+  mills: any[] = [];
+  allParties:any[]= [];
+  getBranches:any[]= [];
+  getCompanies:any[]= [];
+  financialYear:any[]= [];
+  account:any[]=[]
+  report:any[]=[]
+  sumOpeningBalance: number = 0;
+  sumDebit: number = 0;
+  sumCredit: number = 0;
+  sumDiff: number = 0;
+  sumClosingBalance: number = 0;
 
-  public tableData: Array<expensereport> = [];
-  public pageSize = 10;
-  public serialNumberArray: Array<number> = [];
-  public totalData = 0;
-  showFilter = false;
-  dataSource!: MatTableDataSource<expensereport >;
-  public searchDataValue = '';
-  //** / pagination variables
 
-  constructor(
-    private data: DataService,
-    private pagination: PaginationService,
-    private router: Router,
-    private sidebar: SidebarService,
-    private common: CommonService,
-    private renderer: Renderer2
-  ) {
-    this.maxDate.setDate(this.maxDate.getDate() + 7);
-    this.bsRangeValue = [this.bsValue, this.maxDate];
-    this.data.getDataTable().subscribe((apiRes: apiResultFormat) => {
-      this.totalData = apiRes.totalData;
-      this.pagination.tablePageSize.subscribe((res: tablePageSize) => {
-        if (this.router.url == this.routes.expenseReport) {
-          this.getTableData({ skip: res.skip, limit: this.totalData  });
-          this.pageSize = res.pageSize;
-        }
-      });
+  constructor(private sidebar:SidebarService,
+    private allApiService:AllApiService,
+    private apiService:HttpService
+  ){
+     this.getAll()
+  }
+  obj:any={
+    "companyIds": [
+        "0"
+    ],
+    "accountThirdLevel": null,
+    "branchIds": [
+        "0"
+    ],
+    "level": "4",
+    "fromAccountCode": "0",
+    "toAccountCode": "0",
+    "voucherStatusId": "0",
+    "financialYearId": "6",
+    "fromDate": new Date().toISOString().substring(0, 10),
+    "toDate": new Date().toISOString().substring(0, 10),
+    "upperRange": "0",
+    "lowerRange": "0"
+  }
+  level(id:any){
+    this.apiService.getObservable<any[]>('reports/load_from_and_to_Accounts?level='+id).subscribe((res:any)=>{
+      console.log('account level::',res);
+      this.account=res
+    })
+    console.log('level::',id)
+  }
+  search() {
+    this.apiService.post('reports/trial_balance', this.obj).subscribe((res: any) => {
+      if (res) {
+        this.report = res;
+        this.flattenReport();
+        this.calculateSums()
+      }
+    });
+  }
+  calculateSums() {
+    this.sumOpeningBalance = 0;
+    this.sumDebit = 0;
+    this.sumCredit = 0;
+    this.sumDiff = 0;
+    this.sumClosingBalance = 0;
+
+    this.report.forEach(data => {
+      this.sumOpeningBalance += data.openingBalance || 0;
+      this.sumDebit += data.debit || 0;
+      this.sumCredit += data.credit || 0;
+      this.sumDiff += data.diff || 0;
+      this.sumClosingBalance += data.closingBalance || 0;
     });
   }
 
-  private getTableData(pageOption: pageSelection): void {
-    this.data.getexpenseReport().subscribe((apiRes: apiResultFormat) => {
-      this.tableData = [];
-      this.serialNumberArray = [];
-      this.totalData = apiRes.totalData;
-      apiRes.data.map((res: expensereport , index: number) => {
-        const serialNumber = index + 1;
-        if (index >= pageOption.skip && serialNumber <= pageOption.limit) {
-          res.sNo = serialNumber;
-          this.tableData.push(res);
-          this.serialNumberArray.push(serialNumber);
-        }
-      });
-      this.dataSource = new MatTableDataSource<expensereport >(this.tableData);
-      this.pagination.calculatePageSize.next({
-        totalData: this.totalData,
-        pageSize: this.pageSize,
-        tableData: this.tableData,
-        serialNumberArray: this.serialNumberArray,
-      });
-    });
-  }
-
-  public sortData(sort: Sort) {
-    const data = this.tableData.slice();
-    if (!sort.active || sort.direction === '') {
-      this.tableData = data;
-    } else {
-      this.tableData = data.sort((a, b) => {
-        const aValue = (a as never)[sort.active];
-        const bValue = (b as never)[sort.active];
-        return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
-      });
-    }
-  }
-
-  public searchData(value: string): void {
-    this.dataSource.filter = value.trim().toLowerCase();
-    this.tableData = this.dataSource.filteredData;
-  }
-
- 
-
+  flattenReport() {
+    debugger
+    let flattened: any = [];
   
-
+    this.report.forEach(data => {
+      flattened.push(data);
+      data.backgroundColor = this.getBackgroundColor(data.level);
+      if (data.children) {
+        data.children.forEach((secondData: any) => {
+          flattened.push(secondData);
+          secondData.backgroundColor = this.getBackgroundColor(secondData.level);
+          if (secondData.children) {
+            secondData.children.forEach((thirdData: any) => {
+              flattened.push(thirdData);
+              thirdData.backgroundColor = this.getBackgroundColor(thirdData.level);
+              if (thirdData.children) {
+                thirdData.children.forEach((forthData: any) => {
+                  flattened.push(forthData);
+                  forthData.backgroundColor = this.getBackgroundColor(forthData.level);
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  
+    this.report = flattened;
+  }
+  
+  getBackgroundColor(level: number): string {
+    debugger
+    if (level === 1) {
+      return 'lightgray';
+    } else if (level === 2) {
+      return 'lightblue';
+    } else if (level === 3) {
+      return 'lightgreen';
+    } else if (level === 4) {
+      return 'lightyellow';
+    }
+    return 'transparent';  // Default background
+  }
   public filter = false;
   openFilter() {
     this.filter = !this.filter;
@@ -108,35 +142,57 @@ export class ExpenseReportComponent {
     this.sidebar.toggleCollapse();
     this.isCollapsed = !this.isCollapsed;
   }
-  public selectedValue1 = '';
-  public selectedValue2 = '';
-  public selectedValue3 = '';
-  selectedList1: data[] = [
-    { value: 'Sort by Date' },
-    { value: 'Newest' },
-    { value: 'Oldest' },
-  ];
-  selectedList2: data[] = [
-    { value: 'Choose Category' },
-    { value: 'Computers' },
+  getAll(){
     
-  ];
-  selectedList3: data[] = [
-    { value: 'Created by' },
-    { value: 'Complete' },
-    { value: 'Inprogress' },
-    
-  ];
-  selectAll(initChecked: boolean) {
-    if (!initChecked) {
-      this.tableData.forEach((f) => {
-        f.isSelected = true;
-      });
-    } else {
-      this.tableData.forEach((f) => {
-        f.isSelected = false;
-      });
+    let items: any = localStorage.getItem('itemDefs');
+    let parties: any = localStorage.getItem('parties');
+    let mills: any = localStorage.getItem('mills');
+    let getBranches: any = localStorage.getItem('branch');
+    let getCompanies: any = localStorage.getItem('companies');
+    let financialYear: any = localStorage.getItem('financialYear');
+    // console.log(parties,'party')
+    if (items && parties && mills && getBranches && getCompanies && financialYear
+       != null && JSON.parse(items).length != 0) {
+      this.itemDefs = JSON.parse(items);
+      this.parties =JSON.parse(parties);
+      this.mills = JSON.parse(mills); 
+      this.getBranches = JSON.parse(getBranches);
+      this.getCompanies = JSON.parse(getCompanies);
+      this.financialYear = JSON.parse(financialYear);
+      console.log(this.financialYear ,'yearrrr====')
+      // debugger
     }
+    else{
+      this.allApiService.getItemDefs();
+      items = localStorage.getItem('itemDefs');
+      this.itemDefs = JSON.parse(items);
+      this.allApiService.getMills();
+      mills = localStorage.getItem('mills');
+      this.mills = JSON.parse(mills);
+      this.allApiService.getParties();
+      parties = localStorage.getItem('parties');
+      this.parties = JSON.parse(parties);
+      this.allApiService.getBranches();
+      getBranches = localStorage.getItem('branch');
+      this.getBranches = JSON.parse(getBranches);
+      this.allApiService.getCompanies();
+      getCompanies = localStorage.getItem('companies');
+      this.getCompanies = JSON.parse(getCompanies);
+      this.allApiService.financialYear();
+      financialYear = localStorage.getItem('financialYear');
+      this.financialYear = JSON.parse(financialYear);
+      
+      //  debugger
+    }
+    const maxFinancialYear = this.financialYear.reduce((maxYear, currentYear) => {
+      debugger
+      return currentYear.id > maxYear.id ? currentYear : maxYear;
+    },  
+      this.financialYear[0]);
+      this.obj.fromDate =maxFinancialYear.fromDate;
+      this.obj.toDate =maxFinancialYear.toDate;
+      this.obj.financialYearId =maxFinancialYear.id;
+  
   }
 
 }

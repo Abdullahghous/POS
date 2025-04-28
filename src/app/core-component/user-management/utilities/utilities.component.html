@@ -1,0 +1,370 @@
+
+<div class="card table-list-card">
+    <div class="modal-header border-0 custom-modal-header">
+        <div class="page-title">
+          <h4>Add And Update Menu </h4>
+        </div>
+        <button mat-raised-button color="primary" (click)="addParentRow($event)">
+          <mat-icon>add</mat-icon>
+          <span class="ms-1">ADD NEW Sid</span>
+        </button>
+          
+      </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <!-- <nz-table #nestedTable [nzData]="moduleList" nzSize="middle" [nzPageSize]="10" [nzFrontPagination]="false" [nzBordered]="true">
+          <thead>
+            <tr>
+              <th></th>
+              <th>TITTLE</th>
+              <th>ICON</th>
+              <th>showAsTab</th>
+              <th>separateRoute</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-template ngFor let-data [ngForOf]="bar" >
+              <tr>
+                <td [(nzExpand)]="data.expand" ></td>
+                <td>{{data.tittle}}</td>
+                <td>{{data.icon}}</td>
+                <td>{{data.showAsTab}}</td>
+                <td>{{data.separateRoute}}</td>
+                <td class="action-table-data">
+                  <div class="edit-delete-action">
+                    <a class="me-2 p-2" data-bs-toggle="modal" data-bs-target="#edit-units" id="openmenu" (click)="editModule(data)">
+                      <i class="feather icon-edit feather-edit"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              <tr [nzExpand]="data.expand">
+                <nz-table #innerTable1 [nzData]="data.menu" nzSize="middle" [nzShowPagination]="false">
+                  <thead>
+                    <tr>
+                      <th>TITTLE</th>
+                      <th>ROUTE</th>
+                      <th>ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of data.menu" >
+                      <td>{{row.tittle}}</td>
+                      <td>{{row.route}}</td>
+                      <td class="action-table-data">
+                        <div class="edit-delete-action">
+                          <a class="me-2 p-2" data-bs-toggle="modal" data-bs-target="#edit-units" id="openmenu" >
+                            <i class="feather icon-edit feather-edit"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    <nz-table>
+                      <thead>
+                        <tr>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </nz-table>
+                  </tbody>
+                </nz-table>
+              </tr>
+            </ng-template>
+          </tbody>
+        </nz-table> -->
+        <nz-table [nzData]="sidebarData1" [nzBordered]="true" [nzSize]="'middle'" [nzShowPagination]="false">
+          <thead>
+            <tr>
+              <th></th>
+              <th>TITTLE</th>
+              <th>ICON</th>
+              <th>Show As Tab</th>
+              <th>Show SubRoute</th>
+              <th>Has SubRoute</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+           <ng-container *ngFor="let module of sidebarData1">
+            <tr>
+              <td [(nzExpand)]="module.expand"></td>
+              <td><input type="text" [(ngModel)]="module.tittle" [ngModelOptions]="{standalone:true}" ></td>
+              <td><input type="text" [(ngModel)]="module.icon" [ngModelOptions]="{standalone:true}" ></td>
+              <td><div class="mb-3">
+                <mat-checkbox [(ngModel)]="module.showAsTab" name="showAsTab" [ngModelOptions]="{standalone:true}">
+                  showAsTab (1)
+                </mat-checkbox>
+              </div></td>
+              <td><div class="mb-3">
+                <mat-checkbox [(ngModel)]="module.showSubRoute" name="showSubRoute" [ngModelOptions]="{standalone:true}">
+                  SHOW SUBROUTE
+                </mat-checkbox>
+              </div></td>
+              <td><div class="mb-3">
+                <mat-checkbox [(ngModel)]="module.hasSubRoute" name="hasSubRoute" [ngModelOptions]="{standalone:true}">
+                  Has SUBROUTE
+                </mat-checkbox>
+              </div></td>
+              <td class="action-table-data"><div class="edit-delete-action">
+                <a class="me-2 p-2" (click)="addGrandRow(module)">
+                  <i class="feather icon-plus feather-edit"></i>
+                </a>
+              </div></td>
+            </tr>
+
+            <tr *ngIf="module.expand">
+              <td colspan="7">
+                <nz-table [nzData]="module.menu" [nzBordered]="true" [nzSize]="'small'"[nzShowPagination]="false">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Title</th>
+                      <th>Show SubRoute</th>
+                      <th>Has SubRoute</th>
+                      <th>Icon</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   <ng-container *ngFor="let menu of module.menu">
+                     <tr>
+                       <td [(nzExpand)]="menu.expand"></td>
+                       <td><input type="text" [(ngModel)]="menu.menuValue" [ngModelOptions]="{standalone:true}" ></td>
+                       <td><div class="mb-3">
+                        <mat-checkbox [(ngModel)]="menu.showSubRoute" name="showSubRoute" [ngModelOptions]="{standalone:true}">
+                          SHOW SUBROUTE
+                        </mat-checkbox>
+                      </div></td>
+                      <td><div class="mb-3">
+                        <mat-checkbox [(ngModel)]="menu.hasSubRoute" name="hasSubRoute" [ngModelOptions]="{standalone:true}">
+                          Has SUBROUTE
+                        </mat-checkbox>
+                      </div></td>
+                       <td><input type="text" [(ngModel)]="menu.icon" [ngModelOptions]="{standalone:true}" ></td>
+                       <td class="action-table-data"><div class="edit-delete-action">
+                        <a class="me-2 p-2"  (click)="addParentRow(menu)">
+                          <i class="feather icon-plus feather-edit"></i>
+                        </a>
+                      </div></td>
+                      </tr>
+
+                     <tr *ngIf="menu.expand">
+                       <td colspan="6">
+                         <nz-table [nzData]="menu.subMenus" [nzBordered]="true" [nzSize]="'small'" [nzShowPagination]="false" >
+                           <thead>
+                             <tr>
+                               <th>#</th>
+                               <th>Title</th>
+                               <th>Route</th>
+                               <!-- <th>Custom Submenu Two</th> -->
+                               <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let sub of menu.subMenus ; let i = index">
+                                <td>{{i + 1}}</td>
+                                <td><input type="text" [(ngModel)]="sub.menuValue" [ngModelOptions]="{standalone:true}" ></td>
+                                <td><input type="text" [(ngModel)]="sub.route" [ngModelOptions]="{standalone:true}" ></td>
+                                <!-- <td><input type="text" [(ngModel)]="sub.CustomSubmenuTwo" [ngModelOptions]="{standalone:true}" ></td> -->
+                                <td class="action-table-data"><div class="edit-delete-action">
+                                  <a class="me-2 p-2"  (click)="addChildRow(sub)">
+                                    <i class="feather icon-plus feather-edit"></i>
+                                  </a>
+                                </div></td>
+                              </tr>
+                            </tbody>
+                          </nz-table>
+                         </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </nz-table>
+               </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+    <div class="modal-header border-0 custom-modal-header justify-content-end " >
+      <button mat-raised-button color="primary" (click)="setSideBar()" >
+        <mat-icon>save</mat-icon>
+        <span class="ms-1">Save</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- /branch -->
+  <div class="card table-list-card">
+    <div class="card-body">
+        <div class="modal-header border-0 custom-modal-header">
+            <div class="page-title">
+              <h4>BRANCH</h4>
+            </div>
+            <button mat-raised-button color="primary" data-bs-toggle="modal" data-bs-target="#add-units">
+              <mat-icon>add</mat-icon>
+              <span class="ms-1">ADD NEW</span>
+            </button>
+          </div>
+      <div class="table-responsive">
+        <table class="table  datanew">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>TITTLE</th>
+              <th>ROUTE</th>
+              <th>Has SUBROUTE</th>
+              <th>Show SUBROUTE</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of list ; let i = index">
+              <td></td>
+              <td>{{data.tittle}}</td>
+              <td>{{data.route}}</td>
+              <td>
+                <span class="badge " [ngClass]="data.hasSubRoute ? 'rounded-pill bg-soft-primary' : 'rounded-pill bg-soft-secondary'">
+                  {{ data.hasSubRoute ? 'Yes' : 'No' }}
+                </span>
+              </td>
+            
+              <!-- Show Subroute Badge -->
+              <td>
+                <span class="badge" [ngClass]="data.showSubRoute ? 'rounded-pill bg-soft-primary' : 'rounded-pill bg-soft-secondary'">
+                  {{ data.showSubRoute ? 'Yes' : 'No' }}
+                </span>
+              </td>
+              <td class="action-table-data">
+                <div class="edit-delete-action">
+                  <a class="me-2 p-2" data-bs-toggle="modal" data-bs-target="#add-units" (click)="edit(data)">
+                    <i class="feather icon-edit feather-edit"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Add Role -->
+  <div class="modal fade" id="add-units">
+    <div class="modal-dialog modal-dialog-centered custom-modal-two">
+      <div class="modal-content">
+        <div class="page-wrapper-new p-0">
+          <div class="content">
+            <div class="modal-header border-0 custom-modal-header">
+              <div class="page-title">
+                <h4>Create Side Bar</h4>
+              </div>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+  
+            <div class="modal-body custom-modal-body">
+              <form *ngIf="obj">
+                <div class="mb-0">
+                  <label class="form-label"> TITTLE</label>
+                  <input type="text" class="form-control" [(ngModel)]="side[0].tittle" [ngModelOptions]="{standalone:true}" >
+                </div>
+                
+                <!-- <div class="mb-3" >
+                  <label class="form-label">ROUTE</label>
+                  <input type="text" class="form-control" [(ngModel)]="side.route" [ngModelOptions]="{standalone:true}" >
+                </div> -->
+                <div class="mb-3">
+                  <mat-checkbox [(ngModel)]="side[0].hasSubRoute" name="hasSubRoute" [ngModelOptions]="{standalone:true}">
+                    HAS SUBROUTE
+                  </mat-checkbox>
+                </div>
+                <div class="mb-3">
+                  <mat-checkbox [(ngModel)]="side[0].showSubRoute" name="showSubRoute" [ngModelOptions]="{standalone:true}">
+                    SHOW SUBROUTE
+                  </mat-checkbox>
+                </div>
+                <div class="modal-footer-btn d-flex justify-content-end">
+                  <button mat-button color="warn" id="closeMenu" data-bs-dismiss="modal">Cancel</button>
+                  <button mat-flat-button color="primary" (click)="setSideBar()">Create MENU</button>
+                </div>
+  
+              </form>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- /Add Role -->
+  
+  <!-- Edit Role -->
+  <div class="modal fade" id="edit-units">
+    <div class="modal-dialog modal-dialog-centered custom-modal-two">
+      <div class="modal-content">
+        <div class="page-wrapper-new p-0">
+          <div class="content">
+            <div class="modal-header border-0 custom-modal-header">
+              <div class="page-title">
+                <h4>MANGE YOUR ADD OR UPDATE ROUTE</h4>
+              </div>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body custom-modal-body">
+              <form>
+                <div class="mb-0">
+                  <label class="form-label">MODULE TITTLE</label>
+                  <input type="text"  class="form-control"[(ngModel)]="obj.tittle" [ngModelOptions]="{standalone:true}" > 
+                </div>
+                <div class="mb-0">
+                  <label class="form-label">ICON</label>
+                  <input type="text"  class="form-control"[(ngModel)]="obj.icon" [ngModelOptions]="{standalone:true}" > 
+                </div>
+                <!-- <div class="mb-0">
+                  <label class="form-label">TITTLE</label>
+                  <input type="text" class="form-control"[(ngModel)]="payLoad.tittle" [ngModelOptions]="{standalone:true}" > 
+                </div>
+                <div class="mb-0">
+                  <label class="form-label">ROUTE</label>
+                  <input type="text" class="form-control" [(ngModel)]="payLoad.route" [ngModelOptions]="{standalone:true}" >
+                </div> -->
+                <div class="mb-2 row " style="margin-top: 5%; ">
+                  <div class="col-9">
+                    <label class="form-label">show As Tab</label>
+                  </div>
+                  <div class="col-3">
+                    <input type="checkbox" id="user" class="check" [(ngModel)]="obj.showAsTab" [ngModelOptions]="{standalone:true}">
+                    <label for="user" class="checktoggle">	</label>
+                  </div>
+                </div>
+                <div class="mb-2 row" style="margin-top: 5%; ">
+                  <div class="col-9">
+                    <label class="form-label">Separate Route</label>
+                  </div>
+                  <div class="col-3">
+                    <input type="checkbox" id="user1" class="check" [(ngModel)]="obj.separateRoute" [ngModelOptions]="{standalone:true}" >
+                    <label for="user1" class="checktoggle">	</label>
+                  </div>
+                </div>
+                <div class="modal-footer-btn">
+                  <button type="button" class="btn btn-cancel me-2"
+                  data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-submit" (click)="setModule()">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -91,7 +91,7 @@
         </div>
         </div>   
         <div class="table-responsive">
-            <nz-table>
+            <table>
                 <thead>
                     <tr>
                       <th>#</th>
@@ -110,13 +110,13 @@
                     <tr *ngFor="let data of saleOrder.saleOrderEntries; let i = index">
                       <td><span>{{i + 1}}</span></td>
                       <td>
-                        <mat-select   id class="w-100" matShowSearch AllowClear nzPlaceHolder="Select Item"
+                        <nz-select   id class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Plz Select Item"
                         [(ngModel)]=data.itemDef.id [ngModelOptions]="{standalone: true}" class="space-select select">
-                        <mat-option *ngFor="let item of itemDefs" [value]="item.id">{{ item.name }}</mat-option>
-                        </mat-select>
+                        <nz-option *ngFor="let item of itemDefs"[nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+                        </nz-select>
                       </td>
                      <td>
-                      <nz-select   id class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select parties"
+                      <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select parties"
                       [(ngModel)]=data.customerAccount.code [ngModelOptions]="{standalone: true}">
                         <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.id"></nz-option>
                       </nz-select>
@@ -129,9 +129,9 @@
                      </td>
                       <!-- <td><input type="text" class="form-control"  [(ngModel)]="data.account" [ngModelOptions]="{standalone: true}" (ngModelChange)="add(data)" /></td> -->
                       <!-- <td><input type="text" class="form-control" [(ngModel)]="data.mill" [ngModelOptions]="{standalone: true}" (ngModelChange)="add(data)" /></td> -->
-                      <td><input type="text" class="form-control" [(ngModel)]="data.rate" [ngModelOptions]="{standalone: true}"  /></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="data.kg" [ngModelOptions]="{standalone: true}" /></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="data.vehical" [ngModelOptions]="{standalone: true}"/></td>
+                      <td><input onfocus="this.select()" type="text" class="form-control" [(ngModel)]="data.rate" [ngModelOptions]="{standalone: true}"  /></td>
+                      <td><input onfocus="this.select()" type="text" class="form-control" [(ngModel)]="data.kg" [ngModelOptions]="{standalone: true}" /></td>
+                      <td><input onfocus="this.select()" type="text" class="form-control" [(ngModel)]="data.vehical" [ngModelOptions]="{standalone: true}"/></td>
                       <td><input type="date" class="form-control" [(ngModel)]="data.paymentDate" [ngModelOptions]="{standalone: true}" /></td>
                       <td><nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Type"
                         [(ngModel)]="data.paymentType">
@@ -151,7 +151,7 @@
                       </td>
                     </tr>
                   </tbody>
-            </nz-table>
+            </table>
             <div class="col-lg-12 text-end">
                 <!-- <button type="button" class="btn btn-cancel add-cancel me-3"
                 data-bs-dismiss="modal">Cancel</button> -->

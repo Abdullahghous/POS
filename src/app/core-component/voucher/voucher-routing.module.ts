@@ -25,6 +25,10 @@ const routes: Routes = [{ path: '', component: VoucherComponent,
         path: 'new-voucher', 
         component:NewVoucherComponent 
       },
+      {
+        path: 'new-voucher', 
+        component:ProfitLossComponent 
+      },
     ],
   },
 ];

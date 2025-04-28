@@ -183,6 +183,7 @@ export interface productList {
   img1: string;
   img2: string;
   isSelected?: boolean;
+  name?:string
 }
 
 export interface purchaseList {
@@ -210,6 +211,36 @@ export interface purchaseReturns {
   due: string;
   paymentStatus: string;
   isSelected?: boolean;
+  name:string;
+}
+
+export interface productTravelRecord{
+  sNo: number; 
+  isSelected?: boolean;
+  itemDef?: {  
+    name: string;
+  };
+  itemSubCategory?:{
+   name:string
+  }
+  thekedar?: {  
+    name: string;
+  };
+   fromLocation?:{  
+    name: string;
+  };
+  toLocation?:{  
+    name: string;
+  };
+  name:string;
+  id:number;
+    remarks:string;
+      status:boolean;
+      bags: string;
+      dummydate:string;
+      hiddenRate:number;
+    amount:number;
+  activityName:string;
 }
 export interface supplierList {
   sNo?: number;
@@ -546,6 +577,8 @@ export interface rolesPermissions {
   sNo: number;
   roleName: string;
   createdOn: string;
+  accountName:string;
+  code:string;
   isSelected?: boolean;
 }
 export interface salesList {

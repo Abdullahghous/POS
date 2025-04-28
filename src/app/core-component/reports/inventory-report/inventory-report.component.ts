@@ -1,16 +1,8 @@
 import { Component } from '@angular/core';
-import { Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { SidebarService, apiResultFormat, pageSelection } from 'src/app/core/core.index';
+import { HttpService, SidebarService} from 'src/app/core/core.index';
 import { routes } from 'src/app/core/helpers/routes';
-import { DataService } from 'src/app/core/service/data/data.service';
-import { inventoryreport } from 'src/app/shared/model/page.model';
-import { PaginationService, tablePageSize } from 'src/app/shared/shared.index';
-import Swal from 'sweetalert2';
-interface data {
-  value: string;
-}
+import { AllApiService } from 'src/app/core/service/allApi/all-api.service';
+
 
 @Component({
   selector: 'app-inventory-report',
@@ -18,149 +10,133 @@ interface data {
   styleUrl: './inventory-report.component.scss'
 })
 export class InventoryReportComponent {
-  initChecked = false;
-  public routes = routes;
-  // pagination variables
-  public tableData: Array<inventoryreport> = [];
-  public pageSize = 10;
-  public serialNumberArray: Array<number> = [];
-  public totalData = 0;
-  showFilter = false;
-  dataSource!: MatTableDataSource<inventoryreport>;
-  public searchDataValue = '';
-  //** / pagination variables
-
-  constructor(
-    private data: DataService,
-    private pagination: PaginationService,
-    private router: Router,
-    private sidebar: SidebarService
-  ) {
-    this.data.getDataTable().subscribe((apiRes: apiResultFormat) => {
-      this.totalData = apiRes.totalData;
-      this.pagination.tablePageSize.subscribe((res: tablePageSize) => {
-        if (this.router.url == this.routes.inventoryReport) {
-          this.getTableData({ skip: res.skip, limit: this.totalData  });
-          this.pageSize = res.pageSize;
-        }
-      });
-    });
-  }
-
-  private getTableData(pageOption: pageSelection): void {
-    this.data.getInventoryReport().subscribe((apiRes: apiResultFormat) => {
-      this.tableData = [];
-      this.serialNumberArray = [];
-      this.totalData = apiRes.totalData;
-      apiRes.data.map((res: inventoryreport, index: number) => {
-        const serialNumber = index + 1;
-        if (index >= pageOption.skip && serialNumber <= pageOption.limit) {
-          res.sNo = serialNumber;
-          this.tableData.push(res);
-          this.serialNumberArray.push(serialNumber);
-        }
-      });
-      this.dataSource = new MatTableDataSource<inventoryreport>(this.tableData);
-      this.pagination.calculatePageSize.next({
-        totalData: this.totalData,
-        pageSize: this.pageSize,
-        tableData: this.tableData,
-        serialNumberArray: this.serialNumberArray,
-      });
-    });
-  }
-
-  public sortData(sort: Sort) {
-    const data = this.tableData.slice();
-    if (!sort.active || sort.direction === '') {
-      this.tableData = data;
-    } else {
-      this.tableData = data.sort((a, b) => {
-        const aValue = (a as never)[sort.active];
-        const bValue = (b as never)[sort.active];
-        return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
+  itemDefs: any = [];
+   parties: any[] = [];
+   mills: any[] = [];
+   allParties:any[]= [];
+   getBranches:any[]= [];
+   getCompanies:any[]= [];
+   financialYear:any[]= [];
+   report:any[]=[];
+   account:any=[];
+   sumOpeningBalance: number = 0;
+   sumDebit: number = 0;
+   sumCredit: number = 0;
+   sumDiff: number = 0;
+   sumClosingBalance: number = 0;
+ 
+ 
+   constructor(private sidebar:SidebarService,
+     private allApiService:AllApiService,
+     private apiService:HttpService
+   ){
+      this.getAll();
+      this.onChangeLevelOne()
+   }
+   obj:any={
+    "companyIds": [
+        "0"
+    ],
+    "branchIds": [
+        "0"
+    ],
+    "voucherStatusId": "0",
+    "financialYearId": "1",
+    "fromDate": "2024-05-30",
+    "toDate": "2025-09-01",
+    "accountCode": "22"
+}
+  search() {
+    this.apiService.post('reports/monthly_breakup_report', this.obj).subscribe((res: any) => {
+      if (res) {
+      this.report = res;
+      console.log('repot',res)
+      // Calculate total closing balance for each row
+      this.report.forEach((data: any) => {
+        data.totalClosingBalance = this.getTotalClosingBalance(data);  // Add calculated total to each row
       });
     }
-  }
-
-  public searchData(value: string): void {
-    this.dataSource.filter = value.trim().toLowerCase();
-    this.tableData = this.dataSource.filteredData;
-  }
-
-  confirmColor() {
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: ' btn btn-success',
-        cancelButton: 'me-2 btn btn-danger',
-      },
-      buttonsStyling: false,
     });
-
-    swalWithBootstrapButtons
-      .fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        confirmButtonText: 'Yes, delete it!',
-        showCancelButton: true,
-        cancelButtonText: 'Cancel',
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          );
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
-          );
-        }
-      });
   }
-
-  
-
-  public filter = false;
-  openFilter() {
-    this.filter = !this.filter;
+  getColumnSum(column: string): number {
+    return this.report.reduce((sum, data) => sum + (data[column] || 0), 0);
   }
-  isCollapsed: boolean = false;
-  toggleCollapse() {
-    this.sidebar.toggleCollapse();
-    this.isCollapsed = !this.isCollapsed;
+  getTotalClosingBalanceSum(): number {
+    return this.report.reduce((sum, data) => sum + this.getTotalClosingBalance(data), 0);
   }
-  public selectedValue1 = '';
-  public selectedValue2 = '';
-  public selectedValue3 = '';
-  selectedList1: data[] = [
-    { value: 'Sort by Date' },
-    { value: '25 9 23' },
-    { value: '12 9 23' },
-  ];
-  selectedList2: data[] = [
-    { value: 'Choose Product' },
-    { value: 'Bold V3.2' },
-    { value: 'Nike Jordan' },
-  ];
-  selectedList3: data[] = [
-    { value: 'Choose Product' },
-    { value: 'Accessories' },
-    { value: 'Shoe' },
-  ];
-  selectAll(initChecked: boolean) {
-    if (!initChecked) {
-      this.tableData.forEach((f) => {
-        f.isSelected = true;
-      });
-    } else {
-      this.tableData.forEach((f) => {
-        f.isSelected = false;
-      });
-    }
+   onChangeLevelOne() {
+    this.apiService.getObservable<any[]>('accounts/one_level_accounts').subscribe((res: any[]) => {
+      this.account = res;
+      console.log('level====1',res);
+      // const level = this.levelOneData.accountLevelResults.find((l: any) => l.code == value);
+      // this.selectedLevelOne = `${level?.code} ${level?.name}`; 
+      
+    });
   }
+  getTotalClosingBalance(data: any): number {
+    return (Number(data['7']) || 0) + (Number(data['8']) || 0) + (Number(data['9']) || 0) +
+           (Number(data['10']) || 0) + (Number(data['11']) || 0) + (Number(data['12']) || 0) + 
+           (Number(data['1']) || 0) + (Number(data['2']) || 0) + (Number(data['3']) || 0) + 
+           (Number(data['4']) || 0) + (Number(data['5']) || 0) + (Number(data['6']) || 0);
+  }
+   public filter = false;
+   openFilter() {
+     this.filter = !this.filter;
+   }
+   isCollapsed: boolean = false;
+   toggleCollapse() {
+     this.sidebar.toggleCollapse();
+     this.isCollapsed = !this.isCollapsed;
+   }
+   getAll(){
+     
+     let items: any = localStorage.getItem('itemDefs');
+     let parties: any = localStorage.getItem('parties');
+     let mills: any = localStorage.getItem('mills');
+     let getBranches: any = localStorage.getItem('branch');
+     let getCompanies: any = localStorage.getItem('companies');
+     let financialYear: any = localStorage.getItem('financialYear');
+     // console.log(parties,'party')
+     if (items && parties && mills && getBranches && getCompanies && financialYear
+        != null && JSON.parse(items).length != 0) {
+       this.itemDefs = JSON.parse(items);
+       this.parties =JSON.parse(parties);
+       this.mills = JSON.parse(mills); 
+       this.getBranches = JSON.parse(getBranches);
+       this.getCompanies = JSON.parse(getCompanies);
+       this.financialYear = JSON.parse(financialYear);
+       console.log(this.financialYear ,'yearrrr====')
+       // debugger
+     }
+     else{
+       this.allApiService.getItemDefs();
+       items = localStorage.getItem('itemDefs');
+       this.itemDefs = JSON.parse(items);
+       this.allApiService.getMills();
+       mills = localStorage.getItem('mills');
+       this.mills = JSON.parse(mills);
+       this.allApiService.getParties();
+       parties = localStorage.getItem('parties');
+       this.parties = JSON.parse(parties);
+       this.allApiService.getBranches();
+       getBranches = localStorage.getItem('branch');
+       this.getBranches = JSON.parse(getBranches);
+       this.allApiService.getCompanies();
+       getCompanies = localStorage.getItem('companies');
+       this.getCompanies = JSON.parse(getCompanies);
+       this.allApiService.financialYear();
+       financialYear = localStorage.getItem('financialYear');
+       this.financialYear = JSON.parse(financialYear);
+       
+       //  debugger
+     }
+     const maxFinancialYear = this.financialYear.reduce((maxYear, currentYear) => {
+       debugger
+       return currentYear.id > maxYear.id ? currentYear : maxYear;
+   }, this.financialYear[0]);
+   this.obj.fromDate =maxFinancialYear.fromDate;
+   this.obj.toDate =maxFinancialYear.toDate;
+   this.obj.financialYearId =maxFinancialYear.id;
+   
+   }
 }

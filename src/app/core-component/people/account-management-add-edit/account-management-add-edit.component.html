@@ -35,77 +35,390 @@
             </div>
 
             <form [formGroup]="formGroupLevels">
-                <div class="level-box">
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-12">
-                            <div class="add-newplus">
-                                <label class="form-label">Level One</label>
-                            </div>
-                            <nz-select formControlName="levelOne" class="w-100" nzShowSearch nzAllowClear
-                                nzPlaceHolder="Select Level One" (ngModelChange)="onChangeLevelOne($event)">
-                                <nz-option *ngFor="let l1 of levelOneData" [nzLabel]="l1.name" [nzValue]="l1.code"></nz-option>
-                            </nz-select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-12">
-                            <div class="add-newplus">
-                                <label class="form-label">Level Two</label>
-                            </div>
-                            <nz-select formControlName="levelTwo" class="w-100" nzShowSearch nzAllowClear
-                                nzPlaceHolder="Select Level Two" (ngModelChange)="onChangeLevelTwo($event)">
-                                <nz-option *ngFor="let l2 of levelTwoData" [nzLabel]="l2.name" [nzValue]="l2.code"></nz-option>
-                            </nz-select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-12">
-                            <div class="add-newplus level-add-edit-box">
-                                <div>
-                                    <label class="form-label">Level Three</label>
-                                </div>
-                                <div class="mb-2">
-                                    <button type="submit" class="btn-level btn-submit">Add</button>
-                                    <button type="submit" class="btn-level btn-submit ml-2">Edit</button>
-                                </div>
-                            </div>
-                            <nz-select formControlName="levelThree" class="w-100" nzShowSearch nzAllowClear
-                                nzPlaceHolder="Select Level Three" (ngModelChange)="onChangeLevelThree($event)">
-                                <nz-option *ngFor="let l3 of levelThreeData" [nzLabel]="l3.name" [nzValue]="l3.code"></nz-option>
-                            </nz-select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-6 col-12">
-                            <div class="add-newplus">
-                                <div>
-                                    <label class="form-label">Level Four</label>
-                                </div>
-                                <div class="mb-2">
-                                    <button type="submit" class="btn-level btn-submit">Add</button>
-                                    <button type="submit" class="btn-level btn-submit ml-2">Edit</button>
-                                </div>
-                            </div>
-                            <nz-select formControlName="levelFour" class="w-100" nzShowSearch nzAllowClear
-                                nzPlaceHolder="Select Level Four" (ngModelChange)="onChangeLevelFour($event)">
-                                <nz-option *ngFor="let l4 of levelFourData" [nzLabel]="l4.name" [nzValue]="l4.code"></nz-option>
-                            </nz-select>
-                        </div>
-                    </div>
-                </div>
-            </form>
+              <div class="level-box">
+                  <!-- Level One -->
+                  <div class="row">
+                      <div class="col-lg-6 col-sm-6 col-12">
+                          <div class="add-newplus">
+                              <label class="form-label">Level One</label>
+                          </div>
+                          <nz-select formControlName="levelOne" class="w-100" nzShowSearch nzAllowClear
+                              nzPlaceHolder="Select Level One">
+                              <nz-option *ngFor="let l1 of levelOneData.accountLevelResults" 
+                                          [nzLabel]="l1.code + ' ' + l1.name" 
+                                          [nzValue]="l1.code">
+                              </nz-option>
+                          </nz-select>
+                      </div>
+                  </div>
+          
+                  <!-- Level Two -->
+                  <div class="row">
+                      <div class="col-lg-6 col-sm-6 col-12">
+                          <div class="add-newplus">
+                              <label class="form-label">Level Two</label>
+                          </div>
+                          <nz-select formControlName="levelTwo" class="w-100" nzShowSearch nzAllowClear
+                              nzPlaceHolder="Select Level Two">
+                              <nz-option *ngFor="let l2 of levelTwoData.accountLevelResults" 
+                                          [nzLabel]="l2.formattedCode + ' ' + l2.name" 
+                                          [nzValue]="l2.code">
+                              </nz-option>
+                          </nz-select>
+                      </div>
+                  </div>
+          
+                  <!-- Level Three -->
+                  <div class="row">
+                      <div class="col-lg-6 col-sm-6 col-12">
+                          <div class="add-newplus level-add-edit-box">
+                              <label class="form-label">Level Three</label>
+                              <div class="mb-2">
+                                  <button type="submit" (click)="addAccount3(this.formGroupLevels.get('levelTwo')?.value)" 
+                                          class="btn-level btn-submit" 
+                                          data-bs-toggle="modal" data-bs-target="#open-levle">Add</button>
+                                  <button type="submit" (click)="editAccount3(this.formGroupLevels.value)" 
+                                  class="btn-level btn-submit ml-2" 
+                                  data-bs-toggle="modal" data-bs-target="#open-levle">Edit</button>
+                              </div>
+                          </div>
+                          <nz-select formControlName="levelThree" class="w-100" nzShowSearch nzAllowClear
+                              nzPlaceHolder="Select Level Three">
+                              <nz-option *ngFor="let l3 of levelThreeData.accountLevelResults" 
+                                          [nzLabel]="l3.formattedCode + ' ' + l3.name" 
+                                          [nzValue]="l3.code">
+                              </nz-option>
+                          </nz-select>
+                      </div>
+                  </div>
+          
+                  <!-- Level Four -->
+                  <div class="row">
+                      <div class="col-lg-6 col-sm-6 col-12">
+                          <div class="add-newplus">
+                              <label class="form-label">Level Four</label>
+                              <div class="mb-2">
+                                  <button type="submit" (click)="addAccount4(this.formGroupLevels.get('levelThree')?.value)" 
+                                   class="btn-level btn-submit" data-bs-toggle="modal" data-bs-target="#open-levle" >Add</button>
+                                  <button type="submit"(click)="editAccount4(this.formGroupLevels.get('levelFour')?.value)" 
+                                  class="btn-level btn-submit" data-bs-toggle="modal" data-bs-target="#open-levle" class="btn-level btn-submit ml-2">Edit</button>
+                              </div>
+                          </div>
+                          <nz-select formControlName="levelFour" class="w-100" nzShowSearch nzAllowClear
+                              nzPlaceHolder="Select Level Four">
+                              <nz-option *ngFor="let l4 of levelFourData.accountLevelResults" 
+                                          [nzLabel]="l4.formattedCode + ' ' + l4.name" 
+                                          [nzValue]="l4.code">
+                              </nz-option>
+                          </nz-select>
+                      </div>
+                  </div>
+              </div>
+          </form>
 
 
 
 
 
         </div>
-        <div class="col-lg-12">
-            <div class="btn-addproduct mb-4">
-                <!-- <button type="button" class="btn btn-cancel me-2">Cancel</button> -->
-                <button type="submit" class="btn btn-submit" (click)="onSave()">Save Product</button>
+        <a id="filter_search" (click)="openFilter()" [ngClass]="{'setclose': filter === true}"></a>
+        <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
+            <div class="card-body pb-0">
+              <div class="card">
+                <div class="page-header">
+                  <div class="table-top-head">
+                    <h4 style="margin-left: 25%;padding-top: 15%;">AccountForm</h4>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="col-xl-9 datanew table-bordered " style="margin-left: auto; margin-right: auto; text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>COMPANY</th>
+                                <th>BRANCH</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of getCompanies; let i=index">
+                                <td>{{i + 1}}</td>
+                                <td> {{data.name}}</td>
+                                <td><nz-select  class="w-100" nzShowSearch nzAllowClear
+                                  nzPlaceHolder="Select branch" >
+                                  <!-- <nz-option nzLabel="All" [nzValue]="0"></nz-option> -->
+                                  <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                                 </nz-select></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+             
             </div>
+            <div class="card-body">
+                <form *ngIf="table">
+                    <div class="row">
+                        <div class="col-xl-4">
+                          <div class="row mb-3">
+                            <label class="col-lg-4 col-form-label">Balance Limit</label>
+                            <div class="col-lg-8">
+                              <input type="text" class="form-control border border-dark" 
+                                [(ngModel)]="upDated.balanceLimit"  [ngModelOptions]="{standalone: true}" >
+                            </div>
+                          </div>
+                          
+                          <div class="row mb-3">
+                            <label class="col-lg-4 col-form-label">Upper Limit</label>
+                            <div class="col-lg-8">
+                              <input type="text" class="form-control border border-dark" 
+                                     [(ngModel)]="upDated.upperLimit" [ngModelOptions]="{standalone: true}">
+                            </div>
+                          </div>
+                          
+                          <div class="row mb-3">
+                            <label class="col-lg-4 col-form-label">Contact Person</label>
+                            <div class="col-lg-8">
+                              <input type="text" class="form-control border border-dark" 
+                                     [(ngModel)]="upDated.contactPerson" [ngModelOptions]="{standalone: true}">
+                            </div>
+                          </div>
+                          
+                          <div class="row mb-3">
+                            <label class="col-lg-4 col-form-label">Salesman</label>
+                            <div class="col-lg-8">
+                              <input type="text" class="form-control border border-dark" 
+                                     [(ngModel)]="upDated.salesman" [ngModelOptions]="{standalone: true}">
+                            </div>
+                          </div>
+                          
+                            <div class="row mb-3">
+                             <label class="col-lg-4 col-form-label">Mobile</label>
+                             <div class="col-lg-8">
+                              <input type="text" class="form-control border border-dark" 
+                              [(ngModel)]="upDated.mobile" [ngModelOptions]="{standalone: true}">
+                             </div>
+                            </div>
+                            <div class="row mb-3">
+                              <label class="col-lg-4 col-form-label">Phone</label>
+                              <div class="col-lg-8">
+                               <input type="text" class="form-control border border-dark" 
+                               [(ngModel)]="upDated.phone" [ngModelOptions]="{standalone: true}">
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                          <div class="row mb-3">
+                              <label class="col-lg-4 col-form-label">Fax</label>
+                              <div class="col-lg-8">
+                                <input type="text" class="form-control border border-dark" 
+                                [(ngModel)]="upDated.fax" [ngModelOptions]="{standalone: true}">
+                              </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-lg-4 col-form-label">EMAIL</label>
+                            <div class="col-lg-8">
+                              <input type="text" class="form-control border border-dark" 
+                              [(ngModel)]="upDated.email" [ngModelOptions]="{standalone: true}">
+                            </div>
+                         </div>
+                         <div class="row mb-3">
+                           <label class="col-lg-4 col-form-label">Website</label>
+                           <div class="col-lg-8">
+                            <input type="text" class="form-control border border-dark" 
+                            [(ngModel)]="upDated.website" [ngModelOptions]="{standalone: true}" >
+                           </div>
+                          </div>
+                          <div class="row mb-3">
+                           <label class="col-lg-4 col-form-label">Address</label>
+                           <div class="col-lg-8">
+                           <input type="text" class="form-control border border-dark" 
+                           [(ngModel)]="upDated.address" [ngModelOptions]="{standalone: true}" >
+                           </div>
+                          </div>
+                          <div class="row mb-3">
+                           <label class="col-lg-4 col-form-label">Province</label>
+                           <div class="col-lg-8">
+                            <input type="text" class="form-control border border-dark" 
+                            [(ngModel)]="upDated.province" [ngModelOptions]="{standalone: true}" >
+                           </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-lg-4 col-form-label">City</label>
+                            <div class="col-lg-8">
+                             <input type="text" class="form-control border border-dark"
+                             [(ngModel)]="upDated.city" [ngModelOptions]="{standalone: true}">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xl-4">
+                          <div class="row mb-3">
+                              <label class="col-lg-4 col-form-label">Account Title</label>
+                              <div class="col-lg-8">
+                                <input type="text" class="form-control border border-dark" 
+                                [(ngModel)]="upDated.accountTitle" [ngModelOptions]="{standalone: true}">
+                              </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-lg-4 col-form-label">Account Number</label>
+                            <div class="col-lg-8">
+                              <input type="text" class="form-control border border-dark" 
+                              [(ngModel)]="upDated.accountNumber" [ngModelOptions]="{standalone: true}" >
+                            </div>
+                         </div>
+                         <div class="row mb-3">
+                           <label class="col-lg-4 col-form-label">Branch Code</label>
+                           <div class="col-lg-8">
+                            <input type="text" class="form-control border border-dark" 
+                            [(ngModel)]="upDated.bankBranchCode" [ngModelOptions]="{standalone: true}" >
+                           </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-lg-4 col-form-label">Branch Name</label>
+                            <div class="col-lg-8">
+                             <input type="text" class="form-control border border-dark" 
+                             [(ngModel)]="upDated.bankBranchName" [ngModelOptions]="{standalone: true}">
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer-btn">
+                      
+                      <button type="submit" class="btn btn-warning" (click)="accountUpDate()" >Save</button>
+                    </div>
+                </form>
+              </div>
         </div>
     </div>
 
 </form>
+
+<div class="modal fade" id="open-levle">
+  <div class="modal-dialog modal-dialog-centered custom-modal-two">
+    <div class="modal-content">
+      <div class="page-wrapper-new p-0">
+        <div class="content">
+          <div class="modal-header border-0 custom-modal-header">
+            <div class="page-title">
+              <h4>Create/Update</h4>
+            </div>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body custom-modal-body">
+            <form [formGroup]="modalForm" (ngSubmit)="onSubmit(selectedLevelThree)">
+              <div class="row mb-3">
+                <label class="col-lg-4 col-form-label">Level One</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="levelOne" readonly>
+                  <div *ngIf="modalForm.get('levelOne')?.invalid && modalForm.get('levelOne')?.touched" class="text-danger">
+                    Level One is required.
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-lg-4 col-form-label">Level Two</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="levelTwo" readonly>
+                  <div *ngIf="modalForm.get('levelTwo')?.invalid && modalForm.get('levelTwo')?.touched" class="text-danger">
+                    Level Two is required.
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3" *ngIf="isLevelThreeVisible">
+                <label class="col-lg-4 col-form-label">Level Three</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="levelThree" readonly>
+                  <div *ngIf="modalForm.get('levelThree')?.invalid && modalForm.get('levelThree')?.touched" class="text-danger">
+                    Level Three is required.
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-lg-4 col-form-label">Account Name</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="name">
+                  <div *ngIf="modalForm.get('name')?.invalid && modalForm.get('name')?.touched" class="text-danger">
+                    Account Name is required and must be at least 3 characters long.
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-lg-4 col-form-label">Account Code</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="formattedCode" readonly>
+                  <div *ngIf="modalForm.get('formattedCode')?.invalid && modalForm.get('formattedCode')?.touched" class="text-danger">
+                    Account Code is required.
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer-btn">
+                <button type="button" class="btn btn-cancel me-2" id="close-account" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-submit" [disabled]="modalForm.invalid">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="modal fade" id="open-levle">
+  <div class="modal-dialog modal-dialog-centered custom-modal-two">
+    <div class="modal-content">
+      <div class="page-wrapper-new p-0">
+        <div class="content">
+          <div class="modal-header border-0 custom-modal-header">
+            <div class="page-title">
+              <h4>Create/Update</h4>
+            </div>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body custom-modal-body">
+            <form [formGroup]="modalForm">
+              <div class="row mb-3">
+                <label class="col-lg-4 col-form-label">Level One</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="levelOne">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-lg-4 col-form-label">Level Two</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="levelTwo">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-lg-4 col-form-label">Level Three</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="levelThree">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-lg-4 col-form-label">Account Name</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="name">
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-lg-4 col-form-label">Account Code</label>
+                <div class="col-lg-7">
+                  <input type="text" class="form-control border border-dark" formControlName="code">
+                </div>
+              </div>
+              <div class="modal-footer-btn">
+                <button type="button" class="btn btn-cancel me-2" id="close-account" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-submit" (click)="onSubmit(selectedLevelThree)">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

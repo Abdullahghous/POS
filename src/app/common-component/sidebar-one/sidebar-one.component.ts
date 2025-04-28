@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SidebarService, routes } from 'src/app/core/core.index';
+import { HttpService, SidebarService, routes } from 'src/app/core/core.index';
 import { NavigationEnd, Router, Event as RouterEvent } from '@angular/router';
 import { url } from 'src/app/shared/model/sidebar.model';
 
@@ -32,15 +32,20 @@ export class SidebarOneComponent {
   constructor(
     private Router: Router,
     private sidebar: SidebarService,
-    private router: Router
+    private router: Router,
+    private apiService : HttpService
   ) {
     router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationEnd) {
         this.getRoutes(event);
       }
     });
-    this.getRoutes(this.router);
-    this.side_bar_data = this.sidebar.sidebarData1;
+    this.apiService.getObservable('bar/getSideBarOneList').subscribe((res:any)=>{
+      console.log('side bar',res);
+      this.side_bar_data=res
+    })
+    // this.getRoutes(this.router);
+    // this.side_bar_data = this.sidebar.sidebarData1;
   }
 
   private getRoutes(route: url): void {

@@ -1,0 +1,73 @@
+.text-wrap {
+    word-wrap: break-word; /* Allows long words to be broken and wrap onto the next line */
+    overflow-wrap: break-word; /* Similar to word-wrap, for better compatibility */
+    white-space: normal; /* Allows the text to wrap normally */
+    max-width: 150px; /* Set a max width for the cell to control the wrapping */
+  }
+
+
+  .error-footer {
+    background-color: red !important;
+    color: white !important;
+  }
+  
+
+  .modal-content {
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+  }
+  
+  .modal-header {
+    background-color: #ecfaf5;
+    color: white;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .modal-header h4 {
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+  
+  .custom-modal-header .close {
+    font-size: 1.5rem;
+    color: rgb(245, 165, 165);
+    opacity: 1;
+  }
+  /* Table Styling */
+  table.datanew th {
+    height: 40px !important;
+    font-size: 1.2em;
+    background-color: #343a40;
+    color: white;
+  }
+  
+  table.datanew td {
+    // padding: 8px 15px;
+    border: 1px solid #ddd;
+  }
+  .table tbody td {
+    font-size: 1.1em;
+    color: #333; /* Smaller font size for tbody */
+    // padding: 1px; /* Decrease padding to reduce row height */
+}
+.table footer td {
+  font-size: 1.0em !important;
+  color: #ddc9c9 !important;
+  padding: 5px !important;
+}
+  /* Buttons */
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .btn:hover {
+    opacity: 0.8;
+  }

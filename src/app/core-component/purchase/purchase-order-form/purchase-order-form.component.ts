@@ -63,14 +63,58 @@ export class PurchaseOrderFormComponent implements OnInit {
       },
        "millKhata":
                 {
-                    "id": 7, 
+                    "id": 0, 
                     
                 },
                
-         "paymentType": ""
+         "paymentType": "routine"
       }
     ]
   }
+
+  onSave() {
+    // Log the purchaseOrder to see its current state
+    console.log("Current purchaseOrder:", this.purchaseOrder);
+  
+    // Validate required fields
+    const isValidPurchaseOrder = this.purchaseOrder.company.id !== 0 &&
+                                 this.purchaseOrder.branch.id !== 0 &&
+                                 this.purchaseOrder.financialYear.id !== 0 && // Check financialYear
+                                 this.purchaseOrder.purchaseOrderEntries.every(entry =>
+                                   entry.rate !== 0 &&
+                                   entry.kg !== 0 &&
+                                   entry.itemDef.id !== 0 &&
+                                   entry.millKhata.id !== 0 &&
+                                   entry.supplierAccount.code !== 0);
+  
+    // Log validation result
+    console.log("Is purchase order valid?", isValidPurchaseOrder);
+  
+    if (isValidPurchaseOrder) {
+      console.log("Purchase Order is valid:", this.purchaseOrder);
+      debugger
+      this.apiService.post('app/add_or_update_purchase_order', this.purchaseOrder).subscribe(
+        (res) => {
+          console.log(res, 'purchaseOrder=======');
+          if (res) {
+            this.snackBarService.showSuccess('Order Added Successfully!');
+            this.cancel();
+          } else {
+            this.snackBarService.showError('Please fill all the required fields!');
+          }
+        },
+        (error) => {
+          this.isButtonDisabled = false;
+          this.snackBarService.showError('An error occurred while adding the record!');
+        }
+      );
+  
+    } else {
+      console.error("Purchase Order is missing required fields.");
+      this.snackBarService.showError('Please fill all the required fields!');
+    }
+  }
+  
   toggleCollapse() {
     this.sidebar.toggleCollapse();
     this.isCollapsed = !this.isCollapsed;
@@ -126,29 +170,45 @@ export class PurchaseOrderFormComponent implements OnInit {
     
       // debugger
   }
-  onSave() {
-    this.isButtonDisabled = true;
- 
-  
-    this.apiService.post('app/add_or_update_purchase_order', this.purchaseOrder).subscribe(
-        (res) => {
-            console.log(res, 'purchaseOrder=======');
-            if (res) {
-              this.snackBarService.showSuccess('Order Added Successfully!');
-              // Reload the page after showing the success message
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000); // Add a small delay to allow the user to see the success message
-            } else {
-              this.snackBarService.showError('Please fill all the required fields!');
-            }
-          },
-          (error) => {
-            this.isButtonDisabled = false;
-            this.snackBarService.showError('An error occurred while adding the record!');
-          }
-    );
-  
+  cancel(){
+    this.purchaseOrder ={
+      "id": 0,
+      "company":
+         {
+             "id":  0,
+         },
+     "branch":
+         {
+             "id": 0,
+         },
+     financialYear:
+         {
+             "id":  0,
+         },
+      purchaseOrderDate:new Date().toISOString().substring(0, 10),
+      purchaseOrderEntries:[
+        {"id": 0,
+         "rate": 0,
+          "kg": 0,
+          "vehical": 0,
+            "paymentDate": new Date().toISOString().substring(0, 10),
+          "itemDef":
+         {
+             "id": 0,
+             },
+        "supplierAccount" :{ 
+             "code": 0,
+        },
+         "millKhata":
+                  {
+                      "id": 7, 
+                      
+                  },
+                 
+           "paymentType": "routine"
+        }
+      ]
+    }
   }
   deleteRow(i: any) {
     if (this.purchaseOrder.purchaseOrderEntries.length > 1) {
@@ -163,22 +223,26 @@ export class PurchaseOrderFormComponent implements OnInit {
       i + 1,
       0,
       JSON.parse(
-        JSON.stringify({
-          "id": 0,
-        "itemDef": 0,
-        "supplierAccount": {
-          "code": 0,
-        },
-        "millKhata": {
-          "id": 0,
-        },
-        "rate": 0,
-        "kg": 0,
-        "vehical": 0,
-        "paymentDate": " ",
-        "paymentType": " ",
-          
-        })
+        JSON.stringify( {"id": 0,
+          "rate": 0,
+           "kg": 0,
+           "vehical": 0,
+             "paymentDate": new Date().toISOString().substring(0, 10),
+           "itemDef":
+          {
+              "id": 0,
+              },
+         "supplierAccount" :{ 
+              "code": 0,
+         },
+          "millKhata":
+                   {
+                       "id": 7, 
+                       
+                   },
+                  
+            "paymentType": "routine"
+         })
       )
     );
   }

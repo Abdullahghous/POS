@@ -5,6 +5,7 @@ import { RolesPermissionsComponent } from './roles-permissions/roles-permissions
 import { DeleteAccountComponent } from './delete-account/delete-account.component';
 import { UsersComponent } from './users/users.component';
 import { PermissionsComponent } from './permissions/permissions.component';
+import { UtilitiesComponent } from './utilities/utilities.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'permissions',
         component: PermissionsComponent,
+      },
+      {
+        path: 'utilities',
+        component: UtilitiesComponent,
       },
     ],
   },

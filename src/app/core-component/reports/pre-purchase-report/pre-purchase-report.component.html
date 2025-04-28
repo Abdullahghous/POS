@@ -86,8 +86,8 @@
                           class="w-100"
                           nzShowSearch
                           nzAllowClear
-                          nzPlaceHolder="Select company"
-                        >
+                          nzPlaceHolder="Select company">
+                          <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                           <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
                         </nz-select>
                       </div>
@@ -103,6 +103,7 @@
                           nzShowSearch
                           nzAllowClear
                           nzPlaceHolder="Select Branche">
+                          <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                           <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
                         </nz-select>
                       </div>
@@ -126,6 +127,7 @@
                           nzShowSearch
                           nzAllowClear
                           nzPlaceHolder="Select account">
+                          <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                           <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
                         </nz-select>
                       </div>
@@ -140,6 +142,7 @@
                         nzShowSearch
                         nzAllowClear
                         nzPlaceHolder="Select item">
+                        <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                         <nz-option *ngFor="let i of itemDefs" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
                       </nz-select>
                       </div>
@@ -154,6 +157,7 @@
                         nzShowSearch
                         nzAllowClear
                         nzPlaceHolder="Select mill">
+                        <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                         <nz-option *ngFor="let i of mills" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
                       </nz-select>
                       </div>
@@ -161,14 +165,10 @@
                     <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>MILL Khata <span class="required-span-color">*</span></label>
-                        <nz-select
-                        [(ngModel)]="purchaseOrder.millKhataId"
-                        [ngModelOptions]="{ standalone: true }"
-                        class="w-100"
-                        nzShowSearch
-                        nzAllowClear
-                        nzPlaceHolder="Select Mill Khata">
-                        <!-- <nz-option *ngFor="let i of mills" [nzLabel]="i.name" [nzValue]="i.id"></nz-option> -->
+                        <nz-select [(ngModel)]="purchaseOrder.millKhataId" [ngModelOptions]="{ standalone: true }"
+                        class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Mill Khata" (click)="khata()">
+                        <nz-option nzLabel="ALL" nzValue="0"></nz-option>
+                        <nz-option *ngFor="let m of millKhata" [nzLabel]="m.name" [nzValue]="m.id"></nz-option>
                       </nz-select>
                       </div>
                     </div>
@@ -189,7 +189,7 @@
                         <label>ENTRY Stuts<span class="required-span-color">*</span></label>
                         <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type"
                          [(ngModel)]="purchaseOrder.status" [ngModelOptions]="{ standalone: true }">
-                          <nz-option nzLabel="ALL" nzValue="all"></nz-option>
+                          <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                           <nz-option nzLabel="CONFROM" nzValue="conform"></nz-option>
                           <nz-option nzLabel="CONVERTED" nzValue="conveted"></nz-option>
                           <nz-option nzLabel="CANCEL" nzValue="concel"></nz-option>

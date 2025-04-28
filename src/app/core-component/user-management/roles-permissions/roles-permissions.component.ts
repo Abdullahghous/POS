@@ -7,7 +7,9 @@ import {
   pageSelection,
   apiResultFormat,
   routes,
+  HttpService,
 } from 'src/app/core/core.index';
+import { AuthServiceService } from 'src/app/core/service/http/auth-service.service';
 import { SidebarService } from 'src/app/core/service/sidebar/sidebar.service';
 import { rolesPermissions } from 'src/app/shared/model/page.model';
 import { PaginationService, tablePageSize } from 'src/app/shared/shared.index';
@@ -25,94 +27,66 @@ export class RolesPermissionsComponent {
   initChecked = false;
   public routes = routes;
   isCollapsed: boolean = false;
+  user:any={};
+  // roule:any=[]
   toggleCollapse() {
     this.sidebar.toggleCollapse();
     this.isCollapsed = !this.isCollapsed;
   }
-
-  public selectedValue1 = '';
-  public selectedValue2 = '';
-
-  selectedList1: data[] = [
-    { value: 'Sort by Date' },
-    { value: 'Newest' },
-    { value: 'Oldest' },
-  ];
-  selectedList2: data[] = [
-    { value: 'Choose Role' },
-    { value: 'Admin' },
-    { value: 'Shop Owner' },
-  ];
-  // pagination variables
-  public tableData: Array<rolesPermissions> = [];
-  public pageSize = 10;
-  public serialNumberArray: Array<number> = [];
-  public totalData = 0;
-  showFilter = false;
-  dataSource!: MatTableDataSource<rolesPermissions>;
-  public searchDataValue = '';
-  //** / pagination variables
+  userData:any=[]
 
   constructor(
     private data: DataService,
     private pagination: PaginationService,
     private router: Router,
-    private sidebar: SidebarService
+    private sidebar: SidebarService,
+    private apiService: HttpService,
+    private authService: AuthServiceService
   ) {
-    this.data.getDataTable().subscribe((apiRes: apiResultFormat) => {
-      this.totalData = apiRes.totalData;
-      this.pagination.tablePageSize.subscribe((res: tablePageSize) => {
-        if (this.router.url == this.routes.rolesPermission) {
-          this.getTableData({ skip: res.skip, limit: this.totalData  });
-          this.pageSize = res.pageSize;
-        }
-      });
-    });
+    const raw = this.authService.getLoggedInUserInfo();
+    this.userData=[raw]
+    // Safely access moduleList and flatten if nested
+    let flatUsers = Array.isArray(raw?.moduleList) ? raw.moduleList.flat(Infinity) : [];
+  
+    // Add expanded flags
+    this.user = flatUsers.map((user: any) => ({
+      ...user,
+      expandedUser: false,
+      detail: user.detail?.map((detail: any) => ({
+        ...detail,
+        expandedDetail: false
+      })) ?? []
+    }));
+    this.getAll();
+    console.log('Processed user list:', this.user);
+    console.log(' user data:', this.userData);
+  }
+  
+
+  getAll(){
+    this.apiService.getObservable('auth/get-all-users').subscribe((res:any)=>{
+      console.log('get All User ::',res)
+    })
+    
   }
 
-  private getTableData(pageOption: pageSelection): void {
-    this.data.getRolesPermissions().subscribe((apiRes: apiResultFormat) => {
-      this.tableData = [];
-      this.serialNumberArray = [];
-      this.totalData = apiRes.totalData;
-      apiRes.data.map((res: rolesPermissions, index: number) => {
-        const serialNumber = index + 1;
-        if (index >= pageOption.skip && serialNumber <= pageOption.limit) {
-          res.sNo = serialNumber;
-          this.tableData.push(res);
-          this.serialNumberArray.push(serialNumber);
-        }
-      });
-      this.dataSource = new MatTableDataSource<rolesPermissions>(
-        this.tableData
-      );
-      this.pagination.calculatePageSize.next({
-        totalData: this.totalData,
-        pageSize: this.pageSize,
-        tableData: this.tableData,
-        serialNumberArray: this.serialNumberArray,
-      });
-    });
+ 
+  public filter = false;
+  openFilter() {
+    this.filter = !this.filter;
   }
-
-  public sortData(sort: Sort) {
-    const data = this.tableData.slice();
-    if (!sort.active || sort.direction === '') {
-      this.tableData = data;
-    } else {
-      this.tableData = data.sort((a, b) => {
-        const aValue = (a as never)[sort.active];
-        const bValue = (b as never)[sort.active];
-        return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
-      });
-    }
-  }
-
-  public searchData(value: string): void {
-    this.dataSource.filter = value.trim().toLowerCase();
-    this.tableData = this.dataSource.filteredData;
-  }
-
+  // selectAll(initChecked: boolean) {
+  //   if (!initChecked) {
+  //     this.tableData.forEach((f) => {
+  //       f.isSelected = true;
+  //     });
+  //   } else {
+  //     this.tableData.forEach((f) => {
+  //       f.isSelected = false;
+  //     });
+  //   }
+  // }
+  
   confirmColor() {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -146,21 +120,66 @@ export class RolesPermissionsComponent {
           );
         }
       });
+  } 
+
+  // Function to toggle expand/collapse for the user (parent) table
+  toggleUser(row: any) {
+    row.expandedUser = !row.expandedUser;
   }
-  public filter = false;
-  openFilter() {
-    this.filter = !this.filter;
+
+  // Function to toggle expand/collapse for the detail (child) table
+  toggleDetail(detail: any) {
+    detail.expandedDetail = !detail.expandedDetail;
   }
-  selectAll(initChecked: boolean) {
-    if (!initChecked) {
-      this.tableData.forEach((f) => {
-        f.isSelected = true;
-      });
-    } else {
-      this.tableData.forEach((f) => {
-        f.isSelected = false;
-      });
-    }
-  }
-  
+   // this.userData:any = [
+  //   {
+  //     name: 'ASIF',
+  //     expandedUser: false, // Flag to control visibility of details for the parent
+  //     detail: [
+  //       {
+  //         adress: 'KASRU',
+  //         phone: '03001234567',
+  //         expandedDetail: false, // Flag to control visibility of list for the detail
+  //         list: [
+  //           { adress: 'rajowal', pho: '1' }
+  //         ]
+  //       },
+  //       {
+  //         adress: 'lahore',
+  //         phone: '03004243709',
+  //         selected: false,
+  //         expandedDetail: false, // Flag to control visibility of list for the detail
+  //         list: [
+  //           { adress: '3333', pho: '2' },
+  //           { adress: '4444', pho: '33' },
+  //           { adress: '3333', pho: '2' }
+  //         ]
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     name: 'SALEEM',
+  //     expandedUser: false, // Flag to control visibility of details for the parent
+  //     detail: [
+  //       {
+  //         adress: 'rajowal',
+  //         phone: '03001234567',
+  //         expandedDetail: false, // Flag to control visibility of list for the detail
+  //         list: [
+  //           { adress: 'rajowal', pho: '1' }
+  //         ]
+  //       },
+  //       {
+  //         adress: 'lahore',
+  //         phone: '03004243709',
+  //         selected: false,
+  //         expandedDetail: false, // Flag to control visibility of list for the detail
+  //         list: [
+  //           { adress: 'level-3', pho: '2' }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ];
 }
+ 

@@ -7,3 +7,42 @@
 //     color: black;
 //     background-color:rgb(220, 231, 229);
 // }
+
+// .form-control {
+//     height: 30px; /* Smaller height */
+//     border-radius: 3px;
+//     border: .5px solid #573d1f;
+//     box-shadow: 0 1px 3px rgba(31, 40, 119, 0.1);
+//     color: black;
+//     opacity: 0.85;
+//   }
+.custom-input {
+    height: 38px; /* Adjust height as needed */
+    border-radius: 4px; /* Rounded corners */
+    border: 1px solid #ced4da; /* Border color */
+  }
+  
+  .custom-select {
+    height: 38px; /* Adjust height as needed */
+    border-radius: 4px; /* Rounded corners */
+  }
+  
+  .card {
+    border: 1px solid #e0e0e0; /* Card border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  }
+  
+  .card-body {
+    padding: 20px; /* Padding inside card */
+  }
+  
+  .btn-submit {
+    background-color: #007bff; /* Button color */
+    color: white; /* Button text color */
+  }
+  
+  .btn-cancel {
+    background-color: #dc3545; /* Cancel button color */
+    color: white; /* Cancel button text color */
+  }

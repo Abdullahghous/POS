@@ -1,0 +1,23 @@
+.table footer td {
+    font-size: 1.0em !important;
+    color: #ddc9c9 !important;
+    padding: 5px !important;
+  }
+    /* Buttons */
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+    
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+    }
+    
+    .btn:hover {
+      opacity: 0.8;
+    }
+    .error-footer {
+        background-color: red !important;
+        color: white !important;
+      }

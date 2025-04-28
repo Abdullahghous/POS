@@ -8,8 +8,10 @@ import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service
   styleUrl: './monshi-entry.component.scss'
 })
 export class MonshiEntryComponent {
-  monshiList:any=[]
+  monshiList:any[]=[]
   successMessage: any = '';
+  searchQuery: string = '';
+  filteredReport: any[] = [];
   isButtonDisabled = false;
   public routes = routes;
   constructor(private sidebar: SidebarService,
@@ -28,9 +30,10 @@ export class MonshiEntryComponent {
   }
   getMonshiData(){
     this.apiService.getObservable('monshi/getAll').subscribe(
-      (res) => {
+      (res:any) => {
           console.log(res, 'mooonhi');
           this.monshiList=res;
+          this.filteredReport = res;
       }
     );
   }
@@ -57,6 +60,18 @@ export class MonshiEntryComponent {
     
     );
   }
+  filterByName() {
+    console.log('Search Query:', this.searchQuery);
+    if (this.searchQuery) {
+        this.filteredReport = this.monshiList.filter((item) => 
+            item.name && item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
+        console.log('Filtered Results:', this.filteredReport);
+    } else {
+        this.filteredReport = this.monshiList;
+    }
+}
+
   cancel(){
     this.obj={
       name:'',

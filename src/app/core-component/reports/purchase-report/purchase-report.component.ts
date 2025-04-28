@@ -1,4 +1,5 @@
 import { Component , OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SidebarService,routes,HttpService} from 'src/app/core/core.index';
 import { AllApiService } from 'src/app/core/service/allApi/all-api.service';
 
@@ -22,6 +23,7 @@ export class PurchaseReportComponent implements OnInit {
   constructor(private sidebar: SidebarService,
     private apiService: HttpService,
     private allApiService:AllApiService,
+    private router:Router
     ){
       const today = new Date();
       this.obj.fromDate = today.toISOString().split('T')[0];
@@ -40,33 +42,78 @@ export class PurchaseReportComponent implements OnInit {
     this.getAll();
    
   }
-  obj={
+  // public searchData(value: string): void {
+  //   this.dataSource.filter = value.trim().toLowerCase();
+  //   this.tableData = this.dataSource.filteredData;
+  // }
+  obj:any={
     "companyId": "0",
     "branchId": "0",
     "voucherStatusId": "0",
     "financialYearId": "0",
-    "fromDate": "2024-07-05",
-    "toDate": "2024-09-07",
-    "itemDefId": null,
+    "fromDate": "",
+    "toDate": "",
+    "itemDefId": "0",
     "itemCategoryId": "0",
     "accountCode": "0",
     "serchByDate": "1",
     "voucherType": "0"
-}
-onSave() {
+  }
+    sqvSearch(obj: any) {
+      if (obj.voucherType === "PQV") {
+        obj.callingFrom = "detailSearch";  // Add callingFrom if voucherType is "SQV"
+        document.getElementById('pills-list-tab')?.click();
+      } else {
+        delete obj.callingFrom;  // Remove callingFrom if voucherType is not "SQV"
+        document.getElementById('pills-home-tab')?.click();;
+      }
+    
+      this.onSave(obj);  // Passing obj directly to onSave
+      return obj;
+    }
+    onSave(obj: any) {
   
   this.apiService.post('reports/purchase_report', this.obj).subscribe((res:any) => {
     if (res) {
       res.forEach((element:any) => {
         element.createdDate =  this.allApiService.formatDateDayMonthYear(element.createdDate);
+        element.typeVoucher=this.splitFunctio(element.voucherCode)
       });
-      this.purchaseReport = res;
-      // console.log(res ,'obnjjjjjj')
-    //
+        this.purchaseReport = res;
+        console.log('purchase report ::',res)
+      //
+      }
+    });
+  
+  }
+  splitFunctio(  voucherCode:any){
+    let splitValue: string[] = voucherCode.split('-');
+  let firstPart: string = splitValue[0];
+  return firstPart;
+  }
+  editVoucher(idN:any){
+    console.log('voucher ===view',idN);
+    const url = this.router.createUrlTree(['/purchase/purchase-voucher'], { queryParams: { idN } });
+    const fullUrl = window.location.origin + url.toString();
+    console.log(fullUrl); 
+    window.open(fullUrl, '_blank');
+  }
+  viwoVoucher(id:any ,typeVoucher:any){
+    if(typeVoucher=='PJV'){
+      console.log('voucher viwo',id );
+      const url = this.router.createUrlTree(['/purchase/purchase-list'], { queryParams: { id ,typeVoucher} });
+      const fullUrl = window.location.origin + url.toString();
+      console.log(fullUrl); 
+      window.open(fullUrl, '_blank');
     }
-  });
-
-}
+    if(typeVoucher=='PTV'){
+      console.log('voucher viwo',id );
+      const url = this.router.createUrlTree(['/sales/direct-sales'], { queryParams: { id } });
+      const fullUrl = window.location.origin + url.toString();
+      console.log(fullUrl); 
+      window.open(fullUrl, '_blank');
+    }
+  }
   getAll(){
     
     let items: any = localStorage.getItem('itemDefs');
@@ -111,8 +158,8 @@ onSave() {
       // debugger
       return currentYear.id > maxYear.id ? currentYear : maxYear;
   }, this.financialYear[0]);
-  this.obj.fromDate =maxFinancialYear.fromDate;
-  this.obj.toDate =maxFinancialYear.toDate;
+  // this.obj.fromDate =maxFinancialYear.fromDate;
+  // this.obj.toDate =maxFinancialYear.toDate;
   this.obj.financialYearId =maxFinancialYear.id;
   }
 }

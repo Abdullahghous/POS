@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ReportsRoutingModule } from './reports-routing.module';
@@ -21,7 +21,11 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
 import { PrePurchaseReportComponent } from './pre-purchase-report/pre-purchase-report.component';
 import { PrePurchaseFormComponent } from './pre-purchase-form/pre-purchase-form.component';
-
+import { SupplierStatusReportComponent } from './supplier-status-report/supplier-status-report.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import { DalySummryReportComponent } from './daly-summry-report/daly-summry-report.component';
 
 
 @NgModule({
@@ -39,15 +43,20 @@ import { PrePurchaseFormComponent } from './pre-purchase-form/pre-purchase-form.
     TaxReportComponent,
     GeneralLedgerComponent,
     PrePurchaseReportComponent,
-    PrePurchaseFormComponent
+    PrePurchaseFormComponent,
+    SupplierStatusReportComponent,
+    DalySummryReportComponent
   ],
   imports: [CommonModule,
      ReportsRoutingModule, 
      sharedModule,
      NzSelectModule,
      NzTableModule,
-    NzFormModule,
-    NzInputModule
+     NzFormModule,
+     NzInputModule,
+     MatInputModule,
+     MatSelectModule,
+     MatFormFieldModule,
     ],
 })
 export class ReportsModule {}

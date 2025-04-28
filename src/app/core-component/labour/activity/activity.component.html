@@ -1,4 +1,6 @@
 
+
+
 <div class="page-header">
     <div class="add-item d-flex">
         <div class="page-title">
@@ -45,6 +47,7 @@
                     <tr>
                         <th>#</th>
                         <th>NAME</th>
+                        <th>STATUS</th>
                         <th style="width: 10%;">ACCTION</th>
                     </tr>
                 </thead>
@@ -52,6 +55,13 @@
                       <tr *ngFor="let m of activity; let i=index">
                             <td>{{i+1}}</td>
                             <td>{{m.name}}</td>
+                            <td>
+                              <span 
+                                class="badge" 
+                                [ngClass]="m.status ? 'bg-success' : 'bg-danger'">
+                                {{ m.status ? 'INCLUDE' : 'EXCLUDE' }}
+                              </span>
+                            </td>
                            <td> <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
                             data-bs-target="#add-activity" (click)="editActivity(m)"><i class="feather icon-edit info-img"></i>Edit
                          </a></td>
@@ -82,7 +92,17 @@
                 <div class="input-blocks add-product">
                   <label>NAME <span class="required-span-color">*</span></label>
                   <input type="text" class="form-control" required placeholder="please enter location name"
-                  [(ngModel)]="obj.name" [ngModelOptions]="{standalone: true}"  />
+                  [(ngModel)]="obj.name" [ngModelOptions]="{standalone: true}" style="text-transform: uppercase;" />
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="input-blocks add-product">
+                  <label>STATUS <span class="required-span-color">*</span></label>
+                  <nz-select [(ngModel)]="obj.status" [ngModelOptions]="{ standalone: true }"
+                    class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select item" name="itemDef">
+                    <nz-option nzLabel="EXCLUDE" [nzValue]=false></nz-option>
+                    <nz-option nzLabel="ENCLUDE" [nzValue]=true></nz-option>
+                  </nz-select>
                 </div>
               </div>
             </div>

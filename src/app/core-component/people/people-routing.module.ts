@@ -7,6 +7,7 @@ import { WarehouseComponent } from './warehouse/warehouse.component';
 import { SuppliersComponent } from './suppliers/suppliers.component';
 import { AccountManagementLevelListComponent } from './account-management-level-list/account-management-level-list.component';
 import { AccountManagementAddEditComponent } from './account-management-add-edit/account-management-add-edit.component';
+import { BankAccountComponent } from './bank-account/bank-account.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: 'suppliers-list', component:SuppliersComponent},
     { path: 'account/management-list', component:AccountManagementLevelListComponent},
     { path: 'account/management', component:AccountManagementAddEditComponent},
+    { path: 'bank-account', component:BankAccountComponent},
   ],
     
   },

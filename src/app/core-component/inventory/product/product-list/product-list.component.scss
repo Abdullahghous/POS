@@ -1,0 +1,124 @@
+/* Modal Content */
+.modal-content {
+    border-radius: 12px; /* Rounded corners */
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(27, 20, 126, 0.658); /* Subtle shadow for modern look */
+  }
+  
+  /* Modal Header */
+  .modal-header {
+    background-color: #ffc400;
+    color: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 0.8rem;
+  }
+  
+  /* Close Button */
+  .close {
+    font-size: 1.5rem;
+    color: white;
+  }
+  
+  /* Input fields */
+  .form-control {
+    height: 30px; /* Smaller height */
+    border-radius: 3px;
+    border: .5px solid #573d1f;
+    box-shadow: 0 1px 3px rgba(31, 40, 119, 0.1);
+    color: black;
+    opacity: 0.85;
+  }
+  
+  /* Buttons */
+  button {
+    padding: 8px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Submit Button */
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  /* Cancel Button */
+  .btn-outline-danger {
+    border-color: #dc3545;
+  }
+  
+  button:hover {
+    opacity: 0.85;
+  }
+  /*table  *\
+   #table-to-pdf {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  /* Table Header Styling */
+  .table-responsive {
+    margin: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead {
+    background-color: hsl(211, 100%, 50%) !important; /* Change to your preferred color */
+    color: white !important;
+}
+
+.table thead th {
+    font-size: 1.2em; /* Increase font size for the header */
+    padding: 15px; /* Add padding for better spacing */
+    text-align: left; /* Align text to the left */
+}
+
+.table tbody {
+    background-color: #f8f9fa; /* Light background for tbody */
+}
+
+.table tbody tr {
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.table tbody tr:hover {
+    background-color: #e2e6ea; /* Change background on hover */
+}
+
+.table tbody td {
+    font-size: 1.1em; /* Smaller font size for tbody */
+    padding: 1px; /* Decrease padding to reduce row height */
+}
+
+.action-table-data {
+    display: flex;
+    justify-content: space-around; /* Space out action icons */
+}
+
+.edit-delete-action a {
+    color: #007bff; /* Change icon color */
+    text-decoration: none; /* Remove underline */
+}
+
+.edit-delete-action a:hover {
+    color: #0056b3; /* Darker color on hover */
+}
+
+
+.unstatus-badge {
+  background-color: rgb(245, 155, 20); /* Change to yellow */
+  color: rgb(255, 255, 255); /* Text color should contrast well with yellow */
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+.badges {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 15px;
+}

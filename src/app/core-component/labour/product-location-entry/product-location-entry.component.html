@@ -37,29 +37,49 @@
         class="feather icon-plus-circle me-2"></i> Add New LOCATION</a>
       </div>
 </div>
-<div  class="card table-list-card">
-     <div class="table-responsive">
-            <nz-table #ITableRef [nzData]="['*']" [nzFrontPagination]="false"  class="table datanew" >
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>NAME</th>
-                        <th style="width: 10%;">ACCTION</th>
-                    </tr>
-                </thead>
-                  <tbody>
-                      <tr *ngFor="let m of monshiList; let i=index">
-                            <td>{{i+1}}</td>
-                            <td>{{m.name}}</td>
-                           <td> <a href="javascript:void(0);" (click)="editLocatin(m)" class="dropdown-item" data-bs-toggle="modal"
-                            data-bs-target="#product-location"><i class="feather icon-edit info-img"></i>Edit
-                         </a></td>
-                       </tr>
-                  </tbody>   
-            </nz-table>
-    </div>
+
+
+
+<div class="card-body">
+  <div class="d-flex justify-content-center">
+      <div class="table-responsive">
+          <table class="table table-sm"> <!-- Adjust width here -->
+              <thead >
+                  <tr style="background-color: darkolivegreen;">
+                      <th scope="col">#</th>
+                      <th scope="col">NAME</th>
+                      <th scope="col">STATUS</th>
+                      <th scope="col" style="width: 10%;">ACTION</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let m of location; let i=index">
+                      <td>{{i+1}}</td>
+                      <td>{{m.name}}</td>
+                      <td>
+                        <span 
+                                class="badge" 
+                                [ngClass]="m.status ? 'bg-success' : 'bg-danger'">
+                                {{ m.status ? 'INCLUDE' : 'EXCLUDE' }}
+                              </span>
+                      </td>
+                      <td>
+                          <a href="javascript:void(0);" (click)="editLocatin(m)" class="dropdown-item" data-bs-toggle="modal"
+                             data-bs-target="#product-location">
+                              <i class="feather icon-edit info-img"></i>Edit
+                          </a>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
 </div>
- 
+
+
+
+
+  
 <!-- <model> -->
     <!-- <div class="modal fade" id="add-sales-new"> -->
 <!-- <div class="col-lg-4 col-sm-6 col-12"> -->
@@ -84,7 +104,18 @@
                   [(ngModel)]="obj.name" [ngModelOptions]="{standalone: true}"  />
                 </div>
               </div>
+              <div class="col-12">
+                <div class="input-blocks add-product">
+                  <label>STATUS <span class="required-span-color">*</span></label>
+                  <nz-select [(ngModel)]="obj.status" [ngModelOptions]="{ standalone: true }"
+                    class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select item" name="itemDef">
+                    <nz-option nzLabel="EXCLUDE" [nzValue]=false></nz-option>
+                    <nz-option nzLabel="ENCLUDE" [nzValue]=true></nz-option>
+                  </nz-select>
+                </div>
+              </div>
             </div>
+            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
             <div class="col-lg-12 text-end">
               <button type="button" class="btn btn-cancel add-cancel me-3" (click)="cancel()"
               data-bs-dismiss="modal" id="cancelButton" >Cancel</button>

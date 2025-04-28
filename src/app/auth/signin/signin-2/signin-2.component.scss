@@ -1,0 +1,19 @@
+.table-background {
+    background-image: url('/assets/img/lake1.png'); // ایبسولیٹ راستہ
+    background-size: fit;
+    background-position: top;
+    background-repeat: repeat;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .underline {
+      text-decoration: underline;
+    }
+    
+    
+    .tablee {
+      background: none; /* ٹیبل کا پس منظر ہٹا دیں */
+      border: none;
+      color: aliceblue; /* بارڈر بھی ہٹا دیں اگر ضرورت ہو */
+    }

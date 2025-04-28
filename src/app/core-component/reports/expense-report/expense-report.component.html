@@ -1,7 +1,7 @@
 <div class="page-header justify-content-between">
   <div class="page-title">
-    <h4>Expenses</h4>
-    <h6>Manage your Expenses</h6>
+    <h4>TRAIL BALANCE REPORT</h4>
+    <h6>Manage your Trial Balance</h6>
   </div>
   <ul class="table-top-head">
     <li>
@@ -65,179 +65,184 @@
 </div>
 
 <!-- /product list -->
-<div class="card table-list-card">
+<div class="card table-list-card" style="border-style: none;">
   <div class="card-body">
-    <div class="table-top">
-      <div class="search-set">
-        <div class="search-input">
-          <a href="javascript:void(0);" class="btn btn-searchset"
-            ><i class="feather icon-search feather-search"></i
-          ></a>
-          <div class="dataTables_filter">
-            <label>
-              <input
-                [(ngModel)]="searchDataValue"
-                [ngModelOptions]="{ standalone: true }"
-                (ngModelChange)="searchData(searchDataValue)"
-                type="search"
-                class="form-control"
-                placeholder="Search..."
-              />
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="search-path">
-        <div class="d-flex align-items-center">
-          <a
-            class="btn btn-filter"
-            id="filter_search"
-            (click)="openFilter()"
-            [ngClass]="{ setclose: filter === true }"
-          >
-            <i class="feather icon-filter filter-icon"></i>
-            <span><img src="assets/img/icons/closes.svg" alt="img" /></span>
-          </a>
-        </div>
-      </div>
-      <div class="form-sort">
-        <i class="feather icon-sliders info-img"></i>
-        <mat-select
-          [(ngModel)]="selectedValue1"
-          [ngModelOptions]="{ standalone: true }"
-          class="select space-select"
-          placeholder="Sort by Date"
-        >
-          @for (data of selectedList1; track data) {
-          <mat-option [value]="data.value">
-            {{ data.value }}
-          </mat-option>
-          }
-        </mat-select>
-      </div>
-    </div>
-    <!-- /Filter -->
-    <div
-      class="card"
-      id="filter_inputs"
-      [ngClass]="{ 'd-block': filter, 'd-none': !filter }"
-    >
+    <div style="margin-bottom: 9px;"></div>
+   
+      <!-- /Filter -->
       <div class="card-body pb-0">
-        <div class="row">
-          <div class="col-lg-3 col-sm-6 col-12">
-            <div class="input-blocks">
-              <i class="feather icon-zap info-img"></i>
-
-              <mat-select
-                [(ngModel)]="selectedValue2"
-                [ngModelOptions]="{ standalone: true }"
-                class="select space-select"
-                placeholder="Choose Category"
-              >
-                @for (data of selectedList2; track data) {
-                <mat-option [value]="data.value">
-                  {{ data.value }}
-                </mat-option>
-                }
-              </mat-select>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 col-12">
-            <div class="input-blocks">
-              <i class="feather icon-user info-img"></i>
-
-              <mat-select
-                [(ngModel)]="selectedValue3"
-                [ngModelOptions]="{ standalone: true }"
-                class="select space-select"
-                placeholder="Created by"
-              >
-                @for (data of selectedList3; track data) {
-                <mat-option [value]="data.value">
-                  {{ data.value }}
-                </mat-option>
-                }
-              </mat-select>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 col-12">
-            <div class="input-blocks">
-              <div class="position-relative daterange-wraper">
-                <input
-                  type="text"
-                  class="form-control date-range bookingrange"
-                  name="datetimes"
-                  placeholder="From Date - To Date"
-                  value="13 Aug 1992"
-                  bsDaterangepicker
-                  [(ngModel)]="bsRangeValue"
-                />
-                <i class="feather icon-calendar feather-14 info-img"></i>
+          <div class="row ">
+            
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>Company <span class="required-span-color">*</span></label>
+                <mat-select [(ngModel)]="obj.companyIds" [ngModelOptions]="{standalone: true}" multiple>
+                  <mat-option [value]="'0'">ALL</mat-option>
+                  <mat-option *ngFor="let c of getCompanies" [value]="c.id">{{ c.name }}</mat-option>
+                </mat-select>
               </div>
             </div>
-          </div>
-          <div class="col-lg-3 col-sm-6 col-12 ms-auto">
-            <div class="input-blocks">
-              <a class="btn btn-filters ms-auto">
-                <i class="feather icon-search feather-search"></i> Search
-              </a>
+            
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div  class="input-blocks add-product">
+                <label >Branch<span class="required-span-color">*</span> </label>
+                    <mat-select [(ngModel)]="obj.branchIds" [ngModelOptions]="{standalone: true}" multiple>
+                      <mat-option [value]="'0'">ALL</mat-option>
+                      <mat-option *ngFor="let c of getBranches" [value]="c.id">{{c.name}}</mat-option>
+                     
+                    </mat-select>
+              </div>
+             </div>
+             <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>From Date <span class="required-span-color">*</span></label>
+                <input nz-input type="date" class="form-control" 
+                [(ngModel)]="obj.fromDate" [ngModelOptions]="{standalone: true}"  />
+              </div>
             </div>
-          </div>
-        </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>To Date <span class="required-span-color">*</span></label>
+                <input nz-input type="date" class="form-control" 
+                [(ngModel)]="obj.toDate" [ngModelOptions]="{standalone: true}"  />
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>FINANCIAL YEAR<span class="required-span-color">*</span></label>
+                <mat-select 
+                  [(ngModel)]="obj.financialYearId" 
+                  [ngModelOptions]="{standalone: true}" 
+                  name="financialYear"
+                  aria-label="Select financial year"
+                  required>
+                  <mat-option [value]="'0'">ALL</mat-option>
+                  <mat-option *ngFor="let c of financialYear" [value]="c.id">{{c.name}}</mat-option>
+                </mat-select>
+              </div>
+            </div>
+            
+             <div class="col-lg-2 col-sm-6 col-12">
+              <div  class="input-blocks add-product">
+                <label >LOWER<span class="required-span-color">*</span> </label>
+                 <input type="text" class="form-control" [(ngModel)]="obj.lowerRange" [ngModelOptions]="{standalone: true}">   
+              </div>
+             </div>
+             <div class="col-lg-2 col-sm-6 col-12">
+              <div  class="input-blocks add-product">
+                <label >UPPER<span class="required-span-color">*</span> </label>
+                <input type="text" class="form-control" [(ngModel)]="obj.upperRange" [ngModelOptions]="{standalone: true}">   
+              </div>
+             </div>
+             <div class="col-lg-2 col-sm-6 col-12">
+               <div  class="input-blocks add-product">
+                 <label> VOUCHER STATUS<span class="required-span-color">*</span></label>
+                     <mat-select [(ngModel)]="obj.voucherStatusId" [ngModelOptions]="{standalone: true}" name="status">
+                       <mat-option [value]="'0'">BOTH</mat-option>
+                       <mat-option [value]="'M'">1</mat-option>
+                       <mat-option [value]="'S'">0</mat-option>
+                       
+                     </mat-select>
+                </div>
+              </div>
+             <div class="col-lg-3 col-sm-6 col-12">
+              <div  class="input-blocks add-product">
+                <label> LEVEL<span class="required-span-color">*</span></label>
+                    <mat-select [(ngModel)]="obj.level" (ngModelChange)="level($event)"
+                     [ngModelOptions]="{standalone: true}" name="level">
+                      <!-- <mat-option [value]="'0'">All</mat-option> -->
+                      <mat-option [value]="'1'">ONE</mat-option>
+                      <mat-option [value]="'2'">IWO</mat-option>
+                      <mat-option [value]="'3'">THREE</mat-option>
+                      <mat-option [value]="'4'">FOUR</mat-option>
+                    </mat-select>
+               </div>
+             </div>
+             <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>FROM ACCOUNT <span class="required-span-color">*</span></label>
+                <nz-select [(ngModel)]="obj.fromAccountCode" [ngModelOptions]="{ standalone: true }"
+                 class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Account">
+                  <!-- <nz-option nzLabel="ALL" nzValue="0"></nz-option> -->
+                  <nz-option *ngFor="let p of account" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
+                </nz-select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>TO ACCOUNT <span class="required-span-color">*</span></label>
+                <nz-select [(ngModel)]="obj.toAccountCode" [ngModelOptions]="{ standalone: true }"
+                 class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Account">
+                  <!-- <nz-option nzLabel="ALL" nzValue="0"></nz-option> -->
+                  <nz-option *ngFor="let p of account" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
+                </nz-select>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>MULTIPLE SELECTION <span class="required-span-color">*</span></label>
+                <nz-select [(ngModel)]="obj.accountCode" [ngModelOptions]="{ standalone: true }"
+                 class="w-100" nzShowSearchnzAllowClear nzPlaceHolder="Select Account">
+                  <nz-option nzLabel="ALL" nzValue="0"></nz-option>
+                  <!-- <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option> -->
+                </nz-select>
+              </div>
+            </div>
+             <div class="col-lg-3 col-sm-6 col-12 text-end">
+               <div class="input-blocks add-product">
+                <label><span class="required-span-color">.</span></label>
+                <a class="btn btn-filters ms-auto" (click)="search()"> <i class="feather icon-search  feather-search" ></i>
+                Search </a>
+               </div>
+             </div>
+            <!-- <div class="col-lg-2 col-sm-6 col-12">
+              <div class="input-blocks">
+                <a class="btn btn-filters ms-auto"> <i class="feather icon-search  feather-search"></i>
+              Search </a>
+            </div>-->
+          </div> 
       </div>
-    </div>
     <!-- /Filter -->
     <div class="table-responsive">
-      <table
-        class="table datanew"
-        (matSortChange)="sortData($event)"
-        matSort
-        matSortActive="Sno"
-        matSortDirection="asc"
-        matSortDisableClear
-      >
+      <table class="w-100 table-sm">
         <thead>
           <tr>
-            <th class="no-sort">
-              <label class="checkboxs" (click)="selectAll(initChecked)">
-                <input
-                  type="checkbox"
-                  id="select-all"
-                  [(ngModel)]="initChecked"
-                />
-                <span class="checkmarks"></span>
-              </label>
-            </th>
-            <th mat-sort-header="date">Date</th>
-            <th mat-sort-header="expense">Expense Category</th>
-            <th mat-sort-header="user">User</th>
-            <th mat-sort-header="amountDue">Amount</th>
+            <th>#</th>
+            <th>ACCOUNT CODE</th>
+            <th>ACCOUNT NAME</th>
+            <th>OPENING BALANCE</th>
+            <th>DEBIT</th>
+            <th>CREDIT</th>
+            <th>DIFF</th>
+            <th>CLOSING BALANCE</th>
           </tr>
         </thead>
-        <tbody class="Expense-list">
-          @for (data of tableData; track data) {
-          <tr>
-            <td>
-              <label class="checkboxs">
-                <input type="checkbox" [(ngModel)]="data.isSelected" />
-                <span class="checkmarks"></span>
-              </label>
-            </td>
-            <td>{{ data.date }}</td>
-            <td>{{ data.expenseCategory }}</td>
-            <td class="userimgname">
-              <a href="javascript:void(0);" class="product-img">
-                <img [src]="data.img" alt="product" />
-              </a>
-              <a href="javascript:void(0);">{{ data.user }} </a>
-            </td>
-            <td>{{ data.amount }}</td>
+        <tbody>
+          <tr *ngFor="let data of report; let i = index" [ngClass]="{'lightgray': data.backgroundColor === 'lightgray', 'lightblue': data.backgroundColor === 'lightblue', 'lightgreen': data.backgroundColor === 'lightgreen', 'lightyellow': data.backgroundColor === 'lightyellow'}">
+            <td>{{ i + 1 }}</td>
+            <td>{{ data.accountFormattedCode }}</td>
+            <td class="text-wrap">{{ data.accountName }}</td>
+            <td>{{ data.openingBalance }}</td>
+            <td>{{ data.debit }}</td>
+            <td>{{ data.credit }}</td>
+            <td>{{ data.diff }}</td>
+            <td>{{ data.closingBalance }}</td>
           </tr>
-          }
         </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3"><strong>Total</strong></td>
+            <td>{{ sumOpeningBalance | number: '1.2-2'}}</td>
+            <td>{{ sumDebit | number: '1.2-2'}}</td>
+            <td>{{ sumCredit | number: '1.2-2'}}</td>
+            <td>{{ sumDiff | number: '1.2-2'}}</td>
+            <td>{{ sumClosingBalance | number: '1.2-2'}}</td>
+          </tr>
+        </tfoot>
       </table>
     </div>
-    <app-custom-pagination></app-custom-pagination>
+    
+    <!-- <app-custom-pagination></app-custom-pagination> -->
   </div>
 </div>
 <!-- /product list -->

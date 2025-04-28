@@ -12,6 +12,7 @@ import { AccountManagementLevelListComponent } from './account-management-level-
 import { AccountManagementAddEditComponent } from './account-management-add-edit/account-management-add-edit.component';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { BankAccountComponent } from './bank-account/bank-account.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
     SuppliersComponent,
     WarehouseComponent,
     AccountManagementLevelListComponent,
-    AccountManagementAddEditComponent
+    AccountManagementAddEditComponent,
+    BankAccountComponent,
   ],
   imports: [
     CommonModule,

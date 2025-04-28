@@ -91,6 +91,12 @@ export class AllApiService {
       }
     );
   }
+  khata(){
+    this.apiService.getObservable<any[]>('app/getMillKhate').subscribe((res:any[])=>{
+      localStorage.setItem('millKhata', JSON.stringify(res));
+      console.log('millkhata',res)
+    })
+  }
   public getBranches():void {
     this.apiService.getObservable<any[]>('app/getAllbranch').subscribe(
       (response: any[]) => {
@@ -102,6 +108,17 @@ export class AllApiService {
       }
     );
   }
+  public getCompanies():void  {
+    this.apiService.getObservable<any[]>('app/getAllCompany').subscribe(
+     (res:any[]) =>{
+       console.log(res , 'company====5');
+       localStorage.setItem('companies' , JSON.stringify(res))
+     } ,
+     (error) => {
+       console.error('Error fetching Companies:', error);
+     }
+   )
+ }
    getParties():void  {
      this.apiService.getObservable<any[]>('app/getAllParties').subscribe(
     (res:any[]) =>{
@@ -113,17 +130,7 @@ export class AllApiService {
     }
     )
   }
-  public getCompanies():void  {
-     this.apiService.getObservable<any[]>('app/getAllCompany').subscribe(
-      (res:any[]) =>{
-        console.log(res , 'company====5');
-        localStorage.setItem('companies' , JSON.stringify(res))
-      } ,
-      (error) => {
-        console.error('Error fetching Companies:', error);
-      }
-    )
-  }
+  
   financialYear(): void {
     this.apiService.getObservable<any>('app/getAllYear').subscribe(
       (res:any) =>{

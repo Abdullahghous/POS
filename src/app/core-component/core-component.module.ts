@@ -22,7 +22,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
     SidebarThreeComponent,
     LayoutComponent,
   ],
-  imports: [CommonModule, CoreComponentRoutingModule, sharedModule, RouterModule, NzAlertModule],
+  imports: [CommonModule, CoreComponentRoutingModule, sharedModule, RouterModule, NzAlertModule,],
   providers: [],
 })
 export class CoreComponentModule {}

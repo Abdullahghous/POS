@@ -5,6 +5,17 @@
           <h6>Manage Your monshi</h6>
         </div>
       </div>
+      <div class="search-set">
+        <div class="search-input">
+          <a href="javascript:void(0);" class="btn btn-searchset"><i class="feather icon-search feather-search"></i></a>
+          <div class="dataTables_filter">
+            <label>
+              <input [(ngModel)]="searchQuery" placeholder="Search by name" (input)="filterByName()" 
+              [ngModelOptions]="{standalone: true}"  type="search" class="form-control"  />
+              </label>
+            </div>
+          </div>
+        </div>
       <ul class="table-top-head">
         <li>
           <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Pdf" matTooltipPosition="above"><img
@@ -38,6 +49,7 @@
       </div>
 </div>
 <div  class="card table-list-card">
+  
      <div class="table-responsive">
             <nz-table #ITableRef [nzData]="['*']" [nzFrontPagination]="false" class="table datanew" >
                 <thead>
@@ -50,7 +62,7 @@
                     </tr>
                 </thead>
                   <tbody>
-                      <tr *ngFor="let m of monshiList; let i=index">
+                      <tr *ngFor="let m of filteredReport; let i=index">
                             <td>{{i+1}}</td>
                             <td>{{m.name}}</td>
                             <td>{{m.address}}</td>
@@ -86,14 +98,14 @@
                     <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>NAME <span class="required-span-color">*</span></label>
-                        <input type="text" class="form-control" 
+                        <input type="text" class="form-control" style="text-transform: uppercase;"
                         [(ngModel)]="obj.name" [ngModelOptions]="{standalone: true}"  />
                       </div>
                     </div>
                      <div class="col-lg-4 col-sm-6 col-12">
                       <div class="input-blocks add-product">
                         <label>ADDRESS <span class="required-span-color">*</span></label>
-                        <input type="text" class="form-control" 
+                        <input type="text" class="form-control" style="text-transform: uppercase;"
                         [(ngModel)]="obj.address" [ngModelOptions]="{standalone: true}"  />
                       </div>
                     </div>

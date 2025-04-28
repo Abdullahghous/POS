@@ -2,3 +2,47 @@
 //     background-color: black;
 //     selectAll:onFoucs
 // }
+/* Reduce the height of input fields */
+.form-control {
+    height: 38px; /* Adjust this value as needed */
+    padding: 6px 12px; /* Adjust padding for a more compact look */
+    font-size: 14px; /* Adjust font size if necessary */
+}
+/* More specific selector */
+.row .form-control {
+    height: 35px; /* Adjust this value as needed */
+    padding: 6px 12px; /* Adjust padding for a more compact look */
+    font-size: 14px;
+    border: 3; /* Adjust font size if necessary */
+}
+/* Reduce the height of nz-select components */
+.custom-nz-select {
+    height: 38px; /* Adjust this value as needed */
+}
+
+/* Adjust the inner input of nz-select */
+.custom-nz-select .ant-select-selector {
+    height: 38px; /* Adjust this value as needed */
+    line-height: 38px; /* Align text vertically */
+}
+
+/* Adjust the padding of the inner input */
+.custom-nz-select .ant-select-selector .ant-select-selection-item {
+    padding: 0 12px; /* Adjust padding for a more compact look */
+}
+
+/* Adjust the label font size */
+.col-form-label {
+    font-size: 14px; /* Adjust label font size */
+}
+
+/* Adjust the margin between rows */
+.row.mb-3 {
+    margin-bottom: 1rem; /* Adjust margin as needed */
+}
+
+/* Optional: Adjust the button size */
+.btn {
+    padding: 6px 12px; /* Adjust button padding */
+    font-size: 14px; /* Adjust button font size */
+}

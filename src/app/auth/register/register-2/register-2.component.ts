@@ -51,7 +51,7 @@ export class Register2Component {
       );
       this.loginBtnText = 'Create Account';
     } else {
-      this.apiService.post('user/add-or-update', createAccObj).subscribe({
+      this.apiService.post('auth/add-or-update', createAccObj).subscribe({
         next: (res) => {
           if (res) {
             console.log('Create Acc Res::', res);

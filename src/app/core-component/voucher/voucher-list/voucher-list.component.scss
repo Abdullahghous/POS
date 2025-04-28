@@ -1,0 +1,33 @@
+/* Modal header */
+.modal-header {
+    background-color: #f8f9fa;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+  }
+  
+  /* Table Styling */
+  table.datanew th {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  table.datanew td {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .btn:hover {
+    opacity: 0.8;
+  }
+  

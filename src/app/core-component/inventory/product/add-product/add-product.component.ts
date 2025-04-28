@@ -96,6 +96,7 @@ export class AddProductComponent {
 
   onChangeCatgory(value: any) {
     this.getAllSubCategory(value);
+    
   }
 
   onSave() {
@@ -106,16 +107,16 @@ export class AddProductComponent {
           id: this.formGroup.value?.subCategory
         },
         name: this.formGroup.value.productName,
-        pricingRule: 'QUANTITY',
-        reorderLevel: this.formGroup.value.quantityAlert,
-        saleRate: this.formGroup.value.sellingPrice,
-        purchaseRate: this.formGroup.value.buyingPrice,
+        pricingRule: '',
+        // reorderLevel: this.formGroup.value.quantityAlert,
+        // saleRate: this.formGroup.value.sellingPrice,
+        // purchaseRate: this.formGroup.value.buyingPrice,
         unit: {
           id: this.formGroup.value.unit,
         },
-        brand: {
-          id: this.formGroup.value.brand,
-        },
+        // brand: {
+        //   id: this.formGroup.value.brand,
+        // },
       };
 
       this.apiService.post('item/add_or_update_item', obj).subscribe((res) => {

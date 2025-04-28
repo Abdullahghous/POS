@@ -19,6 +19,7 @@ export class PrePurchaseReportComponent implements OnInit {
   getCompanies:any[]= [];
   financialYear:any[]= [];
   items:any[]= [];
+  millKhata:any=[];
   // item: any = {
   //   itemSubCategory: {
   //     account: { code: 0, id: 0 },
@@ -58,6 +59,12 @@ export class PrePurchaseReportComponent implements OnInit {
     
     this.getAll();
    
+  }
+  khata(){
+    this.apiService.getObservable('app/getMillKhate').subscribe((res:any)=>{
+      this.millKhata= res;
+      console.log('millkhata',res)
+    })
   }
   isCollapsed: boolean = false;
   toggleCollapse() {

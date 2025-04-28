@@ -1,0 +1,169 @@
+
+<div class="card table-list-card">
+    <div class="card-body">
+        <div >
+            <div class="card-body pb-0">
+                <form>
+                    <div class="row">
+                        <div class="page-header">
+                            <div class="page-title">
+                              <h4>VIEW BANK ACCOUNTS</h4>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-blocks add-product">
+                                <div class="row ">
+                                    <label class="col-lg-4 col-form-label">SUPPLIER ACCOUNT</label>
+                                    <div class="col-lg-8">
+                                      <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select parties"
+                                        [(ngModel)]="pay.account.code" [ngModelOptions]="{standalone: true}"
+                                        (ngModelChange)="getAccount($event)">
+                                          <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
+                                        </nz-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-blocks add-product">
+                                <div class="row ">
+                                    <label class="col-lg-4 col-form-label">CUSTOMER ACCOUNT</label>
+                                    <div class="col-lg-8">
+                                        <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select parties"
+                                             [(ngModel)]="custmer" [ngModelOptions]="{standalone: true}">
+                                             <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.formattedCode + ' ' + p.accountName"></nz-option>
+                                           </nz-select>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-blocks add-product">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-blocks add-product">
+                                <div class="row ">
+                                    <label class="col-lg-4 col-form-label">MOBILE NO :</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                             </div>
+                        </div> 
+                        <div class="col-3">
+                            <div class="input-blocks add-product">
+                                <div class="row ">
+                                    <label class="col-lg-4 col-form-label">OTHER NO :</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                             </div>
+                        </div>                                                                       
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card table-list-card">
+    <div class="card-body">
+        <div >
+            <div class="card-body pb-0">
+                <div class="row" style="padding: 5px;">
+                    <div class="add-item d-flex">
+                        <div class="page-title">
+                          <h4 style="padding: 2px;">ENTRY FORM</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered table-hover table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>BANK NAME</th>
+                                <th>ACCOUNT TITLE	</th>
+                                <th>BRANCH CODE	</th>
+                                <th>ACCOUNT NUMBER	</th>
+                                <th>ADDRESS</th>
+                                <th>SEND SMS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of list ; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{data.bankName.name}}</td>
+                                <td>{{data.accountTitle}}</td>
+                                <td>{{data.branchCode}}</td>
+                                <td>{{data.accountNumber}}</td>
+                                <td>{{data.address}}</td>
+                                <td class="text-center"><a class="me-2 p-2" href="javascript:void(0);" (click)="sendAccount(data)" data-bs-toggle="modal" data-bs-target="#edit-sales-new">
+                                    <i class="feather icon-send feather-edit"></i>
+                                  </a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card table-list-card">
+    <div class="card-body">
+        <div >
+            <div class="card-body pb-0">
+                <div class="row" style="padding: 2px;">
+                    <div class="add-item d-flex">
+                        <div class="page-title">
+                          <h4 style="padding: 5px;">READY FOR SEND ACCOUNT</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive" *ngIf="addData">
+                    <table class="table table-sm table-bordered table-hover table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>BANK NAME</th>
+                                <th>ACCOUNT TITLE	</th>
+                                <th>BRANCH CODE	</th>
+                                <th>ACCOUNT NUMBER	</th>
+                                <th>ADDRESS</th>
+                                <th>AMOUNT</th>
+                                <th>CONNECT</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of addData ; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td><input readonly class="pb-0 w-100 border-0 "[(ngModel)]="data.bankName" [ngModelOptions]="{standalone:true}"></td>
+                                <td><input readonly class="pb-0 w-100 border-0 "[(ngModel)]="data.accountTitle" [ngModelOptions]="{standalone:true}"></td>
+                                <td><input readonly class="pb-0 w-100 border-0 "[(ngModel)]="data.branchCode" [ngModelOptions]="{standalone:true}"></td>
+                                <td><input readonly class="pb-0 w-100 border-0 "[(ngModel)]="data.accountNumber" [ngModelOptions]="{standalone:true}"></td>
+                                <td><input readonly class="pb-0 w-100 border-0 "[(ngModel)]="data.address" [ngModelOptions]="{standalone:true}"></td>
+                                <td> <input class="pb-0 w-100 border-0 "[(ngModel)]="data.amount" [ngModelOptions]="{standalone:true}"> </td>
+                                <td> <input class="pb-0 w-100 border-0 "[(ngModel)]="data.singleParty" [ngModelOptions]="{standalone:true}"> </td>
+                                <td class="text-center">
+                                     <a class="btn btn-sm btn-outline-primary me-1" href="javascript:void(0);" (click)="deleteRow(i)"s-toggle="modal" data-bs-target="#edit-sales-new">
+                                    <i class="feather icon-delete action-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div >
+                    <a class="btn btn-primary mt-3" href="javascript:void(0);" (click)="sendSelected()" >DOWNlOAD SELECTED ACCOUNT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

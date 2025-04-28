@@ -1,0 +1,459 @@
+<div class="page-header transfer">
+  <div class="add-item d-flex">
+      <div class="page-title">
+        <h4>Mill Rate List</h4>
+        <h6>Manage Your Rate</h6>
+      </div>
+    </div>
+    <div class="col-sm-6 col-12 text-end" >
+            
+      <button type="submit" class="btn btn-submit add-sale" (click)="onSrech()">SEARCH</button>
+    </div>
+    <!-- <ul class="table-top-head">
+      <li>
+        <div>
+          <button type="submit" class="btn btn-warning add-sale" style="margin-right: 3%;" (click)="travelpdf()">Location Wise Report</button>
+        </div>
+      </li>
+      <li (click)="travelThekedarPdf()">
+        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Thekedar Wise Report" matTooltip="Thekedar Wise Report" matTooltipPosition="above"><img
+          src="assets/img/icons/pdf.svg" alt="img"></a>
+      </li>
+      <li (click)="generatePDF()">
+        <a data-bs-toggle="tooltip" data-bs-placement="top" title="Table Pdf" matTooltip="Table Pdf" matTooltipPosition="above"><img
+        src="assets/img/icons/pdf.svg" alt="img"></a>
+      </li>
+      <li>
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Print" matTooltipPosition="above"><i
+        class="feather icon-printer feather-rotate-ccw"></i></a>
+      </li>
+      <li (click)="search()">
+        <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Refresh" matTooltipPosition="above"><i
+        class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
+      </li>
+      <li>
+        <a (click)="toggleCollapse()" data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Collapse"
+          matTooltipPosition="above" id="collapse-header"> @if (!isCollapsed) {
+          <i class="feather icon-chevron-up feather-chevron-up"></i>
+        }
+        @if (isCollapsed) {
+          <i class="feather icon-chevron-down feather-chevron-down"></i>
+        }</a>
+      </li>
+    </ul> -->
+    <div class="page-btn">
+      <a id="open-mill" href="javascript:void(0);" class="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-travel" ><i
+      class="feather icon-plus-circle me-2"></i> Mill Rate Entry Form </a>
+    </div>
+    <a  href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#mill-rate" ></a>
+</div>
+
+
+
+
+
+<div class="card table-list-card">
+  <div class="card-body">
+    <div class="table-top">
+      
+         <div class="col-lg-3 col-sm-6 col-12">
+          <div class="input-blocks add-product">
+            <label>ITEM DEF<span class="required-span-color">*</span></label>
+            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="product"
+                          [(ngModel)]=obj.itemDefId [ngModelOptions]="{standalone:true}">
+                          <nz-option nzLabel="All" [nzValue]="0"></nz-option>
+                          <nz-option *ngFor="let item of itemDefs" [nzLabel]="item.name" [nzValue]="item.id">
+                          </nz-option>
+                        </nz-select>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="input-blocks add-product">
+            <label>MILL<span class="required-span-color">*</span></label>
+            <nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Mill Name"
+                          [(ngModel)]=obj.millId [ngModelOptions]="{standalone:true}">
+                          <nz-option nzLabel="All" [nzValue]="0"></nz-option>
+                          <nz-option *ngFor="let mill of mills" [nzLabel]="mill.accountName" [nzValue]="mill.id">
+                          </nz-option>
+                        </nz-select>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="input-blocks add-product">
+            <label>FROM DATE<span class="required-span-color">*</span></label>
+            <input class="form-control" type="date"  [(ngModel)]="obj.fromDate"
+             [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="input-blocks add-product">
+            <label>TO DATE<span class="required-span-color">*</span></label>
+            <input class="form-control" type="date"  id="" [(ngModel)]="obj.toDate"
+            [ngModelOptions]="{standalone: true}"  >
+          </div>
+        </div>
+      </div>
+    
+  
+      <div >
+        <table class="table table-hover mb-0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ITEM NAME</th>
+              <th>MILL NAME</th>
+              <th>MILL RATE</th>
+              <th>SALE RATE</th>
+              <th>CASH RATE</th>
+              <th>MOISTURE %</th>
+              <th>REMARKS</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of list; let i = index">
+              <td>{{ i + 1 }}</td> <!-- Display index as row number -->
+              <td>{{ item.item }}</td> <!-- Display item name -->
+              <td>{{ item.mill }}</td> <!-- Display mill name -->
+              <td>{{ item.millRate }}</td> <!-- Display mill rate -->
+              <td>{{ item.saleRate }}</td> <!-- Display sale rate -->
+              <td>{{ item.cashRate }}</td> <!-- Display cash rate -->
+              <td>{{ item.moisture }}</td> <!-- Display moisture percentage -->
+              <td>{{ item.remarks || 'No remarks' }}</td> <!-- Display remarks -->
+              <td class="action-table-data">
+                <div class="edit-delete-action">
+                  <a class="me-2 p-2" href="javascript:void(0);" (click)="edit(item)" data-bs-toggle="modal" data-bs-target="#edit-sales-new">
+                    <i class="feather icon-edit feather-edit"></i>
+                  </a>
+                  <!-- <a class="me-2 p-2 mb-0" href="javascript:void(0);" (click)="viwoVoucher(data.id,data.typeVoucher  )" class="btn btn-added underline">
+                    <i class="feather icon-eye action-eye"></i>
+                  </a> -->
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="add-travel" tabindex="-1" aria-labelledby="editpayment" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="page-wrapper p-0 m-0">
+        <div class="content p-0">
+         
+         <div class="modal-header border-0 custom-modal-header">
+          <div class="page-title">
+            <h4>Mill Rate Entry Form</h4>
+          </div>
+          <button type="button" (click)="back()" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+          <div class="table-top">
+          <div class="col-lg-3 col-sm-6 col-12">
+            <div class="input-blocks add-product">
+              <label>ENTRY DATE<span class="required-span-color">*</span></label>
+              <input class="form-control" type="date"  [(ngModel)]="millRate[0].entryDate"
+               [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          </div>
+      
+          <div class="card">
+            <div class="card-body">
+             <div class="table-responsive">
+          <nz-table #nestedTable [nzData]="millRate" nzSize="middle" [nzShowPagination]="false">
+            <thead>
+              <tr>
+                <th nzWidth="3%"></th>
+                <th nzWidth="20%">Item Name</th>
+                <th nzWidth="20%">MILL NAME</th>
+          
+                <th>MILL RATE</th>
+                <th>SALE RATE</th>
+          
+                <th>CASH RATE</th>
+                <th>MOISTURE%</th>
+                <th>REMARKS</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-template ngFor let-parentData  [ngForOf]="millRate" ; let-parenIndex=index>
+                  <tr>
+                      <td [(nzExpand)]="parentData.expand" (click)='expandBtnClicked(parentData)'></td> 
+                      <td><nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="product"
+                          [(ngModel)]=parentData.itemDef.id [ngModelOptions]="{standalone:true}">
+                          <nz-option *ngFor="let item of itemDefs" [nzLabel]="item.name" [nzValue]="item.id">
+                          </nz-option>
+                        </nz-select> </td>
+              
+                      <td><nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Mill Name"
+                          [(ngModel)]=parentData.mill.id [ngModelOptions]="{standalone:true}">
+                          <nz-option *ngFor="let mill of mills" [nzLabel]="mill.accountName" [nzValue]="mill.id">
+                          </nz-option>
+                        </nz-select> </td>
+              
+                      <td><input class="form-control" type="tel" onfocus="this.select()" input [(ngModel)]=parentData.millRate [ngModelOptions]="{standalone:true}"></td>
+                      <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.saleRate [ngModelOptions]="{standalone:true}"></td>
+                      <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.cashRate [ngModelOptions]="{standalone:true}"></td>
+                      <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.moisture [ngModelOptions]="{standalone:true}"></td>
+                      <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.remarks [ngModelOptions]="{standalone:true}"></td>
+                      <td>
+                        <a class="me-2 p-2" href="javascript:void(0);" (click)="addParentRow(parentData,parenIndex)">
+                          <i class="feather icon-plus-circle feather-edit" style="color:blue;"></i>
+                        </a>
+                        <a class="confirm-text p-2 border-warning" href="javascript:void(0);"  (click)="deleteParentRow(parenIndex)">
+                          <i class="feather icon-trash-2 feather-trash-2" style="color:red;"></i>
+                        </a>
+                      </td> 
+                  </tr>
+                  <tr (click)='expandBtnClicked(parentData)' [nzExpand]="parentData.expand">
+                      <nz-table #innerTable  [nzData]="millRate" nzWidth="90px" [nzShowPagination]="false">
+                        <thead>
+                          <tr style="color: red">
+                            <th nzWidth="40%">Party Account</th>
+                            <th nzWidth="20%">RATE</th>
+                            <th nzWidth="20%">Type</th>
+                            <th nzWidth="20%">QTY</th>
+                            <th nzWidth="20%">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+              
+                         <tr *ngFor="let data of parentData.millRateEntries; let chailIndex=index">
+                    <td *ngIf="data.supplierAccount">
+                      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please select" style="width: 100%;"
+                        [(ngModel)]=data.supplierAccount.code [ngModelOptions]="{standalone:true}">
+                        <nz-option *ngFor="let account of parties" [nzLabel]="account.accountName" [nzValue]="account.code">
+                        </nz-option>
+                      </nz-select>
+                    </td>
+                      <td>
+                        <input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=data.rate [ngModelOptions]="{standalone:true}">
+                      </td>
+                      <td>
+                        <nz-select  nzAllowClear nzPlaceHolder="Please select" style="width: 100%;"
+                          [(ngModel)]=data.type [ngModelOptions]="{standalone:true}">
+                          <nz-option [nzLabel]="'UnLimited'" [nzValue]="'UnLimited'">  </nz-option>
+                          <nz-option [nzLabel]="'Limited'" [nzValue]="'Limited'">  </nz-option>
+                        </nz-select>
+                      </td>
+                    <td>
+                      <input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=data.qty [ngModelOptions]="{standalone:true}" [readonly]="limitOrUnLimit(data)">
+                    </td>
+              
+                    <td>
+                      <a class="me-2 p-2" href="javascript:void(0);" (click)="addChaildRow(data,chailIndex,parentData)">
+                          <i class="feather icon-plus-circle feather-edit" style="color:blue;"></i></a>
+                      
+                      <a class="confirm-text p-2 border-warning" href="javascript:void(0);" (click)="deleteChaildRow(data,chailIndex,parentData)">
+                          <i class="feather icon-trash-2 feather-trash-2" style="color:red;"></i></a>
+                    </td>
+              
+                         </tr>
+                        </tbody>
+                      </nz-table>
+                    </tr>
+              </ng-template>
+            </tbody>
+          </nz-table>
+            <div class="col-lg-12 text-end">
+              <button type="button" id="cancelButton" class="btn btn-cancel add-cancel me-3"
+              data-bs-dismiss="modal" (click)="back()">Cancel</button>
+              <button type="submit" class="btn btn-submit add-sale" (click)="onSave()" >Submit</button>
+            </div>
+             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+
+<!-- <div class="modal fade" id="mill-rate" tabindex="-1" aria-labelledby="editpayment" aria-hidden="true">
+  <div class="modal-dialog add-centered">
+    <div class="modal-content">
+      <div class="page-wrapper p-0 m-0">
+        <div class="content p-0">
+          <div class="modal-header border-0 custom-modal-header">
+          <div class="page-title">
+            <h4>Mill Rate Edit Form</h4>
+          </div>
+          <button type="button" (click)="back()" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="table-top">
+          <div class="col-lg-3 col-sm-6 col-12">
+            <div class="input-blocks add-product">
+              <label>ENTRY DATE<span class="required-span-color">*</span></label>
+              <input class="form-control" type="date"  [(ngModel)]="millRate[0].entryDate"
+               [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+               <table class="table table-hover table-sm mb-0">
+            <thead>
+              <tr>
+                <th nzWidth="20%">Item Name</th>
+                <th nzWidth="20%">MILL NAME</th>
+          
+                <th>MILL RATE</th>
+                <th>SALE RATE</th>
+          
+                <th>CASH RATE</th>
+                <th>MOISTURE%</th>
+                <th>REMARKS</th>
+              </tr>
+            </thead>
+            <tbody>
+                  <tr *ngFor="let parentData of millRate">
+                      <td><nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="product"
+                          [(ngModel)]=parentData.itemDef.id [ngModelOptions]="{standalone:true}">
+                          <nz-option *ngFor="let item of itemDefs" [nzLabel]="item.name" [nzValue]="item.id">
+                          </nz-option>
+                        </nz-select> </td>
+              
+                      <td><nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Mill Name"
+                          [(ngModel)]=parentData.mill.id [ngModelOptions]="{standalone:true}">
+                          <nz-option *ngFor="let mill of mills" [nzLabel]="mill.accountName" [nzValue]="mill.id">
+                          </nz-option>
+                        </nz-select> </td>
+              
+                      <td><input class="form-control" type="tel" onfocus="this.select()" input [(ngModel)]=parentData.millRate [ngModelOptions]="{standalone:true}"></td>
+                      <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.saleRate [ngModelOptions]="{standalone:true}"></td>
+                      <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.cashRate [ngModelOptions]="{standalone:true}"></td>
+                      <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.moisture [ngModelOptions]="{standalone:true}"></td>
+                      <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.remarks [ngModelOptions]="{standalone:true}"></td>
+                      
+                  </tr>
+               </table>
+                <div class="col-lg-12 text-end" style="margin-top: 23px;">
+                 <button type="button" id="cancelButton" class="btn btn-cancel add-cancel me-3"
+                  data-bs-dismiss="modal" (click)="back()">Cancel</button>
+                 <button type="submit" class="btn btn-submit add-sale" (click)="editSave()" >Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>    
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+<!-- <div class="card table-list-card" >
+    <div class="card-body">
+      <div class="table-responsive datanew "> 
+    <nz-table #nestedTable [nzData]="millRate" nzSize="middle" [nzShowPagination]="false">
+      <thead>
+        <tr>
+          <th nzWidth="3%"></th>
+          <th nzWidth="20%">Item Name</th>
+          <th nzWidth="20%">MILL NAME</th>
+    
+          <th>MILL RATE</th>
+          <th>SALE RATE</th>
+    
+          <th>CASH RATE</th>
+          <th>MOISTURE%</th>
+          <th>REMARKS</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-template ngFor let-parentData  [ngForOf]="millRate" ; let-parenIndex=index>
+            <tr>
+                <td [(nzExpand)]="parentData.expand" (click)='expandBtnClicked(parentData)'></td> 
+                <td><nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="product"
+                    [(ngModel)]=parentData.itemDef.id>
+                    <nz-option *ngFor="let item of itemDefs" [nzLabel]="item.name" [nzValue]="item.id">
+                    </nz-option>
+                  </nz-select> </td>
+        
+                <td><nz-select style="width: 100%;" nzShowSearch nzAllowClear nzPlaceHolder="Mill Name"
+                    [(ngModel)]=parentData.mill.id>
+                    <nz-option *ngFor="let mill of mills" [nzLabel]="mill.accountName" [nzValue]="mill.id">
+                    </nz-option>
+                  </nz-select> </td>
+        
+                <td><input class="form-control" type="tel" onfocus="this.select()" input [(ngModel)]=parentData.millRate></td>
+                <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.saleRate></td>
+                <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.cashRate></td>
+                <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.moisture></td>
+                <td><input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=parentData.remarks></td>
+                <td>
+                  <a class="me-2 p-2" href="javascript:void(0);" (click)="addParentRow(parentData,parenIndex)">
+                    <i class="feather icon-plus-circle feather-edit" style="color:blue;"></i>
+                  </a>
+                  <a class="confirm-text p-2 border-warning" href="javascript:void(0);"  (click)="deleteParentRow(parenIndex)">
+                    <i class="feather icon-trash-2 feather-trash-2" style="color:red;"></i>
+                  </a>
+                </td> 
+            </tr>
+            <tr (click)='expandBtnClicked(parentData)' [nzExpand]="parentData.expand">
+                <nz-table #innerTable  [nzData]="millRate" nzWidth="90px" [nzShowPagination]="false">
+                  <thead>
+                    <tr style="color: red">
+                      <th nzWidth="40%">Party Account</th>
+                      <th nzWidth="20%">RATE</th>
+                      <th nzWidth="20%">Type</th>
+                      <th nzWidth="20%">QTY</th>
+                      <th nzWidth="20%">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+        
+                   <tr *ngFor="let data of parentData.millRateEntries; let chailIndex=index">
+              <td>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please select" style="width: 100%;"
+                  [(ngModel)]=data.supplierAccount.code>
+                  <nz-option *ngFor="let account of parties" [nzLabel]="account.accountName" [nzValue]="account.code">
+                  </nz-option>
+                </nz-select>
+              </td>
+                <td>
+                  <input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=data.rate>
+                </td>
+                <td>
+                  <nz-select  nzAllowClear nzPlaceHolder="Please select" style="width: 100%;"
+                             [(ngModel)]=data.type>
+                    <nz-option [nzLabel]="'UnLimited'" [nzValue]="'UnLimited'">  </nz-option>
+                    <nz-option [nzLabel]="'Limited'" [nzValue]="'Limited'">  </nz-option>
+                  </nz-select>
+                </td>
+              <td>
+                <input type="tel" onfocus="this.select()" class="form-control" input [(ngModel)]=data.qty  [readonly]="limitOrUnLimit(data)">
+              </td>
+        
+              <td>
+                <a class="me-2 p-2" href="javascript:void(0);" (click)="addChaildRow(data,chailIndex,parentData)">
+                    <i class="feather icon-plus-circle feather-edit" style="color:blue;"></i></a>
+                
+                <a class="confirm-text p-2 border-warning" href="javascript:void(0);" (click)="deleteChaildRow(data,chailIndex,parentData)">
+                    <i class="feather icon-trash-2 feather-trash-2" style="color:red;"></i></a>
+              </td>
+        
+                   </tr>
+                  </tbody>
+                </nz-table>
+              </tr>
+        </ng-template>
+      </tbody>
+    </nz-table>
+      </div>
+    </div> 
+     <button (click)="onSave()" >Save</button>
+</div> -->

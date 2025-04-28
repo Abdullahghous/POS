@@ -9,7 +9,7 @@ import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service
   styleUrl: './product-location-entry.component.scss'
 })
 export class ProductLocationEntryComponent {
-  monshiList:any=[]
+  location:any=[]
   successMessage: any = '';
   isButtonDisabled = false;
   constructor(private sidebar: SidebarService,
@@ -21,7 +21,8 @@ export class ProductLocationEntryComponent {
   obj:any={
     name:'',
     address:'',
-    mobile:''
+    mobile:'',
+    status:0
   }
   veiw:any={
 
@@ -29,8 +30,9 @@ export class ProductLocationEntryComponent {
   getLocationData(){
     this.apiService.getObservable('location/getAll').subscribe(
       (res) => {
-          console.log(res, 'mooonhi');
-          this.monshiList=res;
+          console.log(res, 'loctaion');
+          this.location=res;
+          
       }
     );
   }

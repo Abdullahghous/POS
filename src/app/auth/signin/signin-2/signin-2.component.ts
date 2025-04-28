@@ -6,6 +6,7 @@ import { HttpService } from 'src/app/core/service/http/http.service';
 import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service';
 import { environment } from '../../../../environments/environment'
 import { AuthServiceService } from 'src/app/core/service/http/auth-service.service';
+import { SidebarService } from 'src/app/core/core.index';
 
 @Component({
   selector: 'app-signin-2',
@@ -20,21 +21,23 @@ export class Signin2Component {
   public loginBtnDisable: boolean = false;
 
   public productName = environment.PRODUCT_NAME;
-
+   
   constructor(
     private router: Router,
     private apiService: HttpService,
     private snackBarService: SnackBarService,
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    private  sidebarService: SidebarService
   ) {}
 
   public password: boolean[] = [false];
-
+    user:any;
   public togglePassword(index: number) {
     this.password[index] = !this.password[index];
   }
 
   public login() {
+    // debugger
     this.loginBtnText = 'Loading...';
     this.loginBtnDisable = true;
 
@@ -45,19 +48,18 @@ export class Signin2Component {
     };
 
     this.apiService
-      .post('user/getToken', loginObj)
+      .post('auth/getToken', loginObj)
       .pipe(
         switchMap((loginRes: any) => {
           this.authService.setAccessToken(loginRes.access_token);
           // this.authService.setRefreshToken(loginRes.access_token);
-          return this.apiService.get(
-            `user/get-by-email?email=${loginRes.user.email}`
-          );
+          return    this.apiService.post('auth/getToken', loginObj);
         })
       )
       .subscribe({
         next: (res) => {
-          if(res) {
+          if(loginObj) {
+            this.user =res;
             this.authService.setLoggedInUserInfo(res);
             this.authService.userIsAuthenticated();
             this.snackBarService.showSuccess('Login Successfull !');
@@ -108,6 +110,8 @@ export class Signin2Component {
   // }
 
   navigationToVerification() {
+    debugger
+    // this.sidebarService.sidebarData1=this.user.moduleList;
     this.router.navigate([routes.adminDashboard]);
     // this.router.navigate([routes.twoStepVerification]);
   }

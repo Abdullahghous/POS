@@ -8,6 +8,8 @@ import { sharedModule } from 'src/app/shared/shared.module';
 import { RolesPermissionsComponent } from './roles-permissions/roles-permissions.component';
 import { UsersComponent } from './users/users.component';
 import { PermissionsComponent } from './permissions/permissions.component';
+import { UtilitiesComponent } from './utilities/utilities.component';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 
 @NgModule({
@@ -16,12 +18,15 @@ import { PermissionsComponent } from './permissions/permissions.component';
     DeleteAccountComponent,
     RolesPermissionsComponent,
     UsersComponent,
-    PermissionsComponent
+    PermissionsComponent,
+    UtilitiesComponent
   ],
   imports: [
     CommonModule,
     UserManagementRoutingModule,
-    sharedModule
+    sharedModule,
+    NzTableModule
+    
   ]
 })
 export class UserManagementModule { }

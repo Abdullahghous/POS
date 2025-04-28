@@ -1,6 +1,7 @@
 import { Component,OnInit , ElementRef } from '@angular/core';
 import { HttpService,routes,SidebarService } from 'src/app/core/core.index';
 import { AllApiService } from 'src/app/core/service/allApi/all-api.service';
+import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service';
 
 @Component({
   selector: 'app-pre-purchase-form',
@@ -24,7 +25,7 @@ export class PrePurchaseFormComponent implements OnInit {
     private sidebar: SidebarService,
     private apiService: HttpService,
     private allApiService:AllApiService,
-    private el: ElementRef,
+    private snackBarService: SnackBarService,
   ) {}
   
 
@@ -38,20 +39,20 @@ export class PrePurchaseFormComponent implements OnInit {
         "id": null,
         "prePurchaseCode": null,
         "prePurchaseNumber": 0,
-        "entryDate": "2024-09-20",
-        "itemDef": { id: 0 },
+        "entryDate": new Date().toISOString().substring(0, 10),
+        "itemDef": "",
         "supplierAccount": {
-          "code": "11111011001"
+          "code": ""
         },
         "millKhata": {
-          "id": 6
+          "id": ""
         },
-        "vehicalNo": "12",
-        "bag": 1,
+        "vehicalNo": "",
+        "bag": 0,
         "paymentType": "cash",
-        "kg": 2500,
+        "kg": 0,
         "freight": 0,
-        "rate": 1500,
+        "rate": 0,
         "remarks": ""
       }
     ]
@@ -118,14 +119,15 @@ export class PrePurchaseFormComponent implements OnInit {
         (res) => {
             console.log(res, 'preeeeeeechsaaa');
             if (res) {
-                setTimeout(() => {
-                    const closeButton = this.el.nativeElement.querySelector('.close');
-                    if (closeButton) {
-                        closeButton.click();
-                    }
-                });
+              if (res) {
+                // debugger
+                document.getElementById('cancelButton')?.click();
+                this.snackBarService.showSuccess('Record Update Successfully!');
+                
+              } else {
+                this.snackBarService.showError('Please fill all the required fields!');
+              }
             }
-            this.isButtonDisabled = false;
         },
         (error) => {
             this.isButtonDisabled = false;
@@ -148,7 +150,7 @@ export class PrePurchaseFormComponent implements OnInit {
           "id": null,
           "prePurchaseCode": null,
           "prePurchaseNumber": 0,
-          "entryDate": "2024-09-20",
+          "entryDate": new Date().toISOString().substring(0, 10),
           "itemDef": { id: 0 },
           "supplierAccount": {
             "code": "11111011001"

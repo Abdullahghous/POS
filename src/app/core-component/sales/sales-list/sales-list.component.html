@@ -15,10 +15,6 @@
       src="assets/img/icons/excel.svg" alt="img"></a>
     </li>
     <li>
-      <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Print" matTooltipPosition="above"><i
-      class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
-    </li>
-    <li>
       <a data-bs-toggle="tooltip" data-bs-placement="top" matTooltip="Refresh" matTooltipPosition="above"><i
       class="feather icon-rotate-ccw feather-rotate-ccw"></i></a>
     </li>
@@ -31,25 +27,48 @@
         <i class="feather icon-chevron-down feather-chevron-down"></i>
       }</a>
     </li>
+    <li>
+     
+    </li>
   </ul>
+  <div class="page-btn">
+    <div class="search-path">
+      <div class="d-flex align-items-center">
+        <a href="javascript:void(0);" class="btn btn-filter" id="filter_search" (click)="openFilter()" [ngClass]="{'setclose': filter === true}">
+          <i class="feather icon-filter filter-icon"></i>
+          <span><img src="assets/img/icons/closes.svg" alt="img"></span>
+        </a>
+      </div>
+    </div>
+  </div>
   <div class="page-btn">
     <a [routerLink] = "routes.saleVoucher" class="btn btn-added"><i class="feather icon-plus-circle me-2"></i>Add New
       Sale </a>
   </div>
+  <div class="page-btn">
+    <a href="javascript:void(0);" class="btn btn-added" (click)="openModel()" id="openModel" data-bs-toggle="modal" data-bs-target="#sales-new">
+      <i class="feather icon-plus-circle me-2"></i>Add New SQV Voucher
+    </a>
+  </div>
+  <a id="openviewvoucher" data-bs-toggle="modal" data-bs-target="#viewSale">
+    <a id="open-sqv" data-bs-toggle="modal" data-bs-target="#sales-new"></a>
+    <a id="veiwOpenSqv" data-bs-toggle="modal" data-bs-target="#sqv-view"></a>
+    
+  </a>
 </div>
 
 
 <!-- /product list -->
 <div class="card table-list-card">
   <div class="card-body">
-    <div class="table-top">
-      <div class="search-set">
+    <div style="margin-bottom: 9px;"></div>
+     <!--  <div class="search-set">
         <div class="search-input">
           <a href="javascript:void(0);" class="btn btn-searchset"><i class="feather icon-search feather-search"></i></a>
           <div class="dataTables_filter">
             <label>
-              <input [(ngModel)]="searchDataValue" [ngModelOptions]="{standalone: true}" (ngModelChange)="searchData(searchDataValue)" type="search"
-                class="form-control" placeholder="Search..." />
+              <input [(ngModel)]="searchQuery" placeholder="Search by name" (input)="filterByName()" 
+              [ngModelOptions]="{standalone: true}" type="search" class="form-control" placeholder="Search..." />
               </label>
             </div>
           </div>
@@ -67,7 +86,7 @@
         </div>
         <div class="form-sort">
           <i class="feather icon-sliders info-img"></i>
-          <mat-select [(ngModel)]="selectedValue1" [ngModelOptions]="{standalone: true}" class="space-select select"
+          <mat-select class="space-select select"
             placeholder="Sort by Date">
             @for (data of selectedList1; track data) {
               <mat-option [value]="data.value">
@@ -76,107 +95,84 @@
             }
           </mat-select>
         </div>
-      </div>
+      </div> -->
       <!-- /Filter -->
-      <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
+    <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
         <div class="card-body pb-0">
-          <div class="row">
-            <div class="col-lg-6 col-sm-8 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  COMPANY</label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
-                  <nz-select class="w-100" [(ngModel)]="obj.company.id" [ngModelOptions]="{standalone: true}" nzShowSearch nzAllowClear
-                    nzPlaceHolder="Select Company">
-                   <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
-                 </nz-select>
-               </div>
+          <div class="row ">
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>Company <span class="required-span-color">*</span></label>
+                <nz-select [(ngModel)]=obj.company.id class="w-100" nzShowSearch nzAllowClear
+                nzPlaceHolder="Select Company">
+                <nz-option nzLabel="All" nzValue="0"></nz-option>
+               <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+               </nz-select>
               </div>
-             </div>
-             <div class="col-lg-6 col-sm-8 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  BRANCH </label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+            </div>
+             <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>BRANCH<span class="required-span-color">*</span>  </label>
                   <nz-select class="w-100" [(ngModel)]="obj.branch.id" [ngModelOptions]="{standalone: true}" nzShowSearch nzAllowClear
                     nzPlaceHolder="Select Branch">
+                    <nz-option nzLabel="All" nzValue="0"></nz-option>
                    <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
                  </nz-select>
-               </div>
               </div>
              </div>
-             <div class="col-lg-6 col-sm-8 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  FROM DATE </label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
-                  <input nz-input type="date" [(ngModel)]="obj.fromDate" [ngModelOptions]="{standalone: true}">
+             <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label> FROM DATE<span class="required-span-color">*</span> </label>
+                  <input class="form-control" type="date" [(ngModel)]="obj.fromDate" [ngModelOptions]="{standalone: true}">
                </div>
               </div>
-             </div>
-             <div class="col-lg-6 col-sm-8 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  TO DATE </label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
-                  <input nz-input type="date" [(ngModel)]="obj.toDate" [ngModelOptions]="{standalone: true}">
+             <div class="col-lg-3 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>TO DATE<span class="required-span-color">*</span> </label>
+                  <input class="form-control" type="date" [(ngModel)]="obj.toDate" [ngModelOptions]="{standalone: true}">
                </div>
               </div>
-             </div>
-             
-            <div class="col-lg-6 col-sm-8 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  SEARCH BY DATE </label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
-                  <nz-select class="w-100" nzShowSearch nzAllowClear
-                    nzPlaceHolder="Select Date" [(ngModel)]="obj.searchByDate" [ngModelOptions]="{standalone: true}">
-                    <nz-option nzLabel="VOUCHERDATE" nzValue="1"></nz-option>
-                      <nz-option nzLabel="CREATDATE" nzValue="2"></nz-option>
-                      <nz-option nzLabel="UPDATEDATE" nzValue="3"></nz-option>
-                 </nz-select>
-               </div>
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div  class="input-blocks add-product">
+                <label >SEARCH BY DATE<span class="required-span-color">*</span> </label>
+                    <mat-select [(ngModel)]="obj.searchByDate" [ngModelOptions]="{standalone: true}" name="status">
+                      <mat-option [value]="'1'">VOVCHER DATE</mat-option>
+                      <mat-option [value]="'2'">CREATED DATE</mat-option>
+                      <mat-option [value]="'3'">UPDATED DATE</mat-option>
+                    </mat-select>
               </div>
              </div>
-            <div class="col-lg-6 col-sm-8 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  POSTED/UNPOSTED </label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
-                  <nz-select class="w-100" [(ngModel)]="obj.voucherType.name" [ngModelOptions]="{standalone: true}" nzShowSearch nzAllowClear
-                    nzPlaceHolder="Select Type">
-                    <nz-option nzLabel="BOTH" nzValue="2"></nz-option>
-                    <nz-option nzLabel="POSTED" nzValue="P"></nz-option>
-                    <nz-option nzLabel="UNPOSTED" nzValue="U"></nz-option>
-                 </nz-select>
-               </div>
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label>POSTED/UNPOSTED<span class="required-span-color">*</span> </label>
+                    <mat-select [(ngModel)]="obj.postedUnPosted" [ngModelOptions]="{standalone: true}" name="status">
+                      <mat-option [value]="'2'">All</mat-option>
+                      <mat-option [value]="'P'">POSTED</mat-option>
+                      <mat-option [value]="'U'">UNPOSTED</mat-option>
+                    </mat-select>
               </div>
              </div>
-            <div class="col-lg-6 col-sm-8 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  VOUCHER No</label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="input-blocks add-product">
+                <label> VOUCHER No<span class="required-span-color">*</span></label>
                     <input [(ngModel)]="obj.voucherCode" [ngModelOptions]="{standalone: true}" nz-input type="text" name="" id="">
                </div>
-              </div>
              </div>
-             <div class="col-lg-6 col-sm-8 col-12">
-              <div  class="input-blocks add-product" style="display: flex;">
-                <label style="text-align: right;margin-right: 3%;" nz-col nzSm="7" nzMd="7" nzLg="7">
-                  INVENTORY VOUCHER </label>
-                  <div nz-col nzSm="17" nzMd="17" nzLg="17">
-                  <nz-select class="w-100" [(ngModel)]="obj.inventoryVoucherType" [ngModelOptions]="{standalone: true}" nzShowSearch nzAllowClear
-                    nzPlaceHolder="Select VoucherType">
-                    <nz-option nzLabel="SJV" nzValue="SJV"></nz-option>
-                    <nz-option nzLabel="STV" nzValue="STV"></nz-option>
-                 </nz-select>
+             <div class="col-lg-3 col-sm-6 col-12">
+              <div  class="input-blocks add-product">
+                <label>INVENTORY VOUCHER <span class="required-span-color">*</span></label>
+                    <mat-select [(ngModel)]="obj.inventoryVoucherType" [ngModelOptions]="{standalone: true}" name="status">
+                      <!-- <mat-option [value]="'0'">All</mat-option> -->
+                      <mat-option [value]="'SJV'">SJV</mat-option>
+                      <mat-option [value]="'STV'">STV</mat-option>
+                      <mat-option [value]="'SQV'">SQV</mat-option>
+                    </mat-select>
                </div>
-              </div>
              </div>
-             <div class="col-lg-6 text-end">
-               <div class="input-blocks">
-                <a class="btn btn-filters ms-auto" (click)="search()"> <i class="feather icon-search  feather-search" ></i>
+             <div class="col-lg-2 col-sm-6 col-12 text-end">
+               <div class="input-blocks add-product">
+                <label><span class="required-span-color">.</span></label>
+                <a class="btn btn-filters ms-auto" (click)="search()" > <i class="feather icon-search  feather-search" ></i>
                 Search </a>
                </div>
              </div>
@@ -184,14 +180,15 @@
               <div class="input-blocks">
                 <a class="btn btn-filters ms-auto"> <i class="feather icon-search  feather-search"></i>
               Search </a>
-            </div>
-          </div> -->
+            </div>-->
+          </div> 
         </div>
-      </div>
     </div>
+    <!-- </div> -->
     <!-- /Filter -->
-    <div class="table-responsive">
-      <table class="table  datanew">
+    <div class="table table-responsive">
+      <table class="table table-sm datanew">
+        
         <thead>
           <tr>
             <!-- <th class="no-sort">
@@ -201,130 +198,268 @@
                 </label>
               </th> -->
               <th>#</th>
-              <th>PARY NAME (CLICK SHOW LEDGER)</th>
+              <th>PARY NAME (Click Show Ledger)</th>
               <th>VOUCHER NO.</th>
               <th>VOUCHER DATE</th>
               <th>UPDATED AT</th>
               <th>AMOUNT</th>
               <th>USERNAME</th>
               <th>P/U</th>
-              <th>Book</th>
+              <th>Action</th>
           </tr>
         </thead>
-        <tbody class="sales-list">
-          <!-- @for (data of tableData; track data) { -->
-            <tr *ngFor="let data of voucher.voucherDetailList ; let i = index">
-              <td>
-                 {{i + 1}}
-                </td>
-              <td>{{data.accountName}}</td>
+        <tbody class="table-sm">
+            <tr *ngFor="let data of filteredReport ; let i = index">
+            <!-- <tr *ngFor="let data of paginatedReport; let i = index"></tr> -->
+              <!-- <td>
+                {{ (currentPage - 1) * itemsPerPage + i + 1 }}
+                </td> -->
+                <td>{{ i + 1}}</td>
+              <td> <a href="javascript:void(0);" class="text-decoration-underline" (click)="ledger(data.code)" >{{data.accountName}}</a></td>
               <td>{{data.voucherCode}}</td>
               <td>{{data.voucherDate}}</td>
-              <td>{{data.updatedAt}}</td>
+              <td>{{data.date}}</td>
             <td>{{data.voucherAmount}}</td>
             <td>{{data.userName}}</td>
-            <td>{{data.postedUnPosted}}</td>
-            <td>{{data.register}}</td>
-          <td>{{data.biller}}</td>
-          <!-- <td class="text-center">
-            <a class="action-set" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="true">
-              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
-                  data-bs-target="#sales-details-new"><i class="feather icon-eye info-img"></i>Sale Detail</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
-                    data-bs-target="#edit-sales-new"><i class="feather icon-edit info-img"></i>Edit
-                  Sale</a>
-                </li>
-                <li>
-                  <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
-                    data-bs-target="#showpayment"><i class="feather icon-dollar-sign info-img"></i>Show Payments</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="modal"
-                      data-bs-target="#createpayment"><i class="feather icon-plus-circle info-img"></i>Create Payment</a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);" class="dropdown-item"><i
-                      class="feather icon-download info-img"></i>Download pdf</a>
-                    </li>
-                    <li>
-                      <a href="javascript:void(0);" class="dropdown-item confirm-text mb-0"><i
-                      class="feather icon-trash-2 info-img"></i>Delete Sale</a>
-                    </li>
-                  </ul>
-                </td> -->
+            <td>
+              <span class="badges" [ngClass]="{
+                'status-badge': data.postedUnPosted === 'P',
+                'unstatus-badge': data.postedUnPosted !== 'P'
+              }">
+                {{ data.postedUnPosted === 'P' ? 'P' : 'U' }} 
+              </span>
+            </td>
+                <td class="action-table-data">
+                  <div class="edit-delete-action">
+                    <a class="me-2 p-2" href="javascript:void(0);" (click)="editVoucher(data.id,data.typeVoucher)" data-bs-toggle="modal" data-bs-target="#edit-sales-new">
+                      <i class="feather icon-edit feather-edit"></i>
+                    </a>
+                    <a class="me-2 p-2 mb-0" href="javascript:void(0);" (click)="viwoVoucher(data.id,data.typeVoucher)" class="btn btn-added underline">
+                      <i class="feather icon-eye action-eye"></i>
+                    </a>
+                  </div>
+                </td>
               </tr>
-            <!-- } -->
+            
           </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="text-end"><strong>Total Amount:</strong></td>
+              <td>{{ totalAmount  }}</td>
+              <td colspan="3"></td> <!-- Empty cells for the remaining columns -->
+            </tr>
+          </tfoot>
         </table>
+        <!-- </cdk-virtual-scroll-viewport> -->
+        <!-- <nav class="mt-3">
+          <ul class="pagination justify-content-end">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" (click)="currentPage = currentPage - 1">Previous</a>
+            </li>
+        
+            <li class="page-item"
+                *ngFor="let page of [].constructor(totalPages); let pageIndex = index"
+                [class.active]="currentPage === (pageIndex + 1)">
+              <a class="page-link" (click)="currentPage = pageIndex + 1">{{ pageIndex + 1 }}</a>
+            </li>
+        
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" (click)="currentPage = currentPage + 1">Next</a>
+            </li>
+          </ul>
+        </nav>
+         -->
       </div>
-      <app-custom-pagination></app-custom-pagination>
+      <!-- <app-custom-pagination></app-custom-pagination> -->
     </div>
-  </div>
+</div>
   <!-- /product list -->
 
   <!--add popup -->
-  <div class="modal fade" id="add-sales-new">
+  <div class="modal fade" id="viewSale">
     <div class="modal-dialog add-centered">
       <div class="modal-content">
-        <div class="page-wrapper p-0 m-0">
-          <div class="content p-0">
-            <div class="modal-header border-0 custom-modal-header">
-              <div class="page-header">
-                <h2>Details </h2>
-                
-                
-                <div class="search-path" style="margin-left: 5%;">
-                  <div class="d-flex align-items-center">
-                    <a class="btn btn-filter" id="details" (click)="openFilter()" [ngClass]="{'setclose': filter === true}">
-                      <i class="feather icon-filter filter-icon"></i>
-                      <span><img src="assets/img/icons/closes.svg" alt="img"></span>
-                    </a>
-        
-                  </div>
-             
-                </div>
-             </div>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-             </div>
-            <div class="card">
+        <!-- <div class="modal-header border-0 custom-modal-header">
+        <div class="page-header">
+               
+        </div>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div> -->
+        <div class="card">
               <div class="card-body">
-                <form>
-                  <!-- <div  style="height: 600px;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"style="display: flex;flex-wrap: wrap;"> -->
-                    <div class="card" id="details" [ngClass]="{'d-block': filter, 'd-none': !filter}">
-                      <div class="card-body pb-0">
-                        <div class="row">
-                    
-                          <table class="table  datanew">
-                            <thead>
-                              <th>#</th>
-                              <th>UNIT</th>
-                              <th>ACCOUNT</th>
-                              <th>NARRATION</th>
-                              <th>DEBIT</th>
-                              <th>CREDIT</th>
-                            </thead>
-                          </table>
-                        </div>
-                  
+                <form *ngIf="voucher">
+                  <div class="row color-warning">
+                    <tr>
+                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                     <div class="card-body">
+                      <!-- <div style="display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"> -->
+                        <h6 nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: left;">
+                          COMPANY : {{voucher.company.name}}
+                        </h6>
+                        <!-- <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex;align-items: center;margin-left: 4px;">
+                         <h6></h6>
+                        </div> -->
+                      <!-- </div> -->
+                      <div style="display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+                        <h6 nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: left;">
+                          BRANCH  : {{voucher.itemStock.branch.name}}
+                        </h6>
+                        <!-- <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex;align-items: center;margin-left: 8px;">
+                         <h6></h6>
+                        </div> -->
                       </div>
-                  </div>
-                  <div><h3>Sale Voucher</h3></div>
-                  
+                      <div style="display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+                        <h6 nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: left;">
+                          ADDRESS : {{voucher.itemStock.branch.address}}
+                        </h6>
+                        <!-- <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex;align-items: center;margin-left: 4px;">
+                         <h6></h6>
+                        </div> -->
+                      </div>
+                      <h4  style="color: chocolate;text-align:center; " ><br> SALE INVOICE</h4>
+                     </div>
+                   </tr>
+                  </div> 
+                  <!-- <div class="page-header"> -->
+                    
+                      
+                  <div class="row "  style="margin-left: 10px;">
+                      <tr class=" col-sm-6 col-12" style="margin-top:4px ;margin-bottom: 4px;">
+                      
+                       <td><h6>VOUCHER NO : {{voucher.voucherCode}}</h6> <h6> PARTY NAME : {{voucher.itemStock.account.accountName}}</h6>
+                         <h6>PRODUCT NAME :{{voucher.itemStock.itemStockEntries[0].itemDef.name}}</h6></td>
                        
                       
-                <!-- </div> -->
+                      
+                      </tr>
+                      <tr class=" col-sm-6 col-12" style="margin-top:4px ;">
+                      <!-- <div class="row"> -->
+                        <td><h6>SJV DATE : {{voucher.voucherDate}}</h6> <h6> BOOK NUMBER :{{voucher.bookNumber}} </h6></td>
+                       
+                        <!-- </div> -->
+                      
+                      </tr>
+                  </div>
+                  
+                  <div class="card table-list-card">
+                    <div class="card-body">
+                      <div class="page-wrapper p-0 m-0">
+                        <div class="content p-0">
+                          <!-- <div class="page-header border-0 custom-modal-header">
+                            <div class="add-item new-sale-items d-flex">
+                              <div class="page-header">
+                                <h4>Sales New Voucher</h4>
+                              </div>
+                            </div>
+                          </div> -->
+                          <div class="card table-list-card">
+                            <div class="card-body">
+                              <!-- <form> -->
+                                <div class="row">
+                                  
+                                </div>
+                                <div class="table-responsive">
+                                  <table class="table table-hover closeview">
+                                    <thead>
+                                      <tr>
+                                        <!-- <th>#</th> -->
+                                        <th>VEHICALE NO</th>
+                                        <th>BAGS</th>
+                                        <th>GRASS WT(KG)</th>
+                                        <th>BAG WT</th>
+                                        <th>DEDUCTION</th>
+                                        <th>NET WT(KG)</th>
+                                        <th>RATE</th>
+                                        <th>GROSS AMOUNT</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let data of voucher.itemStock.itemStockEntries">
+                                        <td>{{voucher.vehicalNumber }}</td>
+                                        <td>{{data.bags}}</td>
+                                        <td>{{data.totalKg}}</td>
+                                        <td>{{data.totalBagWeightDeduction}}</td>
+                                        <td>{{data.katoti}}</td>
+                                        <td>{{data.safiKg}}</td>
+                                        <td>{{data.price}}</td>
+                                        <td>{{voucher.itemStock.totalAmount}}</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                  
+                                 <div class="row">
+                                  <div class="col-lg-6 ms-auto" style="margin-right: 25px;">
+                                    <div class="total-order w-100 max-widthauto m-auto mb-4">
+                                      <ul>
+                                        <li>
+                                          <h4>MILL TAX(-)</h4>
+                                          <h5>{{voucher.itemStock.millTaxRate}}</h5>
+                                          <h5>{{voucher.itemStock.millTaxAmount}}</h5>
+                                        </li>
+                                        <li>
+                                          <h4>BANK TAX(-)</h4>
+                                          <h5>{{voucher.itemStock.bankTaxRate}}</h5>
+                                          <h5>{{voucher.itemStock.bankTaxAmount}}</h5>
+                                        </li>
+                                        <li>
+                                          <h4>SILAI(+)</h4>
+                                          <h5>{{voucher.itemStock.silaiRate}}</h5>
+                                          <h5>{{voucher.itemStock.silaiAmount}}</h5>
+                                          <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                        </li>
+                                        <li>
+                                          <h4>BARDANA(+)</h4>
+                                          <h5>{{voucher.itemStock.bardanaRate}}</h5>
+                                          <h5>{{voucher.itemStock.bardanaAmount}}</h5>
+                                        </li>
+                                        <li>
+                                          <h4>LABOUR CHARGES(+)</h4>
+                                          <h5>{{voucher.itemStock.unloadingRate}}</h5>
+                                          <h5>{{voucher.itemStock.unloadingCharges}}</h5>
+                                          <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                        </li>
+                                        <li>
+                                          <h4>OTHER EXPANCES(+)</h4>
+                                          <h5></h5>
+                                          <h5>{{voucher.itemStock.otherExp}}</h5>
+                                          <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                        </li>
+                                        <li>
+                                          <h4>CARRIAGE CHARGES(-)</h4>
+                                          <h5></h5>
+                                          <h5>{{voucher.itemStock.freightCharges}}</h5>
+                                          <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                        </li>
+                                        <li>
+                                          <h4>NET AMOUNT</h4>
+                                          <h5>$ 0.00</h5>
+                                          <h5>{{voucher.itemStock.netAmount}}</h5>
+                                          <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                  
+                                <div class="col-lg-12 text-end">
+                                  <button type="button" class="btn btn-cancel warninig add-cancel me-3"
+                                   (click)="editVoucher(voucher.id , voucher.typeVoucher)">EDIT VOUCHER</button>
+                                  <button data-bs-dismiss="modal" id="closeview" type="submit" class="btn btn-submit add-sale">Cancel</button>
+                                </div>
+                              <!-- </form> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                  </div> 
                 </form>
               </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -332,7 +467,7 @@
   <!-- /add popup -->
 
   <!-- details popup -->
-  <div class="modal fade" id="sales-details-new">
+  <!-- <div class="modal fade" id="sales-details-new">
     <div class="modal-dialog sales-details-modal">
       <div class="modal-content">
         <div class="page-wrapper details-blk">
@@ -541,230 +676,235 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- /details popup -->
 
   <!-- edit popup -->
-  <div class="modal fade" id="edit-sales-new">
+  <div class="modal fade" id="sales-new">
     <div class="modal-dialog edit-sales-modal">
       <div class="modal-content">
         <div class="page-wrapper p-0 m-0">
           <div class="content p-0">
-            <div class="page-header p-4 mb-0">
+            <div class="page-header border-0 custom-modal-header">
               <div class="add-item new-sale-items d-flex">
-                <div class="page-title">
-                  <h4>Edit Sales</h4>
+                <div class="page-header">
+                  <h4>Sales New Voucher</h4>
                 </div>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" id="close" class="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
             </div>
             <div class="card">
               <div class="card-body">
-                <form>
+                <form *ngIf="voucher">
                   <div class="row">
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-2 col-sm-6 col-12">
                       <div class="input-blocks">
-                        <label>Customer</label>
-                        <div class="row">
-                          <div class="col-lg-10 col-sm-10 col-10">
-                            <mat-select [(ngModel)]="selectedValue8" [ngModelOptions]="{standalone: true}" class="select"
-                              placeholder="Thomas">
-                              @for (data of selectedList8; track data) {
-                                <mat-option [value]="data.value">
-                                  {{data.value}}
-                                </mat-option>
-                              }
-                            </mat-select>
-                          </div>
-                          <div class="col-lg-2 col-sm-2 col-2 ps-0">
-                            <div class="add-icon">
-                              <a href="javascript:void(0);" class="choose-add"><i
-                              class="feather icon-plus-circle plus"></i></a>
-                            </div>
-                          </div>
-                        </div>
+                        <label>Company <span class="required-span-color">*</span></label>
+                        <nz-select [(ngModel)]=voucher.company.id class="w-100" nzShowSearch nzAllowClear
+                         nzPlaceHolder="Select Company" [ngModelOptions]="{standalone: true}">
+                        <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+                        </nz-select>
                       </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-2 col-sm-6 col-12">
                       <div class="input-blocks">
-                        <label>Purchase Date</label>
+                        <label>Sale Date</label>
                         <div class="input-groupicon calender-input date-input2">
                           <i class="feather icon-calendar info-img"></i>
-                          <input type="text" class="datetimepicker" bsDatepicker container=".date-input2" placeholder="19 jan 2023">
+                          <input [(ngModel)]="voucher.voucherDate" [ngModelOptions]="{standalone: true}"
+                          type="date" class="form-control">
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="col-lg-2 col-sm-6 col-12">
                       <div class="input-blocks">
-                        <label>Supplier</label>
-                        <mat-select [(ngModel)]="selectedValue9" [ngModelOptions]="{standalone: true}" class="select"
-                          placeholder="Dazzle Shoes">
-                          @for (data of selectedList9; track data) {
-                            <mat-option [value]="data.value">
-                              {{data.value}}
-                            </mat-option>
-                          }
-                        </mat-select>
+                        <label>Branch <span class="required-span-color">*</span></label>
+                        <nz-select [(ngModel)]=voucher.company.id [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear
+                         nzPlaceHolder="Select branch">
+                        <nz-option *ngFor="let c of getBranches" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+                        </nz-select>
                       </div>
                     </div>
-                    <div class="col-lg-12 col-sm-6 col-12">
+                    <div class="col-lg-2 col-sm-6 col-12">
                       <div class="input-blocks">
-                        <label>Product Name</label>
-                        <div class="input-groupicon select-code">
-                          <input type="text" placeholder="Please type product code and select">
-                          <div class="addonset">
-                            <img src="assets/img/icons/scanners.svg" alt="img">
-                          </div>
-                        </div>
+                        <label>Party Account <span class="required-span-color">*</span></label>
+                        <nz-select [(ngModel)]=voucher.itemStock.account.code [ngModelOptions]="{standalone: true}" class="w-100" nzShowSearch nzAllowClear
+                         nzPlaceHolder="Select Party" (ngModelChange)="account($event)">
+                        <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
+                        </nz-select>
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6 col-12">
+                      <div class="input-blocks">
+                        <label>Book No.</label>
+                          <input type="text" [(ngModel)]="voucher.bookNumber" onfocus="this.select()" [ngModelOptions]="{standalone: true}">
+                      </div>
+                    </div>
+                    <div class="col-lg-2 col-sm-6 col-12">
+                      <div class="input-blocks">
+                        <label>Voucher No.</label>
+                          <input type="text" [(ngModel)]="voucher.voucherCode"
+                           [ngModelOptions]="{standalone: true}" readonly>
                       </div>
                     </div>
                   </div>
-                  <div class="table-responsive no-pagination">
-                    <table class="table  datanew">
+                  <div class="table-responsive ">
+                    <table class="table  datanew table-sm">
                       <thead>
                         <tr>
-                          <th>Product</th>
-                          <th>Qty</th>
-                          <th>Purchase Price($)</th>
-                          <th>Discount($)</th>
-                          <th>Tax(%)</th>
-                          <th>Tax Amount($)</th>
-                          <th>Unit Cost($)</th>
-                          <th>Total Cost(%)</th>
+                          <th>#</th>
+                          <th scope="col">Product</th>
+                        <th scope="col">Qty Av</th>
+                        <th>Qty</th>
+                        <th>S Rate</th>
+                        <th>UNIT</th>
+                        <th>Sale Rate</th>
+                        <th>Amount</th>
+                        <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <div class="productimgname">
-                              <a href="javascript:void(0);" class="product-img stock-img">
-                                <img src="assets/img/products/stock-img-02.png" alt="product">
+                      <tbody class="table-sm">
+                        <tr *ngFor="let data of voucher.itemStock.itemStockEntries ;let i=index">
+                          <td><span>{{i + 1}}</span></td>
+                          <td >
+                            <nz-select class="w-100 border-warning" nzShowSearch nzAllowClear nzPlaceHolder="Plz Select Item"
+                            [(ngModel)]="data.itemDef.id" [ngModelOptions]="{standalone: true}" (ngModelChange)="getItemById($event, i)">
+                            <nz-option *ngFor="let item of itemDefs"[nzLabel]="item.name" [nzValue]="item.id"></nz-option>
+                            </nz-select>
+                          </td>
+                          <td >{{data.itemDef.openingQty}}</td>
+                        <td><input class="form-control border border-warning" type="text" [(ngModel)]="data.itemQuantity"
+                          [ngModelOptions]="{standalone: true}" onfocus="this.select()" (ngModelChange)="calculate()"></td>
+                          <td>{{data.itemDef.openingRate}}</td>
+                          
+                          <td style="width: 10%;">
+                            <mat-select [(ngModel)]="data.unitValue" [ngModelOptions]="{standalone: true}" (ngModelChange)="runTimeChange(data)">
+                              <mat-option  [value]="data.itemDef.unitValue">{{data.itemDef.unitName}}</mat-option>
+                              <mat-option  [value]="data.itemDef.conversionValue">{{data.itemDef.conversionName}}</mat-option>
+                            </mat-select>
+                          </td>
+                          <td><input class="form-control border-warning" type="text" [(ngModel)]="data.price" (ngModelChange)="calculate()"
+                            [ngModelOptions]="{standalone: true}" onfocus="this.select()"></td>
+                            <td><input class="form-control" type="text" onfocus="this.select()" [(ngModel)]="data.amount"
+                              [ngModelOptions]="{standalone: true}" readonly>
+                            </td>
+                          <td class="action-table-data">
+                            <div class="edit-delete-action">
+                              <a class="me-2 p-2" href="javascript:void(0);" (click)="addNewRow()">
+                                <i class="feather icon-plus-circle feather-edit"></i>
                               </a>
-                              <a href="javascript:void(0);">Nike Jordan</a>
+                              <a class="confirm-text p-2 border-warning" href="javascript:void(0);" (click)="deleteRow(i)">
+                                <i class="feather icon-trash-2 feather-trash-2"></i>
+                              </a>
                             </div>
                           </td>
-                          <td>
-                            <div class="product-quantity">
-                              <span class="quantity-btn" (click)="reducePos(4)"><i
-                              class="feather icon-minus-circle plus-circle"></i></span>
-                              <input type="text" class="quntity-input" value="2" [value]="cartValue[4]">
-                              <span class="quantity-btn" (click)="addPos(4)"><i
-                              class="feather icon-plus-circle feather-search"></i></span>
-                            </div>
-                          </td>
-                          <td>2000</td>
-                          <td>500</td>
-                          <td>
-                            0.00
-                          </td>
-                          <td>0.00</td>
-                          <td>0.00</td>
-                          <td>1500</td>
                         </tr>
                         <tr>
-                          <td>
-                            <div class="productimgname">
-                              <a href="javascript:void(0);" class="product-img stock-img">
-                                <img src="assets/img/products/stock-img-03.png" alt="product">
-                              </a>
-                              <a href="javascript:void(0);">Apple Series 5 Watch</a>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="product-quantity">
-                              <span class="quantity-btn" (click)="reducePos(5)"><i
-                              class="feather icon-minus-circle plus-circle"></i></span>
-                              <input type="text" class="quntity-input" value="2" [value]="cartValue[5]">
-                              <span class="quantity-btn" (click)="addPos(5)"><i
-                              class="feather icon-plus-circle feather-search"></i></span>
-                            </div>
-                          </td>
-                          <td>3000</td>
-                          <td>400</td>
-                          <td>
-                            0.00
-                          </td>
-                          <td>0.00</td>
-                          <td>0.00</td>
-                          <td>1700</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="productimgname">
-                              <a href="javascript:void(0);" class="product-img stock-img">
-                                <img src="assets/img/products/stock-img-05.png" alt="product">
-                              </a>
-                              <a href="javascript:void(0);">Lobar Handy</a>
-                            </div>
-                          </td>
-                          <td>
-                            <div class="product-quantity">
-                              <span class="quantity-btn" (click)="reducePos(6)"><i
-                              class="feather icon-minus-circle plus-circle"></i></span>
-                              <input type="text" class="quntity-input" value="2" [value]="cartValue[6]">
-                              <span class="quantity-btn" (click)="addPos(6)"><i
-                              class="feather icon-plus-circle feather-search"></i></span>
-                            </div>
-                          </td>
-                          <td>2500</td>
-                          <td>500</td>
-                          <td>
-                            0.00
-                          </td>
-                          <td>0.00</td>
-                          <td>0.00</td>
-                          <td>2000</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>{{qty}}</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td style="margin-right: 10%;" >{{total}}</td>
+                          <td></td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
 
-                  <div class="row">
+                   <div class="row">
+                    <div class="col-xl-4">
+                      <div class="card">
+                          <div class="card-body">
+                              <div class="table-responsive">
+                                <table class="table text-nowrap table-sm">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Name</th>
+                                      <th scope="col">Credit</th>
+                                      <th scope="col">Debit</th>
+                                    </tr>
+                                  </thead>
+                                  <ng-container *ngFor="let data of voucher.voucherEntries; let i = index">
+                                    <tr *ngIf="!hideFirstTwoRows || i > 1">
+                                      <td>{{data.name}} ({{data.operator}})</td>
+                                      <td>
+                                        <input
+                                          class="form-control"
+                                          type="text"
+                                          onfocus="this.select()"
+                                          [(ngModel)]="data.rate"
+                                          [ngModelOptions]="{standalone: true}"
+                                          (ngModelChange)="calculate()">
+                                      </td>
+                                      <td>
+                                        <input
+                                          readonly
+                                          class="form-control"
+                                          type="text"
+                                          onfocus="this.select()"
+                                          [(ngModel)]="data.amount"
+                                          [ngModelOptions]="{standalone: true}">
+                                      </td>
+                                    </tr>
+                                  </ng-container>
+                                </table>
+                                
+                              </div>
+                          </div>
+                          
+                      </div>
+                  </div>
                     <div class="col-lg-6 ms-auto">
                       <div class="total-order w-100 max-widthauto m-auto mb-4">
                         <ul>
                           <li>
-                            <h4>Order Tax</h4>
-                            <h5>$ 0.00</h5>
+                            <h4>TOTAL EXPANCES</h4>
+                            <h5 style="text-align: left;">{{exp}}</h5>
                           </li>
                           <li>
-                            <h4>Discount</h4>
-                            <h5>$ 0.00</h5>
+                            <h4>GRAND TOTAL</h4>
+                            <h5 style="text-align: left;" >{{voucher.itemStock.netAmount}}</h5>
                           </li>
                           <li>
-                            <h4>Shipping</h4>
-                            <h5>$ 0.00</h5>
+                            <h4>PREVIOUS BALANCE</h4>
+                            <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
                           </li>
                           <li>
-                            <h4>Grand Total</h4>
-                            <h5>$5200.00</h5>
+                            <h4>BALANCE</h4>
+                            <h5></h5>
                           </li>
                         </ul>
                       </div>
                     </div>
                   </div>
 
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-lg-3 col-sm-6 col-12">
                       <div class="input-blocks">
-                        <label>Order Tax</label>
+                        <label>Shipping</label>
                         <div class="input-groupicon select-code">
-                          <input type="text" placeholder="0">
+                          <input type="text" onfocus="this.select()" [(ngModel)]="voucher.itemStock.freightCharges"
+                          (ngModelChange)="calculate()" [ngModelOptions]=" {standalone:true}">
                         </div>
 
                       </div>
                     </div>
                     <div class="col-lg-3 col-sm-6 col-12">
                       <div class="input-blocks">
-                        <label>Discount</label>
+                        <label>Other Exp</label>
                         <div class="input-groupicon select-code">
-                          <input type="text" placeholder="0">
+                          <input type="text" onfocus="this.select()" [(ngModel)]="voucher.itemStock.otherExp" [ngModelOptions]=" 
+                          {standalone:true}"
+                          (ngModelChange)="calculate()">
                         </div>
                       </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 col-12">
+                    </div> -->
+                    <!-- <div class="col-lg-3 col-sm-6 col-12">
                       <div class="input-blocks">
                         <label>Shipping</label>
                         <div class="input-groupicon select-code">
@@ -775,26 +915,24 @@
                     <div class="col-lg-3 col-sm-6 col-12">
                       <div class="input-blocks mb-5">
                         <label>Status</label>
-                        <mat-select [(ngModel)]="selectedValue10" [ngModelOptions]="{standalone: true}" class="select"
-                          placeholder="Choose">
-                          @for (data of selectedList10; track data) {
-                            <mat-option [value]="data.value">
-                              {{data.value}}
-                            </mat-option>
-                          }
-                        </mat-select>
+                        
                       </div>
-                    </div>
-                    <div class="col-lg-12">
+                    </div> -->
+                    <!-- <div class="col-lg-12">
                       <div class="input-blocks">
                         <label>Notes</label>
                         <textarea class="form-control"></textarea>
                       </div>
-                    </div>
-                    <div class="col-lg-12 text-end">
+                    </div> -->
+                    <!-- <div class="col-lg-12 text-end">
                       <button type="button" class="btn btn-cancel add-cancel me-3" data-bs-dismiss="modal">Cancel</button>
                       <button type="submit" class="btn btn-submit add-sale">Submit</button>
-                    </div>
+                    </div> -->
+                  <!-- </div> -->
+                  <div class="col-lg-12 text-end">
+                    <button type="button" class="btn btn-cancel add-cancel me-3"
+                    data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-submit add-sale" (click)="addVoucher()" >Submit</button>
                   </div>
                 </form>
               </div>
@@ -804,10 +942,303 @@
       </div>
     </div>
   </div>
-  <!-- /edit popup -->
-
+  <!-- /view Voucher -->
+  <div class="modal fade" id="viwo" tabindex="-1" aria-labelledby="editpayment" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <form *ngIf="voucher">
+          <div class="row color-warning"  style="margin-left: 10px;">
+            <tr style="margin-top:14px ;margin-bottom: 4px;">
+             <div class="card-body">
+              <!-- <div style="display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24"> -->
+                <h6 nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: left;">
+                  COMPANY : {{voucher.company.name}}
+                </h6>
+                <!-- <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex;align-items: center;margin-left: 4px;">
+                 <h6></h6>
+                </div> -->
+              <!-- </div> -->
+              <div style="display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+                <h6 nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: left;">
+                  BRANCH  : {{voucher.itemStock.branch.name}}
+                </h6>
+                <!-- <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex;align-items: center;margin-left: 8px;">
+                 <h6></h6>
+                </div> -->
+              </div>
+              <div style="display: flex; flex-wrap: wrap;" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24" nzXl="24">
+                <h6 nz-col nzXs="10" nzSm="10" nzMd="10" nzLg="10" nzXl="10" style="white-space: normal; text-align: left;">
+                  ADDRESS : {{voucher.itemStock.branch.address}}
+                </h6>
+                <!-- <div nz-col nzXs="14" nzSm="14" nzMd="14" nzLg="14" nzXl="14" style="display: flex;align-items: center;margin-left: 4px;">
+                 <h6></h6>
+                </div> -->
+              </div>
+              <h4  style="color: chocolate;text-align:center; " ><br> PURCHASE INVOICE</h4>
+             </div>
+           </tr>
+          
+          
+          </div> 
+          <!-- <div class="page-header"> -->
+            
+              
+          <div class="row "  style="margin-left: 10px;">
+              <tr class=" col-sm-6 col-12" style="margin-top:4px ;margin-bottom: 4px;">
+              
+               <td><h6>VOUCHER NO : {{voucher.voucherCode}}</h6> <h6> PARTY NAME : {{voucher.itemStock.account.accountName}}</h6>
+                 <h6>PRODUCT NAME :{{voucher.itemStock.itemStockEntries[0].itemDef.name}}</h6></td>
+               
+              
+              
+              </tr>
+              <tr class=" col-sm-6 col-12" style="margin-top:4px ;">
+              <!-- <div class="row"> -->
+                <td><h6>PJV DATE : {{voucher.voucherDate}}</h6> <h6> BOOK NUMBER :{{voucher.bookNumber}} </h6></td>
+               
+                <!-- </div> -->
+              
+              </tr>
+          </div>
+          
+          <div class="card table-list-card">
+            <div class="card-body">
+              <div class="page-wrapper p-0 m-0">
+                <div class="content p-0">
+                  <!-- <div class="page-header border-0 custom-modal-header">
+                    <div class="add-item new-sale-items d-flex">
+                      <div class="page-header">
+                        <h4>Sales New Voucher</h4>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div class="card">
+                    <div class="card-body">
+                      <!-- <form> -->
+                        <div class="row">
+                          
+                        </div>
+                        <div class="table-responsive no-pagination">
+                          <table class="table  datanew">
+                            <thead style="background-color: chartreuse;">
+                              <tr >
+                                <!-- <th>#</th> -->
+                                <th>VEHICALE NO</th>
+                                <th>BAGS</th>
+                                <th>GRASS WT(KG)</th>
+                                <th>BAG WT</th>
+                                <th>DEDUCTION</th>
+                                <th>NET WT(KG)</th>
+                                <th>RATE</th>
+                                <th>GROSS AMOUNT</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let data of voucher.itemStock.itemStockEntries">
+                                <td>{{voucher.vehicalNumber }}</td>
+                                <td>{{data.bags}}</td>
+                                <td>{{data.totalKg}}</td>
+                                <td>{{data.totalBagWeightDeduction}}</td>
+                                <td>{{data.katoti}}</td>
+                                <td>{{data.safiKg}}</td>
+                                <td>{{data.price}}</td>
+                                <td>{{voucher.itemStock.totalAmount}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+          
+                         <div class="row">
+                          <div class="col-lg-6 ms-auto" style="margin-right: 25px;">
+                            <div class="total-order w-100 max-widthauto m-auto mb-4">
+                              <ul>
+                                <li>
+                                  <h4>MILL TAX(-)</h4>
+                                  <h5>{{voucher.itemStock.millTaxRate}}</h5>
+                                  <h5>{{voucher.itemStock.millTaxAmount}}</h5>
+                                </li>
+                                <li>
+                                  <h4>BANK TAX(-)</h4>
+                                  <h5>{{voucher.itemStock.bankTaxRate}}</h5>
+                                  <h5>{{voucher.itemStock.bankTaxAmount}}</h5>
+                                </li>
+                                <li>
+                                  <h4>SILAI(+)</h4>
+                                  <h5>{{voucher.itemStock.silaiRate}}</h5>
+                                  <h5>{{voucher.itemStock.silaiAmount}}</h5>
+                                  <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                </li>
+                                <li>
+                                  <h4>BARDANA(+)</h4>
+                                  <h5>{{voucher.itemStock.bardanaRate}}</h5>
+                                  <h5>{{voucher.itemStock.bardanaAmount}}</h5>
+                                </li>
+                                <li>
+                                  <h4>LABOUR CHARGES(+)</h4>
+                                  <h5>{{voucher.itemStock.unloadingRate}}</h5>
+                                  <h5>{{voucher.itemStock.unloadingCharges}}</h5>
+                                  <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                </li>
+                                <li>
+                                  <h4>OTHER EXPANCES(+)</h4>
+                                  <h5></h5>
+                                  <h5>{{voucher.itemStock.otherExp}}</h5>
+                                  <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                </li>
+                                <li>
+                                  <h4>CARRIAGE CHARGES(-)</h4>
+                                  <h5></h5>
+                                  <h5>{{voucher.itemStock.freightCharges}}</h5>
+                                  <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                </li>
+                                <li>
+                                  <h4>NET AMOUNT</h4>
+                                  <h5>$ 0.00</h5>
+                                  <h5>{{voucher.itemStock.netAmount}}</h5>
+                                  <!-- <h5><input type="text" class="form-control" [(ngModel)]="voucher.itemStock.freightCharges" [ngModelOptions]=" {standalone:true}" readonly></h5> -->
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-lg-12 text-end">
+                          <button type="button" class="btn btn-cancel warninig add-cancel me-3"
+                          data-bs-dismiss="modal" id="close1">POST VOUCHER</button>
+                          <button type="submit" class="btn btn-submit add-sale"><a  class="btn btn-added">EDIT VOUCHER</a></button>
+                        </div>
+                      <!-- </form> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </div> 
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- <view sqv model> -->
+    <div class="modal fade" id="sqv-view" tabindex="-1" aria-labelledby="sales-details" aria-hidden="true">
+      <div class="modal-dialog add-centered">
+        <div class="modal-content shadow-lg rounded">
+          <!-- Modal Header with close button -->
+          <div class="card">
+            <div class="card-body p-4">
+              <form *ngIf="voucher">
+                <div class="row bg-light p-3 rounded mb-4">
+                  <div class="col-12 d-flex justify-content-between align-items-center">
+                    <h4 class="text-center text-primary mb-0">SALES QUANTITY INVOICE</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </div>
+    
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <h6><strong>VOUCHER NO:</strong> {{voucher.voucherCode}}</h6>
+                    <h6><strong>COMPANY:</strong> {{voucher.company.name}}</h6>
+                    <h6><strong>GATE INWARD DATE:</strong></h6>
+                    <h6><strong>INVOICE DUE DATE:</strong> {{voucher.itemStock.voucherDueDate}}</h6>
+                  </div>
+                  <div class="col-md-6">
+                    <h6><strong>SQV DATE:</strong> {{voucher.voucherDate}}</h6>
+                    <h6><strong>BRANCH:</strong> {{voucher.itemStock.branch.name}}</h6>
+                    <h6><strong>GATE INWARD NO:</strong></h6>
+                    <h6><strong>SUPPLIER ACCOUNT:</strong> {{voucher.itemStock.account.accountName}}</h6>
+                    <h6><strong>NARRATION:</strong></h6>
+                  </div>
+                </div>
+    
+                <div class="table-responsive mb-4">
+                  <table class="table table-striped">
+                    <thead class="bg-primary text-white">
+                      <tr>
+                        <th>#</th>
+                        <th>CODE</th>
+                        <th>ITEM</th>
+                        <th>QTY</th>
+                        <th>RATE</th>
+                        <th>AMOUNT</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of voucher.itemStock.itemStockEntries; let i = index">
+                        <td>{{i + 1}}</td>
+                        <td>{{data.itemDef.formattedCode}}</td>
+                        <td>{{data.itemDef.name}}</td>
+                        <td>{{data.itemQuantity}}</td>
+                        <td>{{data.price}}</td>
+                        <td>{{data.amount}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+    
+                <!-- Totals Section (Optional) -->
+                <!-- 
+                <div class="row mb-3">
+                  <div class="col-lg-6 ms-auto">
+                    <div class="total-order w-100 max-widthauto m-auto mb-4">
+                      <ul>
+                        <li>
+                          <h4>MILL TAX(-)</h4>
+                          <h5>{{voucher.itemStock.millTaxRate}}</h5>
+                          <h5>{{voucher.itemStock.millTaxAmount}}</h5>
+                        </li>
+                        <li>
+                          <h4>BANK TAX(-)</h4>
+                          <h5>{{voucher.itemStock.bankTaxRate}}</h5>
+                          <h5>{{voucher.itemStock.bankTaxAmount}}</h5>
+                        </li>
+                        <li>
+                          <h4>SILAI(+)</h4>
+                          <h5>{{voucher.itemStock.silaiRate}}</h5>
+                          <h5>{{voucher.itemStock.silaiAmount}}</h5>
+                        </li>
+                        <li>
+                          <h4>BARDANA(+)</h4>
+                          <h5>{{voucher.itemStock.bardanaRate}}</h5>
+                          <h5>{{voucher.itemStock.bardanaAmount}}</h5>
+                        </li>
+                        <li>
+                          <h4>LABOUR CHARGES(+)</h4>
+                          <h5>{{voucher.itemStock.unloadingRate}}</h5>
+                          <h5>{{voucher.itemStock.unloadingCharges}}</h5>
+                        </li>
+                        <li>
+                          <h4>OTHER EXPENSES(+)</h4>
+                          <h5>{{voucher.itemStock.otherExp}}</h5>
+                        </li>
+                        <li>
+                          <h4>CARRIAGE CHARGES(-)</h4>
+                          <h5>{{voucher.itemStock.freightCharges}}</h5>
+                        </li>
+                        <li>
+                          <h4>NET AMOUNT</h4>
+                          <h5>{{voucher.itemStock.netAmount}}</h5>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                -->
+    
+                <div class="col-lg-12 text-end">
+                  <button type="button" class="btn btn-cancel warninig add-cancel me-3"
+                  (click)="editVoucher(voucher.id , voucher.typeVoucher)">EDIT VOUCHER</button>
+                  <button data-bs-dismiss="modal" type="submit" class="btn btn-danger me-3">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   <!-- show payment Modal -->
-  <div class="modal fade" id="showpayment" tabindex="-1" aria-labelledby="showpayment" aria-hidden="true">
+  <!-- <div class="modal fade" id="showpayment" tabindex="-1" aria-labelledby="showpayment" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered stock-adjust-modal">
       <div class="modal-content">
         <div class="page-wrapper-new p-0">
@@ -869,11 +1300,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- show payment Modal -->
 
   <!-- Create payment Modal -->
-  <div class="modal fade" id="createpayment" tabindex="-1" aria-labelledby="createpayment" aria-hidden="true">
+  <!-- <div class="modal fade" id="createpayment" tabindex="-1" aria-labelledby="createpayment" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-0 custom-modal-header">
@@ -953,11 +1384,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- Create payment Modal -->
 
   <!-- edit payment Modal -->
-  <div class="modal fade" id="editpayment" tabindex="-1" aria-labelledby="editpayment" aria-hidden="true">
+  <!-- <div class="modal fade" id="editpayment" tabindex="-1" aria-labelledby="editpayment" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-0 custom-modal-header">
@@ -1037,7 +1468,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- edit payment Modal -->
 
 
@@ -2112,3 +2543,4 @@
     </div>
   </div> -->
   <!-- edit payment Modal -->
+   

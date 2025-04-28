@@ -36,7 +36,7 @@ export class ThekedarEntryComponent implements OnInit {
     id: 0,
     expand: false,
     thekedarEntries: [{
-      showRate: "",
+      showRate: "0",
       hiddenRate: 0,
       itemSubCategory: {id:0},
       activity:{id:0},
@@ -84,9 +84,20 @@ export class ThekedarEntryComponent implements OnInit {
   expandBtnClicked(data:any){}
   addThekedar() {
     if (!this.thekedar.name ) {
-      this.snackBarService.showError('Please fill all the required fields!');
+      this.snackBarService.showError('plz fill Thekedar Name');
       return; // Exit the method if validation fails
     }
+    const invalidEntry = this.thekedar.thekedarEntries.find(entry => 
+      entry.hiddenRate === 0 ||
+      entry.itemSubCategory?.id === 0 ||
+      entry.activity?.id === 0 
+    );
+  
+    if (invalidEntry) {
+      this.snackBarService.showError('Please fill all required fields in the Thekedar entry');
+      return;
+    }
+
     this.apiService.post('thekedar/addOrUpdate', this.thekedar).subscribe(
       (res) => {
         document.getElementById('cancelbtn')?.click();
@@ -105,11 +116,12 @@ export class ThekedarEntryComponent implements OnInit {
     );
   }
   cancel(){
+    debugger
     this.thekedar = {
       id: 0,
       expand: false,
       thekedarEntries: [{
-        showRate: "",
+        showRate: "0",
         hiddenRate: 0,
         itemSubCategory: {id:0},
         activity:{id:0},
@@ -124,27 +136,31 @@ export class ThekedarEntryComponent implements OnInit {
     };
   }
   editThekedar(edit:any){
-
-    // @ts-ignore
-    // const modal = new bootstrap.Modal(document.getElementById('product-record'));
-    // modal.show();
+    debugger
     this.thekedar =edit;
-    this.thekedar.thekedarEntries = this.thekedar.thekedarEntries ?? [];
-    if(this.thekedar.thekedarEntries?.length>0){
-      console.log(this.thekedar,"dttttttt");
-    }else{
-      console.log(this.thekedar.thekedarEntries,"ssssss");
-      this.thekedar.thekedarEntries.push({
-        showRate: "",
-        hiddenRate: 0,
-        itemSubCategory:{id:0},
-        activity:{id:0},
-        name: "asif idr",
-        expand: false,
-        date: new Date().toISOString().substring(0, 10),
-       
-      })
-    }
+  //   this.thekedar.thekedarEntries = this.thekedar.thekedarEntries ?? [];
+  //   if (!edit.thekedarEntries.itemSubCategory) {
+  //     this.thekedar.thekedarEntries[0].itemSubCategory = { id: 0 }; // Initialize if null
+  // }
+  // if (!edit.thekedarEntries.activity) {
+  //     this.thekedar.thekedarEntries[0].activity = { id: 0 }; // Initialize if null
+  // }
+  //   if(this.thekedar.thekedarEntries?.length>0){
+  //     console.log('edit::', edit);
+  //   }
+  //   else{
+  //     console.log(this.thekedar.thekedarEntries,"ssssss");
+  //     this.thekedar.thekedarEntries.push({
+  //       showRate: "0",
+  //       hiddenRate: 0,
+  //       itemSubCategory:{id:0},
+  //       activity:{id:0},
+  //       name: "asif idr",
+  //       expand: false,
+  //       date: new Date().toISOString().substring(0, 10),
+  //       // isEditing: false
+  //     })
+  //   }
 
   }
 
@@ -215,7 +231,7 @@ export class ThekedarEntryComponent implements OnInit {
 
   addNewRow(data: any, i: number) {
     this.thekedar.thekedarEntries.push({
-      showRate: "",
+      showRate: "0",
       hiddenRate: 0,
       itemSubCategory: {id:0},
       activity:{id:0},

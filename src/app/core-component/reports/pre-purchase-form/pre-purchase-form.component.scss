@@ -1,0 +1,77 @@
+/* General styling for input fields */
+.input-field {
+    height: 30px;
+    padding: 8px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(143, 119, 119, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+/* Add a subtle border highlight on focus */
+.input-field:focus {
+    height: 30px;
+    border-color: #007bff;
+}
+
+/* Table styling */
+.table-styled {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table-styled th, .table-styled td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-styled th {
+    background-color: #f5f5f5;
+}
+
+.table-styled tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button styling */
+.btn-submit, .btn-cancel {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: #218838;
+}
+
+.btn-cancel {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
+}
+
+/* Styling for actions column buttons */
+.edit-delete-action a {
+    margin-right: 10px;
+    font-size: 18px;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.edit-delete-action a:hover {
+    color: #0056b3;
+}
+
+.confirm-text {
+    cursor: pointer;
+}

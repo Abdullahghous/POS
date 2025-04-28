@@ -2,6 +2,7 @@ import { Component,OnInit , ElementRef } from '@angular/core';
 import { HttpService,routes,SidebarService } from 'src/app/core/core.index';
 import { AllApiService } from 'src/app/core/service/allApi/all-api.service';
 import { Router } from '@angular/router';
+import { SnackBarService } from 'src/app/core/service/snackBar/snack-bar.service';
 
 
 @Component({
@@ -27,14 +28,19 @@ export class SalesOrderFormComponent implements OnInit {
     private apiService: HttpService,
     private allApiService:AllApiService,
     private el: ElementRef,
-  ) {}
+    private snackBarService:SnackBarService
+  ) {
+    const today = new Date();
+    this.saleOrder.saleOrderDate = today.toISOString().split('T')[0];
+    // this.saleOrder.saleOrderEntries.paymentDate = today.toISOString().split('T')[0];
+  }
   
   saleOrder = {
    
     id: 0,
     company: { id: 1 },
     branch: { id: 1 },
-    financialYear: { id: 0 },
+    financialYear: { id: 5 },
     saleOrderCode: '',
     
     saleOrderDate: '',
@@ -47,7 +53,7 @@ export class SalesOrderFormComponent implements OnInit {
         rate: 0,
         kg: 0,
         vehical: '',
-        paymentDate: '',
+        paymentDate: new Date().toISOString().substring(0, 10),
         paymentType: '',
       },
     ],
@@ -109,27 +115,70 @@ export class SalesOrderFormComponent implements OnInit {
       // debugger
   }
   onSave() {
-   
-    this.apiService.post('receivables/add_or_update_sale_order', this.saleOrder).subscribe(
-      
+    console.log("Current purchaseOrder:", this.saleOrder);
+  
+    // Validate required fields
+    const isValidPurchaseOrder = this.saleOrder.company.id !== 0 &&
+                                 this.saleOrder.branch.id !== 0 &&
+                                 this.saleOrder.financialYear.id !== 0 && // Check financialYear
+                                 this.saleOrder.saleOrderEntries.every(entry =>
+                                   entry.rate !== 0 &&
+                                   entry.kg !== 0 &&
+                                   entry.itemDef.id !== 0 &&
+                                   entry.millKhata.id !== 0 &&
+                                   entry.customerAccount.code !== 0);
+  
+    // Log validation result
+    console.log("Is purchase order valid?", isValidPurchaseOrder);
+  
+    if (isValidPurchaseOrder) {
+      console.log("Purchase Order is valid:", this.saleOrder);
+      debugger
+      this.apiService.post('receivables/add_or_update_sale_order', this.saleOrder).subscribe(
         (res) => {
-            console.log(res, 'looooog333');
-            if (res) {
-                setTimeout(() => {
-                    const closeButton = this.el.nativeElement.querySelector('.close');
-                    if (closeButton) {
-                        closeButton.click();
-                    }
-                });
-            }
-            this.isButtonDisabled = false;
+          console.log(res, 'purchaseOrder=======');
+          if (res) {
+            this.snackBarService.showSuccess('Order Added Successfully!');
+            this.cancel();
+          } else {
+            this.snackBarService.showError('Please fill all the required fields!');
+          }
         },
         (error) => {
-            this.isButtonDisabled = false;
+          this.snackBarService.showError('An error occurred while adding the record!');
         }
-    );
-  }
+      );
   
+    } else {
+      console.error("Purchase Order is missing required fields.");
+      this.snackBarService.showError('Please fill all the required fields!');
+    }
+  }
+  cancel(){
+    this.saleOrder = {
+   
+      id: 0,
+      company: { id: 1 },
+      branch: { id: 1 },
+      financialYear: { id: 5 },
+      saleOrderCode: '',
+      
+      saleOrderDate: '',
+      saleOrderEntries: [
+        {
+          id: 0,
+          itemDef: { id: 0 },
+          customerAccount: { code: 0 },
+          millKhata: { id: 0 },
+          rate: 0,
+          kg: 0,
+          vehical: '',
+          paymentDate: new Date().toISOString().substring(0, 10),
+          paymentType: '',
+        },
+      ],
+    }; 
+  }
   deleteRow(i: any) {
     if (this.saleOrder.saleOrderEntries.length > 1) {
       this.saleOrder.saleOrderEntries.splice(i, 1);
@@ -151,9 +200,8 @@ export class SalesOrderFormComponent implements OnInit {
           rate: 0,
           kg: 0,
           vehical: '',
-          paymentDate: '',
+          paymentDate: new Date().toISOString().substring(0, 10),
           paymentType: '',
-          amount:0,
           
         })
       )

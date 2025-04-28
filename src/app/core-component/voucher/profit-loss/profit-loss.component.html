@@ -76,18 +76,16 @@
         <div class="card" id="filter_inputs" [ngClass]="{'d-block': filter, 'd-none': !filter}">
           <div class="card-body pb-0">
             <div class="row">
-              <div class="col-lg-3 col-sm-6 col-12">
+              <div class="col-lg-3 col-sm-6 col-12 table-sm">
                 <div class="input-blocks add-product">
                   <label>Company <span class="required-span-color">*</span></label>
                   <nz-select
                     [(ngModel)]="obj.companyId"
-                    [ngModelOptions]="{ standalone: true }"
-                    class="w-100"
-                    nzShowSearch
-                    nzAllowClear
-                    nzPlaceHolder="Select Unit"
-                  >
-                    <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+                    [ngModelOptions]="{standalone: true}"
+                    class="w-100 "
+                    nzShowSearch nzAllowClear nzPlaceHolder="Select Company">
+                    <nz-option nzLabel="ALL" nzValue="0"></nz-option>
+                    <nz-option *ngFor="let data of getCompanies" [nzLabel]="data.name" [nzValue]="data.id"></nz-option>
                   </nz-select>
                 </div>
               </div>
@@ -101,7 +99,8 @@
                     class="w-100"
                     nzShowSearch
                     nzAllowClear
-                    nzPlaceHolder="Select Unit">
+                    nzPlaceHolder="Select Branche">
+                    <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                     <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
                   </nz-select>
                 </div>
@@ -116,6 +115,7 @@
                     nzShowSearch
                     nzAllowClear
                     nzPlaceHolder="Select year">
+                    <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                     <nz-option *ngFor="let f of financialYear" [nzLabel]="f.name" [nzValue]="f.id"></nz-option>
                   </nz-select>
                 </div>
@@ -131,6 +131,7 @@
                     nzShowSearch
                     nzAllowClear
                     nzPlaceHolder="Select year">
+                    <nz-option nzLabel="ALL" nzValue="0"></nz-option>
                     <nz-option *ngFor="let f of itemDefs" [nzLabel]="f.name" [nzValue]="f.id"></nz-option>
                   </nz-select>
                 </div>
@@ -145,7 +146,8 @@
                     nzShowSearch
                     nzAllowClear
                     nzPlaceHolder="Select year">
-                    <nz-option *ngFor="let p of parties" [nzLabel]="p.name" [nzValue]="p.id"></nz-option>
+                    <nz-option nzLabel="All" nzValue="0"></nz-option>
+                    <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
                   </nz-select>
                 </div>
               </div>
@@ -165,9 +167,9 @@
                   <label>VOUCHER STATUS<span class="required-span-color">*</span></label>
                   <nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type"
                    [(ngModel)]="obj.voucherStatusId">
-                    <nz-option nzLabel="BOTH" nzValue="BOTH"></nz-option>
-                    <nz-option nzLabel="1" nzValue="1"></nz-option>
-                    <nz-option nzLabel="0" nzValue="0"></nz-option>
+                    <nz-option nzLabel="BOTH" nzValue="0"></nz-option>
+                    <nz-option nzLabel="1" nzValue="M"></nz-option>
+                    <nz-option nzLabel="0" nzValue="S"></nz-option>
                   </nz-select>
                 </div>
               </div>
@@ -178,34 +180,38 @@
           </div>
         </div> 
         <div class="table-responsive">
-          <nz-table  class="table datanew">
+          <!-- <cdk-virtual-scroll-viewport
+          orientation="vertical"
+          class="scroll-demo"
+          itemSize="50"> -->
+          <table  class="table datanew table-sm">
             <thead>
               <tr>
               
                 <th>#</th>
-                <th style="flex-wrap: wrap;white-space: normal">Formated Code</th>
+                <th>Formated Code</th>
                 <th>Account Name </th>
-                <th style="flex-wrap: wrap;white-space: normal">Opening Qty</th>
+                <th>Opening Qty</th>
                 <th>Item Name</th>
-                <th style="flex-wrap: wrap;white-space: normal">Item Quantity</th>
+                <th>Item Quantity</th>
                 <th>Pur Rate</th>
                 <th>Sale Rate</th>
-                <th style="flex-wrap: wrap;white-space: normal">Voucher Date</th>
-                <th style="flex-wrap: wrap;white-space: normal">Voucher Code</th>
+                <th>Voucher Date</th>
+                <th>Voucher Code</th>
                 <th>Profit</th>
-                <th style="flex-wrap: wrap;white-space: normal">Created By</th>
+                <th>Created By</th>
               </tr>
             </thead>
             <tbody>
               <!-- @for (data of report; track data) { -->
                 <tr *ngFor="let data of filteredReport; let i = index">
                   <td>{{i +1}}</td>
-                  <td style="flex-wrap: wrap;white-space: normal">{{data.formatedCode}}</td>
+                  <td>{{data.formatedCode}}</td>
                   <td style="width: 25%px; flex-wrap: wrap;white-space: normal;">{{data.accountName}}</td>
                   <td>{{data.openingQty}}</td>
-                  <td>{{data.itemName}}</td>
+                  <td style="width: 25%px; flex-wrap: wrap;white-space: normal;">{{data.itemName}}</td>
                   <td>{{data.itemQuantity}}</td>
-                  <td>{{data.itemQuantity}}</td>
+                  <td>{{data.openingRate}}</td>
                  
                   <td>{{data.saleRate}}</td>
                   <td>{{data.voucherDate}}</td>
@@ -217,7 +223,15 @@
             </tr>
           <!-- } -->
         </tbody>
-      </nz-table>
+        <tfoot>
+          <tr>
+            <td colspan="10" class="text-right"><strong>Total Profit:</strong></td>
+            <td>{{ totalProfit | number:'1.2-2' }}</td>
+            <td></td>  <!-- You can leave the last column empty or add any content if needed -->
+          </tr>
+        </tfoot>
+      </table>
+      <!-- </cdk-virtual-scroll-viewport> -->
         </div>
     
   

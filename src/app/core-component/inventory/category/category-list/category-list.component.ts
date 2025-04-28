@@ -122,7 +122,8 @@ export class CategoryListComponent {
         formattedCreatedAt : this.datePipe.transform(new Date(d.createdAt), 'MM-dd-yyyy'),
         formattedModifiedAt : this.datePipe.transform(new Date(d.modifiedAt), 'MM-dd-yyyy'),
       }))
-      this.dataSource = new MatTableDataSource<any>(this.tableData);
+      this.tableData = [...this.allData];
+      this.dataSource = new MatTableDataSource<any>(this.allData);
       this.istableLoading = false;
     } else {
       this.istableLoading = false;

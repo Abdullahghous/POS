@@ -246,6 +246,9 @@ public static get thekedarEntry(): string {
 public static get monshiEntry(): string {
   return this.labour + '/monshi-entry';
 }
+public static get millRate(): string {
+  return this.labour + '/mill-rate';
+}
 public static get profitLoss(): string {
   return this.voucher + '/profit-loss';
 }
@@ -256,6 +259,7 @@ public static get newVoucher(): string {
     return this.purchase + '/purchase-list';
   }
   public static get purchaseVoucher(): string {
+     
     return this.purchase + '/purchase-voucher';
   }
   public static get addPurchase(): string {
@@ -273,7 +277,9 @@ public static get newVoucher(): string {
   public static get editPurchase(): string {
     return this.purchase + '/edit-purchase';
   }
-
+  public static get tradingReport(): string {
+    return this.purchase + '/trading-report';
+  }
   public static get expenseList(): string {
     return this.expense + '/expense-list';
   }
@@ -955,6 +961,9 @@ public static get newVoucher(): string {
   public static get customers(): string {
     return this.people + '/customers';
   }
+  public static get bankAccount(): string {
+    return this.people + '/bank-account';
+  }
   public static get employeesGrid(): string {
     return this.hrm + '/employee/employee-grid';
   }
@@ -975,6 +984,9 @@ public static get newVoucher(): string {
   }
   public static get paySlip(): string {
     return this.hrm + '/payroll/payslip';
+  }
+  public static get utilities(): string {
+    return this.usersManagement + '/utilities';
   }
   public static get rolesPermission(): string {
     return this.usersManagement + '/roles-permissions';
@@ -1011,6 +1023,12 @@ public static get newVoucher(): string {
   }
   public static get supplierReport(): string {
     return this.reports + '/supplier-report';
+  }
+  public static get supplierStatusReport(): string {
+    return this.reports + '/supplier-status-report';
+  }
+  public static get dalySummry(): string {
+    return this.reports + '/daly-summry-report';
   }
   public static get generalLedger(): string {
     return this.reports + '/general-ledger';

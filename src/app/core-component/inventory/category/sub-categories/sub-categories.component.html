@@ -144,7 +144,7 @@
         <tbody>
           @for (data of tableData; track data) {
           <tr>
-            <td>{{data.name}}</td>
+            <td>{{data.formattedCode}} - {{data.name}}</td>
             <td>
               <span class="badge badge-linesuccess" *ngIf="data.active == true">Active</span>
               <span class="badge badge-linedanger" *ngIf="data.active == false">InActive</span>

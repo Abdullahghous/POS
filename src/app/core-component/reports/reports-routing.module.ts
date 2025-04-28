@@ -14,6 +14,8 @@ import { InventoryReportComponent } from './inventory-report/inventory-report.co
 import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
 import { PrePurchaseReportComponent } from './pre-purchase-report/pre-purchase-report.component';
 import { PrePurchaseFormComponent } from './pre-purchase-form/pre-purchase-form.component';
+import { SupplierStatusReportComponent } from './supplier-status-report/supplier-status-report.component';
+import { DalySummryReportComponent } from './daly-summry-report/daly-summry-report.component';
 
 const routes: Routes = [{ path: '', component: ReportsComponent,
 children: [
@@ -66,8 +68,16 @@ children: [
     component: PrePurchaseFormComponent
   },
   {
+    path: 'supplier-status-report',
+    component: SupplierStatusReportComponent
+  },
+  {
     path: 'pre-purchase-report',
     component: PrePurchaseReportComponent
+  },
+  {
+    path: 'daly-summry-report',
+    component: DalySummryReportComponent
   }
 ]
 }];

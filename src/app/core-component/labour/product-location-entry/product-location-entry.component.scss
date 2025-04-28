@@ -1,0 +1,52 @@
+// @import '~@angular/material/theming';
+// @include mat-core();
+
+// // Define your theme colors
+// $primary: mat-palette($mat-indigo);
+// $accent: mat-palette($mat-pink);
+
+// // Create the theme
+// $my-app-theme: mat-light-theme($primary, $accent);
+
+// // Include the theme styles
+// @include angular-material-theme($my-app-theme);
+.custom-textfield {
+    width: 100%; /* Full width */
+    margin-bottom: 16px; /* Space below */
+}
+
+.custom-textfield mat-label {
+    color: #3f51b5; /* Change label color */
+}
+
+.custom-textfield input {
+    padding: 10px; /* Input padding */
+    border-radius: 4px; /* Rounded corners */
+    border: 1px solid #3f51b5; /* Border color */
+}
+
+.custom-textfield input:focus {
+    border-color: #3f51b5; /* Change border color on focus */
+}
+
+.centered-table {
+    margin: auto;
+    width: 80%; /* Adjust width as needed */
+    max-width: 600px; /* Optional max width */
+    border-collapse: collapse;
+}
+
+.centered-table th, .centered-table td {
+    padding: 8px 12px; /* Adjust padding as needed */
+    // text-align: left;
+}
+
+.tabble-prrimary {
+    background-color: #f8f9fa; /* Change to your preferred background */
+    border: 1px solid #dee2e6; /* Optional border */
+}
+
+.tabble-prrimary th {
+    background-color: #007bff; /* Header background color */
+    color: white; /* Header text color */
+}

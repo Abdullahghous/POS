@@ -1,0 +1,56 @@
+/* Table Container */
+.card.table-list-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+.table.datanew {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.table.datanew th, .table.datanew td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.table.datanew th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.table.datanew tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Action Buttons */
+.table.datanew .dropdown-item {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.table.datanew .dropdown-item:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+
+/* Tooltip Style */
+[data-bs-toggle="tooltip"] {
+    cursor: pointer;
+    color: #007bff;
+}
+
+[data-bs-toggle="tooltip"]:hover {
+    color: #0056b3;
+}
+
+
+
+

@@ -24,7 +24,140 @@
     </ul>
   </div>
 
-<div class="card table-list-card">
+
+  <div class="card table-list-card">
+    <div class="card-body">
+        <div class="table-top"> 
+            <div class="card-body pb-0">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6 col-12">
+                        <div class="input-blocks add-product">
+                            <label>Company <span class="required-span-color">*</span></label>
+                            <nz-select
+                                [(ngModel)]="pre.company.id"
+                                [ngModelOptions]="{ standalone: true }"
+                                class="w-100 "
+                                nzShowSearch
+                                nzAllowClear
+                                nzPlaceHolder="Select Unit"
+                            >
+                                <nz-option *ngFor="let c of getCompanies" [nzLabel]="c.name" [nzValue]="c.id"></nz-option>
+                            </nz-select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-12">
+                        <div class="input-blocks add-product">
+                            <label>Branch <span class="required-span-color">*</span></label>
+                            <nz-select
+                                [(ngModel)]="pre.branch.id"
+                                [ngModelOptions]="{ standalone: true }"
+                                class="w-100 "
+                                nzShowSearch
+                                nzAllowClear
+                                nzPlaceHolder="Select Branch"
+                            >
+                                <nz-option *ngFor="let u of getBranches" [nzLabel]="u.name" [nzValue]="u.id"></nz-option>
+                            </nz-select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 col-12">
+                        <div class="input-blocks add-product">
+                            <label>Financial Year <span class="required-span-color">*</span></label>
+                            <nz-select
+                                [(ngModel)]="pre.financialYear.id"
+                                [ngModelOptions]="{ standalone: true }"
+                                class="w-100 "
+                                nzShowSearch
+                                nzAllowClear
+                                nzPlaceHolder="Select Year"
+                            >
+                                <nz-option *ngFor="let f of financialYear" [nzLabel]="f.name" [nzValue]="f.id"></nz-option>
+                            </nz-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+        <div class="table-responsive">
+            <table class="table datanew table-styled">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>PPVN <br>DATE</th>
+                        <th style="width: 15%;">ITEM</th>
+                        <th>ACCOUNT <br>MILL</th>
+                        <th>TRUCK <br>BAGS <br>P TYPE</th>
+                        <th>WEIGHT <br> FRIGHT <br>RATE</th>
+                        <th>ATTACHMENTS <br>REMARKS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody class="sales-list">
+                    <tr *ngFor="let data of pre.prePurchaseEntries; let i = index">
+                        <td><span>{{i + 1}}</span></td>
+                        <td>
+                            <input class="form-control border-dark input-field" type="text">
+                            <br>
+                            <input class="form-control border-dark input-field" type="date">
+                        </td>
+                        <td style="width: 15%;">
+                            <nz-select  class="w-100" [(ngModel)]="data.itemDef" [ngModelOptions]="{standalone: true}">
+                                <nz-option *ngFor="let p of itemDefs" [nzLabel]="p.name" [nzValue]="p.id"></nz-option>
+                            </nz-select>
+                        </td>
+                        <td style="width: 15%;">
+                            <nz-select class="w-100" [(ngModel)]="data.supplierAccount.code" [ngModelOptions]="{standalone: true}">
+                                <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
+                            </nz-select>
+                            <br><br>
+                            <nz-select class="w-100 " [(ngModel)]="data.millKhata.id" [ngModelOptions]="{standalone: true}">
+                                <nz-option *ngFor="let m of mills" [nzLabel]="m.accountName" [nzValue]="m.id"></nz-option>
+                            </nz-select>
+                        </td>
+                        <td>
+                            <input class="form-control border-dark input-field" type="text" [(ngModel)]="data.vehical">
+                            <br>
+                            <input class="form-control border-dark input-field" type="text" [(ngModel)]="data.bag">
+                            <br>
+                            <mat-select class="w-100 " [(ngModel)]="data.paymentType">
+                                <mat-option value="routine">Routine</mat-option>
+                                <mat-option value="cash">Cash</mat-option>
+                                <mat-option value="percentage">Percentage</mat-option>
+                            </mat-select>
+                        </td>
+                        <td>
+                            <input class="form-control border-dark input-field" type="text" [(ngModel)]="data.kg">
+                            <br>
+                            <input class="form-control border-dark input-field" type="text" [(ngModel)]="data.freight">
+                            <br>
+                            <input class="form-control border-dark input-field" type="text" [(ngModel)]="data.rate">
+                        </td>
+                        <td>
+                            <input class="form-control border-dark input-field" type="text" [(ngModel)]="data.remarks">
+                        </td>
+                        <td >
+                            <div class="edit-delete-action">
+                                <a href="javascript:void(0);" class="btn btn-added" (click)="addNewRow(data, i)">
+                                    <i class="feather icon-plus-circle me-2"></i>
+                                </a>
+                                <a class="confirm-text p-2" href="javascript:void(0);" (click)="deleteRow(i)" style="color: red;">
+                                    <i class="feather icon-trash-2 feather-trash-2"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="col-lg-12 text-end">
+                <button type="button" id="cancelButton" class="btn btn-cancel add-cancel me-3" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-submit add-sale" (click)="onSave()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="card table-list-card">
     <div class="card-body">
         <div class="table-top"> 
             <div class="card-body pb-0">
@@ -76,8 +209,8 @@
             </div>
         </div>
         </div>   
-        <div class="card">
-            <nz-table #ITableRef [nzData]="['*']" [nzFrontPagination]="false" class="table  datanew">
+        <div class="table-responsive ">
+            <table  class="table  datanew">
                 <thead>
                     <tr>
                       <th>#</th>
@@ -93,58 +226,37 @@
                   <tbody class="sales-list">
                     <tr *ngFor="let data of pre.prePurchaseEntries; let i = index">
                       <td><span>{{i + 1}}</span></td>
-                      <td><input class="form-control" type="text"> <br><input nz-input type="date"></td>
+                      <td><input class="form-control border border-dark" type="text"> <br><input class="form-control border border-dark" type="date"></td>
                       <td>
-                        <nz-select   id class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select item"
-                      [(ngModel)]=data.itemDef.id [ngModelOptions]="{standalone: true}">
+                        <nz-select class="w-100 border border-dark" id  nzShowSearch nzAllowClear nzPlaceHolder="Select item"
+                      [(ngModel)]=data.itemDef [ngModelOptions]="{standalone: true}">
                         <nz-option *ngFor="let p of itemDefs" [nzLabel]="p.name" [nzValue]="p.id"></nz-option>
                       </nz-select>
                       </td>
                      <td>
-                      <nz-select   id class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select parties"
+                      <nz-select class="w-100 border border-dark"  id nzShowSearch nzAllowClear nzPlaceHolder="Select parties"
                       [(ngModel)]=data.supplierAccount.code [ngModelOptions]="{standalone: true}">
                         <nz-option *ngFor="let p of parties" [nzLabel]="p.accountName" [nzValue]="p.code"></nz-option>
                       </nz-select>
                      <br><br>
-                      <nz-select   id class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Select mill"
+                      <nz-select   id class="w-100 border border-dark border-radius" nzShowSearch nzAllowClear nzPlaceHolder="Select mill"
                       [(ngModel)]=data.millKhata.id [ngModelOptions]="{standalone: true}">
                         <nz-option *ngFor="let m of mills" [nzLabel]="m.accountName" [nzValue]="m.id"></nz-option>
                       </nz-select>
                      </td>
-                      <td><input type="text" class="form-control" [(ngModel)]="data.vehical" [ngModelOptions]="{standalone: true}"/>
-                     <br><input [(ngModel)]="data.bag" class="form-control" type="text"> <br><nz-select class="w-100" nzShowSearch nzAllowClear nzPlaceHolder="Payment Type"
-                     [(ngModel)]="data.paymentType">
-                      <nz-option nzLabel="ROUTINE" nzValue="routine"></nz-option>
-                      <nz-option nzLabel="CASH" nzValue="cash"></nz-option>
-                      <nz-option nzLabel="PRECENTAGE" nzValue="percentage"></nz-option>
-                    </nz-select></td>
-                      <td><input type="text" class="form-control" [(ngModel)]="data.kg" [ngModelOptions]="{standalone: true}" /> <br>
-                    <input [(ngModel)]="data.freight" [ngModelOptions]="{standalone: true}" class="form-control" type="text"><br>
-                    <input [(ngModel)]="data.rate" [ngModelOptions]="{standalone: true}" class="form-control" type="text">
+                      <td><input class="form-control border-dark" type="text"  [(ngModel)]="data.vehical" [ngModelOptions]="{standalone: true}"/>
+                     <br><input class="form-control border border-dark" [(ngModel)]="data.bag" type="text"> <br>
+                     <mat-select class="w-100 border border-dark" [(ngModel)]="data.paymentType" [ngModelOptions]="{standalone: true}" name="status">
+                      <mat-option [value]="'routine'">Routine</mat-option>
+                      <mat-option [value]="'cash'">Cash</mat-option>
+                      <mat-option [value]="'percentage'">Percentage</mat-option>
+                    </mat-select></td>
+                      <td><input type="text" class="form-control border-dark"[(ngModel)]="data.kg" [ngModelOptions]="{standalone: true}" /> <br>
+                    <input class="form-control border-dark" [(ngModel)]="data.freight" [ngModelOptions]="{standalone: true}" type="text"><br>
+                    <input [(ngModel)]="data.rate" [ngModelOptions]="{standalone: true}" class="form-control border-dark"type="text">
                 </td>
                       <td>
-                        <!-- <div style="height: min-content;" class="card-body">
-                          <div class="custom-file-container" data-upload-id="myFirstImage">
-                            
-                            <ngx-dropzone (change)="onSingleSelect($event)" class="service-upload" [multiple]="false">
-                              <ngx-dropzone-label class="drop-browse align-center">
-                                <span><img src="assets/img/icons/drop-icon.svg" alt="upload" /></span>
-                                <div class="d-flex">
-                                  Drop your files here or<span class="text-primary ms-1">browse</span>
-                                </div>
-                                <span class="text-muted">Maximum size: 50MB</span>
-                              </ngx-dropzone-label>
-                              @for (f of singleFile; track f) {
-                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
-                                  [file]="f" [removable]="true" (removed)="onRemoveSingle(f)">
-                                </ngx-dropzone-image-preview>
-                              }
-                            </ngx-dropzone>
-                  
-                  
-                          </div>
-                        </div> -->
-                        <input type="text" class="form-control" [(ngModel)]="data.remarks" [ngModelOptions]="{standalone: true}"/></td>
+                        <input type="text" class="form-control border-dark"[(ngModel)]="data.remarks" [ngModelOptions]="{standalone: true}"/></td>
                      
                       
                       <td>
@@ -159,13 +271,13 @@
                       </td>
                     </tr>
                   </tbody>
-            </nz-table>
+            </table>
             <div class="col-lg-12 text-end">
-                <!-- <button type="button" class="btn btn-cancel add-cancel me-3"
-                data-bs-dismiss="modal">Cancel</button> -->
+                <button type="button" id="cancelButton" class="btn btn-cancel add-cancel me-3"
+                data-bs-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-submit add-sale" (click)="onSave()" >Submit</button>
               </div>
         </div>
 
     </div> 
-</div>  
+</div>   -->

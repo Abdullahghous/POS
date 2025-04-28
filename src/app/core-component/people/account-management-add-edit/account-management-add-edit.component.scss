@@ -25,3 +25,107 @@
     font-weight: 600;
     border: 0px solid;
 }
+
+
+/* General Modal Styling */
+.custom-modal-two .modal-content {
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* Modal Header */
+.custom-modal-header {
+    background: #007bff;
+    color: white;
+    padding: 15px 20px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-modal-header h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Close Button */
+.custom-modal-header .close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Modal Body */
+.custom-modal-body {
+    padding: 20px;
+}
+
+/* Form Labels */
+.col-form-label {
+    font-weight: 500;
+}
+
+/* Input Fields */
+.form-control {
+    border-radius: 6px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Error Messages */
+.text-danger {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Modal Footer Buttons */
+.modal-footer-btn {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    background: #f8f9fa;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+}
+
+.btn-submit {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background: #0056b3;
+}
